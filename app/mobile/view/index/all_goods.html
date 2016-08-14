@@ -1,0 +1,268 @@
+{extend name="base/common"}
+
+
+{block name="head"}
+<link href="__MOBILE_CSS__/list.css" rel="stylesheet" type="text/css" />
+
+<link href="__MOBILE_CSS__/index.css" rel="stylesheet" />
+<link href="__MOBILE_CSS__/common.css" rel="stylesheet" />
+<script src="__MOBILE_JS__/jquery.min.js"></script>
+<!-- <script src="http://apps.bdimg.com/libs/layer/2.1/layer.js"></script> -->
+<script src="__MOBILE_JS__/js.js"></script>
+<script src="__MOBILE_JS__/jquery.event.drag-1.5.min.js"></script>
+<script src="__MOBILE_JS__/jquery.touchSlider.js"></script>
+<script>
+    $(document).ready(function () {
+        $(".main_visual").hover(function(){
+            $("#btn_prev,#btn_next").fadeIn()
+        },function(){
+            $("#btn_prev,#btn_next").fadeOut()
+        })
+        $dragBln = false;
+        $(".main_image").touchSlider({
+            flexible : true,
+            speed : 200,
+            btn_prev : $("#btn_prev"),
+            btn_next : $("#btn_next"),
+            paging : $(".flicking_con a"),
+            counter : function (e) {
+                $(".flicking_con a").removeClass("on").eq(e.current-1).addClass("on");
+            }
+        });
+        $(".main_image").bind("mousedown", function() {
+            $dragBln = false;
+        })
+        $(".main_image").bind("dragstart", function() {
+            $dragBln = true;
+        })
+        $(".main_image a").click(function() {
+            if($dragBln) {
+                return false;
+            }
+        })
+        timer = setInterval(function() { $("#btn_next").click();}, 5000);
+        $(".main_visual").hover(function() {
+            clearInterval(timer);
+        }, function() {
+            timer = setInterval(function() { $("#btn_next").click();}, 5000);
+        })
+        $(".main_image").bind("touchstart", function() {
+            clearInterval(timer);
+        }).bind("touchend", function() {
+            timer = setInterval(function() { $("#btn_next").click();}, 5000);
+        });
+
+        //加入购物车
+        $(document).on('click','.w-button-addToCart',function() {
+            //判断期数与个数是否正确
+            var nper_id = $(this).attr('nper-id');
+
+            //Ajax提交
+            $.ajax({
+                url : "{:U('Cart/ajax_add_cart')}",
+                type : 'POST',
+                data : {
+                    nper_id : nper_id
+                },
+                beforeSend : function () {
+
+                },
+                success : function (data, response, status) {
+                    var response_data = $.parseJSON(data);
+
+                    if (response_data.exist_flag == false) {
+                        $('#count').text(parseInt($('#count').text())+1);
+                        $('#count').show();
+                    }
+//                        if(response_data.status == 'success') {
+//                            alert('登陆成功');
+//                            window.location.href = $('#personal-url').val()
+//                        }
+                }
+            });
+        });
+        //判断是否显示购物车数量
+        if($('#count').text() == '0') {
+            $('#count').hide();
+        }
+        //得到总页码
+        $.ajax({
+            url : "{:U('Index/ajax_goods_count')}",
+            type : 'POST',
+            data : {
+                cate_type : $('#cate-type').val()
+            },
+            success: function(data, response, status){
+                window.count = parseInt(data);
+            }
+        });
+
+
+        //滚动条拖动
+        window.scrollFlag = true;
+        window.first = 10;
+        window.page = 1;
+        $(window).scroll(function () {
+            if (window.page < window.count) {
+                if (window.scrollFlag) {
+                    if ($(document).scrollTop() >= ($('#load-more').offset().top + $('#load-more').outerHeight() - $(window).height() - 20)) {
+                        setTimeout(function(){
+                            $.ajax({
+                                url: "{:U('Index/ajax_all_goods')}",
+                                type: 'POST',
+                                data: {
+                                    offset: window.first,
+                                    cate_type : $('#cate-type').val()
+                                },
+                                success: function(data, response, status){
+                                    $('#load-more').before(data);
+                                }
+                            });
+                            window.scrollFlag = true;
+                            window.first += 10;
+                            window.page += 1;
+                        }, 500);
+                        window.scrollFlag = false;
+                    }
+                }
+            } else {
+                $('#load-more').html('没有更多数据');
+            }
+        });
+
+
+
+
+
+    });
+</script>
+
+<style>
+    .w-cbn{left: 2.9%;top: 12%;}
+
+</style>
+{/block}
+
+{block name="main"}
+
+{include file="public/header" /}
+
+<div class="g-body">
+    <div class="m-list">
+        <!-- 二级导航 -->
+        <div class="g-wrap g-body-hd m-list-nav">
+            <div class="m-list-nav-catlog">
+                <a href="javascript:void(0)">商品分类<i class="ico ico-arrow ico-arrow-down ico-arrow-s-gray"></i></a>
+            </div>
+            <div class="m-list-types">
+                <ul class="m-list-types-list">
+                    <li {php}if($type == 'hot'){echo 'class="selected fd"';}else{ echo 'class="fd" ';}{/php}>
+                        <a href="{:U('all_goods',array('cate'=>$cate.'-1'))}" >人气</a>
+                    </li>
+                    <li {php}if($type == 'new'){echo 'class="selected fd"';}else{ echo 'class="fd" ';}{/php}>
+                        <a href="{:U('all_goods',array('cate'=>$cate.'-2'))}" >最新</a>
+                    </li>
+                    <li {php}if($type == 'remain_num'){echo 'class="selected fd"';}else{ echo 'class="fd" ';}{/php}>
+                        <a href="{:U('all_goods',array('cate'=>$cate.'-3'))}" >剩余人次</a>
+                    </li>
+                    <li {php}if($type == 'total_desc' || $type == 'total_asc'){echo 'class="selected fd"';}else{ echo 'class="fd" ';}{/php}>
+                    {php}$need_type = empty($need_type) ? '4':$need_type;{/php}
+                        <a href="{:U('all_goods',array('cate'=>$cate.'-'.$need_type))}" >总需人次</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- 所有分类列表 -->
+            <div class="m-list-catlog" style="display: none">
+                <ul class="m-list-catlog-list">
+                    <li class="selected"><a href="{:U('all_goods',array('cate'=>'0-1'))}" ><i class="ico ico-type ico-type-0"></i>全部商品</a></li>
+                    {volist name="cate_list" id="vo"}
+                        <li><a href="{:U('all_goods',array('cate'=>$vo['id'].'-1'))}" >
+                            {if condition="is_null($vo.mobile_icon)"}
+                            <i class="ico ico-type ico-type-1"></i>
+                            {else /}
+                            <img class="ico ico-type ico1s" src="{$vo.mobile_icon}">
+                            {/if}
+                            {$vo.name}
+                        </a></li>
+                    {/volist}
+
+                </ul>
+            </div>
+        </div>
+        <!-- 正文 -->
+        <div class="g-wrap g-body-bd">
+            <div class="g-body-bd-mask" style="display:none;"></div>
+            <!-- 商品列表 -->
+            <div class="m-list-content">
+                <div class="w-loading">
+                    {volist name="all_goods" id="vo"}
+                        <div class="w-goods w-goods-l w-goods-ing akl" data-gid="1401" data-period="303164300" data-priceType="1" data-price="15999" data-existingTimes="6494" data-buyUnit="1">
+
+                            {if condition="$vo.code eq 'shiyuanduobao'"}
+                            <img class="ico ico-label ico-label-goods w-cbn" src="__MOBILE_STATIC__/img/icon_ten.png">
+                            {/if}
+
+                            <div class="w-goods-pic w-all-pic">
+                                <a href="{:U('Goods/goods_detail',array('nper_id'=>$vo['nper_id']))}" >
+                                    <img src="{$vo.image_src}"/>
+                                </a>
+                            </div>
+                            <div class="w-goods-info">
+                                <p class="w-goods-title f-txtabb"><a href="{:U('Goods/goods_detail',array('nper_id'=>$vo['nper_id']))}" data-invoke="detail?gid=1401&period=303164300">{$vo.name}</a></p>
+                                <div class="w-progressBar">
+                                    <p class="wrap">
+                                        <span class="bar" style="width:{$vo.progress}%;"><i class="color"></i></span>
+                                    </p>
+                                    <ul class="txt">
+                                        <li class="txt-l"><p>总需：{$vo.sum_times} 人次</p></li>
+                                        <li class="txt-r"><p>剩余<b class="txt-blue">{$vo.remain_num}</b></p></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="w-goods-shortFunc m-tip">
+                                <button class="w-button w-button-round w-button-addToCart" nper-id = "{$vo.nper_id}" data-invoke="addToCart?gid=1401&num=10"></button>
+                            </div>
+                        </div>
+                    {/volist}
+
+                    <p id="load-more"></p>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="g-footer">
+    <div class="g-wrap">
+        <p style="margin-bottom: 7px;text-align: left;border-bottom: #DCDCDC 1px dotted;padding: 2px 6px;">特别说明：苹果公司不是{:C('WEBSITE_NAME')}赞助商，并且苹果公司也不会以任何形式参与其中！</p>
+        <p class="m-link">
+            <a href="{:U('Article/help')}" >什么是{:C('WEBSITE_NAME')}？</a><var>|</var>
+            <a href="{$down}" target="_blank" style="color:#0079fe" class="footer_dl">下载APP</a>
+        </p>
+        <p class="m-copyright">{$wap_config_info.record_num|default=''} <span>{$wap_config_info.copy_right|default=''}</span></p>
+    </div>
+</div>
+
+<!--===========回到顶部===========-->
+<div class="fhdb" ></div>
+
+<!--===========购物车=============-->
+<a href="{:U('Cart/cart_list')}"><div class="indw end"><span id="count" style="position:absolute;width:20px;height:20px;margin-left:19px;top:5px;font-size:13px;background-color:#000;border-radius:12px;color:#fff;line-height:20px;text-align:center;top: -6px;left: 7px;">{$cart_num}</span></div></a>
+
+<input type="hidden" id="cate-type" value="{$cate}-{$type}"/>
+
+
+<script type="text/javascript" src="__MOBILE_JS__/requestAnimationFrame.js"></script>
+<script type="text/javascript" src="__MOBILE_JS__/fly.js"></script>
+
+
+<script type="text/javascript">
+    window.LIST = {
+        typeId : 0,
+        sortId : 1
+    };
+</script>
+
+{/block}

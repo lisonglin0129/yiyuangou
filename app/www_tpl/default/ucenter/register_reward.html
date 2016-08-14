@@ -1,0 +1,47 @@
+{extend name="base/base"/}
+{block name="title"}注册奖励{/block}
+{block name="user_css"}
+{css href="__static__/css/usercenter.css" /}
+{css href="__static__/css/promote.css" /}
+{/block}
+{block name='content'}
+<div class="g-body">
+    <div class="m-user">
+        <div class="g-wrap">
+            <div class="m-user-frame-wraper">
+                <!--用户中心  菜单-->
+                {include file="ucenter/_nav" /}
+                <!--用户中心 main-->
+                <div class="m-user-frame-colMain ">
+                    <div class="m-user-frame-content" >
+                        <ul class="w-crumbs f-clear">
+                            <li class="w-crumbs-item">当前位置：</li>
+                            <li class="w-crumbs-item"><a href="promote.html">我的推广</a><span class="w-crumbs-split">&gt;</span></li>
+                            <li class="w-crumbs-item w-crumbs-active">注册奖励</li>
+                        </ul>
+                        <div class="m-user-comm-wraper">
+                            <div class=" pro-title">
+                                <h2>注册奖励</h2>
+                            </div>
+                            <div>
+                            {$register.content??'<h1>文章丢失,请联系管理员后台添加文章,并设置识别码为:REGISTER(区分大小写)</h1>'}
+                            </div>
+                          <!--  <div class=" pro-detail pro-rew">
+                                <span class="pro-rw"></span>
+                                <h2>“{:C('WEBSITE_NAME')}”推行“推广好友注册送现金”的奖励模式</h2>
+                                <div>
+                                     <p><span>1</span>每个用户在注册时生成一个唯一独立的推广ID</p>
+                                     <p><span>2</span>推广链接发送给您的好友注册，立即送{:C('REGISTER_MONEY_REWARD')}元现金到您的账户，现金不可以提现，可以转换成本站货币在本商城购买任意商品。</p>
+                                </div>
+                            </div>-->
+                        </div>
+                    </div>
+                </div>
+                <div class="m-user-frame-clear"></div>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}
+{block name="user_js"}
+{/block}

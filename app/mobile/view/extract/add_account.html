@@ -1,0 +1,190 @@
+{extend name="base/base"}
+{block name="head"}
+    <link rel="stylesheet" href="__MOBILE_FONTS__/iconfont.css">
+    <link href="__MOBILE_CSS__/common1.css" rel="stylesheet">
+    <link href="__MOBILE_CSS__/adds.css" rel="stylesheet">
+    <script type="text/javascript"  src="__MOBILE_JS__/jquery.min.js"></script>
+    <script type="text/javascript"  src="__MOBILE_JS__/records.js"></script>
+<script>
+    $(function(){
+        $('#account_type').change(function () {
+            var obj=$(this);
+            if(obj.val()==1){
+                $('.vv').show();
+                $('#banks').show();
+            }else{
+                $('.vv input').attr('checked',null);
+                $('#type option').attr('selected',null);
+                $('.vv').hide();
+                $('#banks').hide();
+                $('#zhifu').show();
+            }
+        })
+        $('.with-su').click(function () {
+            var name=$('#name').val();
+            if(!name){
+                layer.msg('请输入姓名');return false;
+            }else{
+                if(!/^[\u4e00-\u9fa5]+$/.test(name)){
+                    layer.msg('请填写中文姓名');return false;
+                }
+            }
+            var iden=$('#identify').val();
+            if(!iden){
+                layer.msg('请输入证件号码');return false;
+            }else{
+                if(!isCardNo(iden)){
+                    layer.msg('身份证号码各式不对');return false;
+                }
+            }
+            var account_type=$('#account_type').val();
+            var bank_name;
+            if(account_type==1){
+              bank_name=$('#type option:selected').html();
+            }
+            if(!$('#bank_no').val()){
+                layer.msg('请输入账号');return false;
+            }else{
+                    if(!/^\d+$/.test($('#bank_no').val())&&account_type==1){
+                        layer.msg('账号含有非法字符');return false;
+                    }
+                }
+            var sub_url=$('#sub_url').val();
+            var root_url=$('#root_url').val();
+            var param=$('form').serialize()+'&bank_name='+bank_name;
+            $.post(sub_url,param,function(data){
+                if(data.code==1){
+                    layer.msg('添加成功');
+                    setTimeout(function () {
+                        location.href=root_url;
+                    },2000);
+                }else{
+                    layer.msg('添加失败');return false;
+                }
+            },'json')
+        })
+    })
+    var isCardNo=function(card)
+    {
+        // 身份证号码为15位或者18位，15位时全为数字，18位前17位为数字，最后一位是校验位，可能为数字或字符X
+        var reg = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
+        if(reg.test(card) === false)
+        {
+            return  false;
+        }else{
+            return true;
+        }
+    }
+</script>
+    <style type="text/css">
+        body{background-color:#fff;}
+    </style>
+{/block}
+{block name="main"}
+<div class="home">
+    <!-- 头部 -->
+    <header>
+        <a href="javascript:history.back(-1)" class="heads"><i class="icon iconfont cio1">&#xe600;</i></a>
+        <span class="heads-p">添加账户</span>
+    </header>
+
+    <section class="adds-main">
+        <form action="" method="">
+            <div class="adds-top1">
+                <span>真实姓名</span>
+                <section class="adds-inp">
+                    <input type="text" name="name"  class="inps" id="name"/>
+                    <section class="adds-ser">*请输入正确的真实姓名，不可输入数字或者其他非法字符</section>
+                </section>
+            </div>
+
+            <div class="adds-top1">
+                <span>证件号码</span>
+                <section class="adds-inp">
+                    <input type="text" name="identify"  class="inps" id="identify"/>
+                    <section class="adds-ser">*请输入正确的身份证信息</section>
+                </section>
+            </div>
+
+            <div class="adds-top1 adds-top2">
+                <span>账户类型</span>
+                <section class="adds-inp adds-inp1">
+                    <select class="inps inps1" id="account_type" name="account_type">
+                        <option value ="1" class="inps-1">银行卡</option>
+                        <option value ="2"  class="inps-1">支付宝</option>
+                    </select>
+                </section>
+            </div>
+            <div class="adds-top1 adds-top2" id="banks">
+                <span>所属银行</span>
+                <section class="adds-inp adds-inp1">
+                    <select class="inps inps1" id="type" name="type">
+                        <option value="3">中国银行</option>
+                        <option value="4">农业银行</option>
+                        <option value="5">工商银行</option>
+                        <option value="6">建设银行</option>
+                        <option value="7">民生银行</option>
+                        <option value="8">交通银行</option>
+                        <option value="9">广发银行</option>
+                        <option value="10">兴业银行</option>
+                        <option value="11">招商银行</option>
+                        <option value="12">光大银行</option>
+                        <option value="13">邮政储蓄</option>
+                        <option value="14">中信银行</option>
+                        <option value="15">浦发银行</option>
+                    </select>
+                </section>
+            </div>
+            <div class="clr"></div>
+            <div class="adds-top1 adds-top2" id="bank">
+                <span>提现账号</span>
+                <section class="adds-inp adds-inp2s">
+                    <input type="text" name="bank_no"  class="inps" id="bank_no"/>
+                </section>
+            </div>
+            <div class="vv">
+                <input type="checkbox" name="is_default" id="males"  class="ras"/>
+                <label for="males" class="ras1"></label>
+                将此卡设置为默认提现卡
+            </div>
+            <!--<div class="clr"></div>-->
+            <!--<div class="adds-top1 adds-top2" style="display: none">-->
+                <!--<span>支付宝号</span>-->
+                <!--<section class="adds-inp adds-inp2s">-->
+                    <!--<input type="text" name="bank_no"  class="inps" id="ali_no"/>-->
+                <!--</section>-->
+            <!--</div>-->
+
+            <input type="button" value="立即添加"  class="with-su"/>
+            <section class="with-zhuyi">
+                <section class="with-zhuyi1">
+                    <i class="icon iconfont ico18">&#xe605;</i>
+                    <span class="with-zhuyi2">注意事项</span>
+                </section>
+                <section class="with-zhuyi3">
+                    1、添加账户必须为本人银行借记卡，支付宝账户，不支持存折、信用卡提现
+                </section>
+                <section class="with-zhuyi3">
+                    2、银行账号最多可以添加8个，请仔细填写，填写完后无法修改；
+                </section>
+                <section class="with-zhuyi3">
+                    3、您填写的银行账号户名，支付宝账户必须与你实名认证的身份证姓名一致，否则无法到账，后果自负；
+                </section>
+
+            </section>
+        </form>
+    </section>
+    <input type="hidden" id="sub_url" value="{:U('account_sub')}">
+    <input type="hidden" id="root_url" value="{:U('index')}">
+    <!-- 底部 -->
+    <div class="foots"></div>
+    <footer>
+        <a href="{:U('Index/index')}" class="foots1">夺宝</a>
+        <a href="{:U('Index/all_goods', array('cate'=> '0-1'))}" class="foots2">全部商品</a>
+        <a href="{:U('Index/all_share_order')}" class="foots3">晒单</a>
+        <a href="{:U('Cart/cart_list')}" class="foots4">购物车</a>
+        <a href="{:U('Users/personal_center')}" class="foots5 act">我的</a>
+    </footer>
+
+</div>
+{/block}

@@ -1,0 +1,178 @@
+{extend name="base/base"/}
+{block name="title"}我的推广{/block}
+{block name="user_css"}
+{css href="__static__/css/usercenter.css" /}
+{css href="__static__/css/promote.css" /}
+{/block}
+{block name='content'}
+<div class="g-body">
+    <div class="m-user">
+        <div class="g-wrap">
+            <div class="m-user-frame-wraper">
+                <!--用户中心  菜单-->
+                {include file="ucenter/_nav" /}
+                <!--用户中心 main-->
+                <div class="m-user-frame-colMain ">
+                    <div class="m-user-frame-content">
+                        <ul class="w-crumbs f-clear">
+                            <li class="w-crumbs-item">当前位置：</li>
+                            <li class="w-crumbs-item"><a href="{:U('promote')}">我的推广</a><span class="w-crumbs-split">&gt;</span>
+                            </li>
+                            <li class="w-crumbs-item w-crumbs-active">推广中心</li>
+                        </ul>
+                        <div class="m-user-comm-wraper">
+                            <div class="pro_info">
+                                <div class="pi-l">
+                                    <div class="pi-ava">
+                                        <img src="{$info.img_path}">
+                                    </div>
+                                    <div class="pi-text">
+                                        <h4>
+                                            {$hello|default=''}，<span class="pi-username">{$info.nick_name}</span>
+                                        </h4>
+                                        <h6 class="pi-cash">
+                                            <label>当前账户：</label>
+                                            <span class="pic-num">{$info.money|default='0.00'}</span><span
+                                                class="pic-s">{:C('MONEY_UNIT')}{:C('MONEY_NAME')}</span>
+                                            <a href="{:U('pay/recharge')}" class="pi-chargecash"><span>充值</span><i
+                                                    class="iconfont">&#xe66c;</i></a>
+                                        </h6>
+                                        <h6 class="pi-cash">
+                                            <label>账户金额：</label>
+                                            <span class="pic-num-s">{$info.cash|default=0.00} </span><span
+                                                class="pic-s">元</span>
+                                            <a href="{:U('extract')}" class="pi-sovcash"><span>提  现</span><i
+                                                    class="iconfont">&#xe644;</i></a>
+                                            <a href="" class="pi-transcash"><span>转为{:C('MONEY_NAME')}</span><i class="iconfont">
+                                                &#xe66b;</i></a>
+                                        </h6>
+                                        <h6 class="pi-cash">
+                                            <label>冻结金额：</label>
+                                            <span class="pic-num-s">{$v_money|default='0.00'}</span><span class="pic-s">元</span>
+                                        </h6>
+
+                                        <p class="pic-fir-tip">(友情提示：账户余额可提现，也可以转为{:C('MONEY_NAME')}参与夺宝。冻结金额为正在审核提现的金额)</p>
+                                    </div>
+                                    <div class="pi-prolink">
+                                        <label>您的推广链接</label>
+                                        <input id="link" readonly="readonly"
+                                               value="http://{$Think.server.http_host}/s/{$info.id}.html">
+                                        <a href="javascript:;" id="link_copy">复制给好友</a>
+                                    </div>
+                                </div>
+                                <div class="pi-r">
+                                    <!--二维码下载链接-->
+                                    <a href="javascript:;" id="down_qr"
+                                       url="http://{$Think.server.http_host}{:U('core/api/qr_code')}?text=http://{$Think.server.http_host}{:U('mobile/index/index',array('spread_userid'=>$info['id']))}">
+                                        <span>您的推广二维码</span>
+                                        <i class="iconfont">&#xe643;</i>
+                                    </a>
+                                    <img src="{:U('core/api/qr_code')}?text=http://{$Think.server.http_host}{:U('mobile/other_users/register',array('spread_userid'=>$info['id']))}">
+                                </div>
+                            </div>
+                            <div class="pro-links">
+                                <div class="pd-qlink">
+                                    {if condition="empty($promote_spread) eq false AND $promote_spread['status'] eq 1"}
+                                    <a href="{:U('promote_detail')}" class="pdq-1">
+                                        <i class="iconfont">&#xe640;</i>
+                                        <span>推广明细</span>
+                                    </a>
+                                    <a href="{:U('distribution')}" class="pdq-2">
+                                        <i class="iconfont">&#xe63f;</i>
+                                        <span>分销奖励</span>
+                                    </a>
+                                    {/if}
+                                    {if condition="empty($reg_spread) eq false AND $reg_spread['status'] eq 1"}
+                                    <a href="{:U('register_detail')}" class="pdq-3">
+                                        <i class="iconfont">&#xe641;</i>
+                                        <span>注册明细</span>
+                                    </a>
+                                    <a href="{:U('register_reward')}" class="pdq-4">
+                                        <i class="iconfont">&#xe642;</i>
+                                        <span>注册奖励</span>
+                                    </a>
+                                    {/if}
+                                </div>
+                                {if condition="empty($promote_spread) eq false AND $promote_spread['status'] eq 1"}
+                                <div class="pro-t-con">
+                                    <h2 class="pro-t-title">最新收益 <a href="{:U('promote_detail')}">全部记录</a></h2>
+
+                                    <table width="100%" border="0" class="pro-table" align="center" cellpadding="0"
+                                           cellspacing="0">
+                                        <tr align="center">
+                                            <th>收益时间</th>
+                                            <th>用户等级</th>
+                                            <th>用户名</th>
+                                            <th>推广消费金额</th>
+                                            <th>推广收益</th>
+                                        </tr>
+                                        {notempty name="rewards"}
+                                        {volist name="rewards" id="vo"}
+                                        <tr align="center" class="even">
+                                            <td>{:date('Y-m-d H:i:s',$vo['create_time'])}</td>
+                                            <td>{$vo.level}级用户</td>
+                                            <td> {$vo.username}</td>
+                                            <td>￥{$vo.total}</td>
+                                            <td class="pro-t-income">￥<span>{$vo.reward}</span></td>
+                                        </tr>
+                                        {/volist}
+                                        {else /}
+                                        <tr align="center">
+                                            <td colspan="5">暂无数据</td>
+                                        </tr>
+                                        {/notempty}
+                                    </table>
+                                </div>
+                                {/if}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <input type="hidden" id="down_url" value="{:U('down_pic')}">
+
+                <div class="m-user-frame-clear"></div>
+                <div class="m-trans-hd">
+                    <div class="m-user-comm-alert_z1">
+                        <h6>转为{:C('MONEY_NAME')}</h6>
+
+                        <div class="alert_z1_content">
+                            <div>
+                                <span>账户余额</span>
+                                <p><span id="leave_money">{$info.cash|default=0.00}</span> 元</p>
+                                <a href="javascript:;" class="all_buy" onclick="buy_all()">全部转出</a>
+                            </div>
+                            <div>
+                                <span>转出金额</span>
+                                <input type="text" class="money" value=""/>
+                            </div>
+                            <div>
+                                <span>账户密码</span>
+                                <input type="password" class="password" value=""/>
+                            </div>
+                        </div>
+                        <div class="alert_z1_buttons">
+                            <a href="javascript:;" class="alert_z1_buttons_n1 layui-layer-close1">取 消</a>
+                            <a href="javascript:;" class="alert_z1_buttons_n2 transensure" onclick="sub_buy(this)">确认转出</a>
+                        </div>
+                        <!--<a href="javascript:;" class="alert_z1_buttons_cancle">×</a>-->
+                    </div>
+                </div>
+                <div class="m-trans-hd">
+                    <div class="m-user-comm-alert_z1 m-user-comm-alert_z2">
+                        <div class="comm-alert_qb"></div>
+                        <p>您的余额已成功转为{:C('MONEY_NAME')}!</p>
+                        <a href="{:U('promote')}" class="alert_z1_buttons_n3">查看{:C('MONEY_NAME')}余额</a>
+                        <!--<a href="javascript:;" class="alert_z1_buttons_cancle">×</a>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <input type="hidden" id="check_url" value="{:U('extract_check')}">
+    <input type="hidden" id="apply_url" value="{:U('get_money_by_cash')}">
+</div>
+{/block}
+{block name="user_js"}
+{js href='__common__/plugin/copy/jquery.zclip.min.js' /}
+{js href="__static__/js/ucenter/promote.js" /}
+{/block}

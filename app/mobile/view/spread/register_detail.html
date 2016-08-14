@@ -1,0 +1,189 @@
+{extend name="base/base"}
+{block name="head"}
+<link rel="stylesheet" href="__MOBILE_FONTS__/iconfont.css">
+<link href="__MOBILE_CSS__/common1.css" rel="stylesheet">
+<link href="__MOBILE_CSS__/indexho.css" rel="stylesheet">
+<link href="__MOBILE_CSS__/promote.css" rel="stylesheet">
+<script type="text/javascript"  src="__MOBILE_JS__/jquery.min.js"></script>
+<script src="__MOBILE_JS__/js.js"></script>
+<script src="__MOBILE_JS__/jquery.event.drag-1.5.min.js"></script>
+<script src="__MOBILE_JS__/jquery.touchSlider.js"></script>
+<script>
+    $(function(){
+       //总页码
+        window.count='{$pages}';
+        //滚动条拖动
+        window.scrollFlag = true;
+        window.first = 10;
+        window.page = 1;
+        $(window).scroll(function () {
+            var year=$('#year').val();
+            var month=$('#month').val();
+            if (window.page < window.count) {
+                if (window.scrollFlag) {
+                    if ($(document).scrollTop() >= ($('#load-more').offset().top + $('#load-more').outerHeight() - $(window).height() - 20)) {
+                        setTimeout(function(){
+                            $.ajax({
+                                url: "{:U('spread/ajax_register_detail')}",
+                                type: 'POST',
+                                data: {
+                                    offset:window.first,
+                                    year:year,
+                                    month:month
+                                },
+                                success: function(data, response, status){
+                                    $('#load-more').before(data);
+                                }
+                            });
+                            window.scrollFlag = true;
+                            window.first += 10;
+                            window.page += 1;
+                        }, 500);
+                        window.scrollFlag = false;
+                    }
+                }
+            } else {
+                $('#load-more').html('没有更多数据');
+            }
+        });
+        $('.det-time button').click(function () {
+            $('.det-dates').show();
+        })
+        $('.li1').click(function(){
+            var obj=$(this);
+            var year=obj.html();
+            if(year=='全部'){
+                $('#time').html('全部');
+                $('#year').val(null);$('#month').val(null);
+                $('.det-dates').hide();
+                search();
+                return false;
+            }
+            $('#time').html(year);
+            $('#year').val(obj.data('val'));
+            $('.det-dates').hide();
+            $('.det-das').show();
+        })
+        $('.det-das li').click(function () {
+            var obj=$(this);
+            var month=obj.html();
+            if(month=='全部'){
+                $('.det-das').hide();$('#month').val(null);search();
+                return false;
+            }
+            $('#time').append(month);
+            $('#month').val(obj.data('val'));
+            $('.det-das').hide();
+            //搜索
+          search();
+        })
+    })
+    function search(){
+        var year_filter=$('#year').val();
+        var mon_filter=$('#month').val();
+        setTimeout(function(){
+            $.ajax({
+                url: "{:U('spread/ajax_register_detail')}",
+                type: 'POST',
+                data: {
+                    year:year_filter,
+                    month:mon_filter
+                },
+                success: function(data, response, status){
+                    $('.prom-top1').remove();
+                    $('#load-more').before(data);
+                }
+            });
+        }, 500);
+    }
+</script>
+{/block}
+{block name="main"}
+<div class="home">
+    <!-- 头部 -->
+    <!-- <iframe src="header.html" width="750" height="80" scrolling="no" frameborder="0"></iframe> -->
+    <header>
+        <a href="javascript:history.back(-1)" class="heads"><i class="icon iconfont cio1">&#xe600;</i></a>
+        <span class="heads-p">注册推广</span>
+    </header>
+
+
+    <section style="background-color:#f7f7f7">
+        <div class="det-time">
+            <button type="button"><span id="time">全部</span><i class="icon iconfont ico11">&#xe60c;</i></button>
+            <input type="hidden" id="year" value=""><input type="hidden" id="month" value="">
+            <div class="det-dates">
+                <div class="arrow-up"></div>
+                <div class="arrow-up arrow-ups"></div>
+                <div class="det-dates1">
+                    <ul>
+                        <li class="li1" data-val="">全部</li>
+                        <li class="li1" data-val="2016">2016年</li>
+                        <li class="li1" data-val="2015">2015年</li>
+                        <li class="li1" data-val="2014">2014年</li>
+                        <li class="li1" data-val="2013">2013年</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="det-das det-das1">
+                <ul>
+                    <li data-val="">全部</li>
+                    <li data-val="1">1月</li>
+                    <li data-val="2">2月</li>
+                    <li data-val="3">3月</li>
+                    <li data-val="4">4月</li>
+                    <li data-val="5">5月</li>
+                    <li data-val="6">6月</li>
+                    <li data-val="7">7月</li>
+                    <li data-val="8">8月</li>
+                    <li data-val="9">9月</li>
+                    <li data-val="10">10月</li>
+                    <li data-val="11">11月</li>
+                    <li data-val="12">12月</li>
+                </ul>
+            </div>
+
+
+        </div>
+        <section class="t-detail">推广▪好友</section>
+
+        <div class="clr"></div>
+        {notempty name="list"}
+        {volist name="list" id="vo"}
+        <section class="prom-top1">
+            <section class="prom-left1">
+                <section class="prom-left1-1">
+                    <section>{$vo.reward}元</section>
+                    <section>奖励现金</section>
+                </section>
+
+                <section class="prom-left1-2">
+                    <section>用户名　{$vo.username|default='--'}</section>
+                    <section>注册时间　{:date('Y-m-d H:i',$vo['create_time'])}</section>
+                </section>
+            </section>
+        </section>
+        {/volist}
+        <p id="load-more" style="color: #808080;text-align: center"></p>
+        {else /}
+        <p  style="color: #808080;text-align: center">暂无数据</p>
+        {/notempty}
+
+
+
+    </section>
+
+    <!-- 底部 -->
+    <div class="foots"></div>
+
+        <footer>
+            <a href="{:U('Index/index')}" class="foots1">夺宝</a>
+            <a href="{:U('Index/all_goods', array('cate'=> '0-1'))}" class="foots2">全部商品</a>
+            <a href="{:U('Index/all_share_order')}" class="foots3">晒单</a>
+            <a href="{:U('Cart/cart_list')}" class="foots4">购物车</a>
+            <a href="{:U('Users/personal_center')}" class="foots5 act">我的</a>
+        </footer>
+    <!-- <iframe src="footer.html" class="footer" width="750" height="115" scrolling="no" frameborder="0"></iframe> -->
+</div>
+{/block}
+

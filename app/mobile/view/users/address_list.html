@@ -1,0 +1,87 @@
+{extend name="base/common"}
+
+{block name="title"}
+个人中心 - 管理收货地址
+{/block}
+
+{block name="head"}
+<link href="__MOBILE_CSS__/user.css" rel="stylesheet"/>
+<script src="__MOBILE_JS__/jquery.min.js"></script>
+{/block}
+
+{block name="main"}
+<div class="ds">
+<div class="m-user mm czz" id="dvWrapper">
+        <div class="m-simpleHeader" id="dvHeader">
+             <a href="javascript:history.go(-1);" data-pro="back" data-back="true" class="m-simpleHeader-back"><i class="ico ico-back"></i></a>
+             <a href="{:U('Users/add_address')}" data-pro="ok" class="m-simpleHeader-ok" id="aHome" style="color:blue">新增</a>
+            <h1>管理收货地址</h1>
+        </div>
+    <div class="clear"></div>
+</div>
+{empty name="address_list"}
+    <p style="margin:0 auto;width: 100px;margin-top: 10px;">请新增收货地址</p>
+{else /}
+    {volist name="address_list" id="vo"}
+
+    <div class="gldz-1">
+        <a href="{:U('Users/address_details',array('address_id'=>$vo.address_id))}">
+        <div class="gldz-left">
+            <section style="margin-bottom:10px">{$vo.name}</section>
+            <span>{$vo.provice}{$vo.city}{$vo.area}{$vo.address}</span>
+        </div>
+        <div class="gldz-right">
+            <span>{$vo.phone}</span>
+        </div>
+        </a>
+    </div>
+
+    {/volist}
+{/empty}
+
+
+
+
+
+{/block}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

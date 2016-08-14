@@ -1,0 +1,25 @@
+{notempty name="list['data']"}
+{volist name="list['data']" id="vo"}
+<div {if condition="$vo['status'] eq 1"}class="pro-ex-l pro-el-3"{elseif condition="$vo['status'] eq 2" /}class="pro-ex-l pro-el-1"{elseif condition="$vo['status'] eq '-2'" /}class="pro-ex-l pro-el-2"{/if} >
+                                   {if condition="$vo['status'] eq 1"} <span class="pec-b-del" data-id="{$vo.id}">
+                                            <i class="iconfont">&#xe65b;</i>
+                                        </span>{/if}
+    <div class="prel-title">
+        <h4>
+            <span class="prel-fee">{$vo.money}元</span>
+            <span class="prel-ft">提现金额</span> <span class="prel-ft">(手续费:{$vo.need}元)</span>
+            <span class="prel-st">{if condition="$vo['status'] eq 1"}审核中{elseif condition="$vo['status'] eq 2" /}已审核{elseif condition="$vo['status'] eq '-2'" /}未通过{/if}</span>
+        </h4>
+        <div>
+            <p class="prel-info-bank">{if condition="$vo['account_type'] eq 1"}{$vo.bank_name}{else /}支付宝{/if}: <span>{$vo.bank_no}</span></p>
+            <p class="prel-info-time">提现时间: <span >{:date('Y-m-d H:i:s',$vo['create_time'])}</span></p>
+        </div>
+    </div>
+</div>
+{/volist}
+<div class="xc_pages" data-flag="deposer">
+    {$pages}
+</div>
+{else /}
+<div align="center"><p>暂无数据</p></div>
+{/notempty}

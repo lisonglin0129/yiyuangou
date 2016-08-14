@@ -1,0 +1,107 @@
+{extend name="base/base"}
+{block name="head"}
+<link rel="stylesheet" href="__MOBILE_FONTS__/iconfont.css">
+<link href="__MOBILE_CSS__/common1.css" rel="stylesheet">
+<link href="__MOBILE_CSS__/promote.css" rel="stylesheet">
+<link href="__MOBILE_CSS__/patt.css" rel="stylesheet">
+<script type="text/javascript"  src="__MOBILE_JS__/jquery.min.js"></script>
+<script src="__MOBILE_JS__/records.js"></script>
+<style>
+
+</style>
+{/block}
+{block name="main"}
+<div class="home home_ht">
+
+    <header>
+        <a href="javascript:history.back(-1)" class="heads headss"><i class="icon iconfont cio1">&#xe600;</i></a>
+        <span class="heads-p">兑换话费</span>
+    </header>
+
+
+    <section class="patt pattss">
+        <section class="tele_1">您获得了3张100元的话费充值卡</section>
+        <section class="tele_2">
+             <section class="tele_2_left">
+                  <span class="tele_left1">￥</span>
+                  <span class="tele_left2">100</span>
+                  <section class="tele_right">
+                    <p class="tele_right1">话费充值卡</p>
+                    <p class="tele_right2">适用条件：可充值话费或支付宝提现</p>
+                  </section>
+             </section>
+
+             <section class="tele_3_left">
+                <p class="card_number">卡号：123456789001222</p>
+                <p class="password">密码：123456789001222</p>
+             </section>
+        </section>
+
+        <section class="tele_2">
+             <section class="tele_2_left">
+                  <span class="tele_left1">￥</span>
+                  <span class="tele_left2">100</span>
+                  <section class="tele_right">
+                    <p class="tele_right1">话费充值卡</p>
+                    <p class="tele_right2">适用条件：可充值话费或支付宝提现</p>
+                  </section>
+             </section>
+
+             <section class="tele_3_left">
+                <p class="card_number">卡号：123456789001222</p>
+                <p class="password">密码：123456789001222</p>
+             </section>
+        </section>
+
+        <div class="how_phone">如何充话费 ?<i class="icon iconfont ph_ico">&#xe618;</i></div>
+
+        <div class="how_phone">如何充值支付宝余额 ?<i class="icon iconfont ph_ico">&#xe618;</i></div>
+
+
+        <!-- 弹出层 -->
+
+        <div class="layer">
+            <div class="layer_thickness"></div>
+            <div class="layer_fic">
+                <h1 class="layer_h1">充值话费</h1>
+                <li>1.移动充值卡   </li>
+                <li>拨打10086或者13800138000根据语音提示选择充值卡充值。</li>
+                <li>2.联通充值卡</li>
+                <li>拨打10011根据语音提示选择充值卡充值</li>
+                <li>3.电信充值卡</li>
+                <li>拨打11888输入18位密码充值。卡号做被查使用，充值不需要输入卡号。</li>
+                <li class="cli_dis">我知道了</li>
+            </div>  
+        </div> 
+
+        <div class="layer">
+            <div class="layer_thickness"></div>
+            <div class="layer_fic layer_fics">
+                <h1 class="layer_h1">支付宝余额充值</h1>
+                <li>1.打开支付宝“我的”--“余额”页面</li>
+                <li>2.点击“充值”并选择“使用话费卡充值”</li>
+                <li>3.输入卡号/卡密确认充值即可</li>
+                <a  href="" class="tel_see">查看官方图文教程</a>
+                <li class="cli_dis cli_diss">我知道了</li>
+            </div>  
+        </div> 
+
+
+
+
+
+    </section>
+
+    <!-- 底部 -->
+    <div class="foots"></div>
+    <footer>
+        <a href="{:U('Index/index')}" class="foots1">夺宝</a>
+        <a href="{:U('Index/all_goods', array('cate'=> '0-1'))}" class="foots2">全部商品</a>
+        <a href="{:U('Index/all_share_order')}" class="foots3">晒单</a>
+        <a href="{:U('Cart/cart_list')}" class="foots4">购物车</a>
+        <a href="{:U('Users/personal_center')}" class="foots5 act">我的</a>
+    </footer>
+
+</div>
+{/block}
+

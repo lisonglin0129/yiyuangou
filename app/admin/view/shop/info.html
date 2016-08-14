@@ -1,0 +1,42 @@
+{extend name="base/base" /}
+{block name="content"}
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('breadcrumbs', 'fixed')
+        } catch (e) {
+        }
+    </script>
+
+    <ul class="breadcrumb">
+        <li>
+            <i class="icon-home home-icon"></i>
+            <a href="javascript:">菜单</a>
+        </li>
+        <li>
+            <a href="javascript:">商家信息</a>
+        </li>
+    </ul><!-- .breadcrumb -->
+</div>
+<div class="page-content">
+    <div class="row">
+        <div class="col-xs-12">
+            <!-- PAGE CONTENT BEGINS -->
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="table-responsive">
+                            <div id="form_content" data-url="{:U('shop_info',array('id'=>$id))}"></div>
+                    </div><!-- /.table-responsive -->
+                </div><!-- /span -->
+            </div><!-- /row -->
+        </div><!-- /.col -->
+    </div><!-- /.row -->
+</div><!-- /.page-content -->
+
+<input type="hidden" id="submit_url" value="{:U('update')}">
+<input type="hidden" id="upload_url" value='{:U("core/api/up_img")}'/>
+{/block}
+{block name="js"}
+{js href='__common__/admin/js/menu/index.js' /}
+{js href='__common__/admin/js/shop/info.js' /}
+{/block}

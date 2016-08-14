@@ -1,0 +1,307 @@
+{extend name="base/base"/}
+{block name="title"}我的奖品{/block}
+{block name="user_css"}
+{css href="__static__/css/usercenter.css"
+{css href="__static__/css/uc_win.css" /}
+{/block}
+{block name='content'}
+<div class="g-body">
+    <div class="m-user" >
+        <div class="g-wrap">
+            <div class="m-user-frame-wraper">
+                <div class="m-user-frame-colMain m-user-frame-colMain-noLeft">
+                    <div class="m-user-frame-content">
+                        <ul class="w-crumbs f-clear">
+                            <li class="w-crumbs-item">当前位置：</li>
+                            <li class="w-crumbs-item"><a href="{:dwz_filter('ucenter/index')}">我的夺宝</a>
+                                <span class="w-crumbs-split">&gt;</span></li>
+                            <li class="w-crumbs-item">
+                                <a href="{:dwz_filter('ucenter/luck')}">幸运记录</a>
+                                <span class="w-crumbs-split">&gt;</span>
+                            </li>
+                            <li class="w-crumbs-item w-crumbs-active">记录详情</li>
+                        </ul>
+                        <div class="m-winDetail">
+                            <div class="m-win-v m-win-myself">
+                                <div class="m-win-v-g">
+                                    <i class="iconfont">&#xe670;</i>
+                                    商品跟踪
+                                </div>
+                                <div class="m-win-vg-line ">
+                                    <div class="mw-li-p {$luck_info.logistics_status>=1?'active ':' '}">
+                                        <h6>请选择兑换方式</h6>
+                                    </div>
+                                    <span></span>
+                                    <div class="mw-li-p {$luck_info.logistics_status>=3?'active ':' '}">
+                                        <h6>等待商品派发</h6>
+                                    </div>
+                                    <span></span>
+                                    <div class="mw-li-p {$luck_info.logistics_status>=5?'active ':' '}">
+                                        <h6>奖品派发结果</h6>
+                                    </div>
+                                </div>
+                                {switch name="luck_info.logistics_status"}
+                                {case value="1"}
+                                <form target="_self" id="choose_reward_form" method="post" action="{:U('ucenter/luck_detail',['id'=>$luck_info['id']])}">
+                                    <div class="m-win-vg-form">
+                                        <h4>选择兑换方式</h4>
+                                        <div class="m-win-sel">
+                                            <div class="mw-s-charge">
+                                                <input id="charge-sel-1" type="radio" name="reward_type" value="recharge">
+                                                <label for="charge-sel-1" class="mw-s-btn"></label>
+                                                <label for="charge-sel-1" class="mw-s-text">我要兑换<b>{$card_info.money}</b>{:C('MONEY_UNIT')}{:C('MONEY_NAME')}</label>
+                                            </div>
+                                            <div class="mw-s-zfb">
+                                                <input id="charge-sel-2" type="radio" name="reward_type" value="card">
+                                                <label for="charge-sel-2" class="mw-s-btn"></label>
+                                                <label for="charge-sel-2" class="mw-s-text">获取卡密</label>
+                                            </div>
+                                        </div>
+                                            <input name="action" value="choose_reward" type="hidden">
+                                            <a href="javascript:;" class="min-vf-sure">确定</a>
+                                    </div>
+                                </form>
+                                {/case}
+                                {case value="5"}
+                                    {eq name="luck_info.reward_type" value="1"}
+                                    <div class="m-win-vg-info">
+                                        <div class="mw-vgi-block">
+                                            <span>卡密信息</span>
+                                            {eq name="multi_card" value="true"}
+                                            {volist name="card" id="each_card"}
+                                                <div class="mw-vg-pa">
+                                                    <div class="mw-vp-l">
+                                                        <h4>
+                                                            <label>卡号:</label>
+                                                            <span>{$each_card.num|default='------'}</span>
+                                                        </h4>
+                                                        <h4>
+                                                            <label>密码:</label>
+                                                            <span>{$each_card.sec|default='------'}</span>
+                                                        </h4>
+                                                    </div>
+                                                    <div class="mw-vp-r">
+                                                        <span class="mw-vpr-suc">
+                                                            {$card_value}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            <br/>
+                                            {/volist}
+                                            {else/}
+                                            <div class="mw-vg-pa">
+                                                <div class="mw-vp-l">
+                                                    <h4>
+                                                        <label>卡号:</label>
+                                                        <span>{$card.num|default='------'}</span>
+                                                    </h4>
+                                                    <h4>
+                                                        <label>密码:</label>
+                                                        <span>{$card.sec|default='------'}</span>
+                                                    </h4>
+                                                </div>
+                                                <div class="mw-vp-r">
+                                                    <span class="mw-vpr-suc">
+                                                        {$card_value}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            {/eq}
+                                        </div>
+                                        <h4>充值到</h4>
+                                        <div class="mw-vg-btns">
+                                            <a id="chrage_z" class="mw-vg-btn mvb-z" >
+                                                <i class="iconfont">&#xe652;</i>支付宝</a>
+                                            <a id="charge_c" class="mw-vg-btn mvb-c" >
+                                                <i class="iconfont">&#xe671;</i>话费</a>
+                                        </div>
+                                        <br/>
+                                        <br/>
+                                        <br/>
+                                    </div>
+                                    {else/}
+                                <div class="m-win-vg-info">
+                                    <div class="mw-vgi-block">
+                                        <span>兑换信息</span>
+                                        <div class="mw-vg-pa">
+                                            <div class="mw-vp-l">
+                                                <label>已经存入到您的余额</label>
+                                                <label>{$reward.time|date='Y-m-d H:i:s',###}</label>
+                                            </div>
+                                            <div class="mw-vp-r" style="height: 96px;">
+                                                <span class="mw-vpr-suc">
+                                                    {$reward.money}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--<h4>充值到</h4>-->
+                                    <!--<div class="mw-vg-btns">-->
+                                    <!--<a id="chrage_z" class="mw-vg-btn mvb-z" >-->
+                                    <!--<i class="iconfont">&#xe652;</i>支付宝</a>-->
+                                    <!--<a id="charge_c" class="mw-vg-btn mvb-c" >-->
+                                    <!--<i class="iconfont">&#xe671;</i>话费</a>-->
+                                    <!--</div>-->
+                                    <br/>
+                                    <br/>
+                                    <br/>
+                                </div>
+                                    {/eq}
+                                {/case}
+                                {/switch}
+                                <div  class="m-win m-win-myself">
+                                    <div class="m-user-comm-wraper" id="pro-view-12">
+                                        <div pro="cont" class="m-user-comm-cont">
+                                            <div class="m-win-hd">
+                                                <div class="col info">
+                                                    商品信息
+                                                </div>
+                                                <div class="col status">
+                                                    商品状态
+                                                </div>
+                                            </div>
+                                            <div class="m-win-bd" pro="list">
+                                                <div class="w-goods">
+                                                    <div class="col info "><!--visinfo-->
+                                                        <div class="w-goods-pic">
+                                                            <a title="{$luck_info.goods_name|htmlspecialchars}" href="javascript:;">
+                                                                <img src="__UPLOAD_DOMAIN__{$luck_info.goods_image}" style="max-width: 160px;max-height: 160px;" alt="{$luck_info.goods_name|htmlspecialchars}"></a>
+                                                        </div>
+                                                        <div class="w-goods-content">
+                                                            <div class="w-goods-title">
+                                                                <a title="{$luck_info.goods_name|htmlspecialchars}" href="javascript:;">{$luck_info.goods_name|htmlspecialchars}</a>
+                                                            </div>
+                                                            <p class="w-goods-price">期号：{$luck_info.nper_id|num_base_mask}</p>
+                                                            <p class="w-goods-info">幸运号码：<strong class="txt-impt">{$luck_info.luck_num|num_base_mask=1}</strong>，总共参与了<strong class="txt-dark">{$luck_info.order_num}</strong>人次</p>
+                                                            <p class="calcTime">揭晓时间：{$luck_info.luck_time|microtime_format=1,'Y-m-d H:i:s'}</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col status">
+                                                        {switch name="luck_info.logistics_status|intval"}
+                                                        {case value="0"}<span class="txt-blue">等待确认</span>{/case}
+                                                        {case value="1"}<span class="txt-blue">未填写兑换方式</span>{/case}
+                                                        {case value="2"}<span class="txt-suc">等待发货</span>{/case}
+                                                        {case value="3"}<span class="txt-suc">等待收货</span>{/case}
+                                                        {case value="4"}<span class="txt-suc">已签收</span>{/case}
+                                                        <!--{case value="5"}<span class="txt-suc">已完成</span>{/case}-->
+                                                        {/switch}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--弹出层用遮罩-->
+<div class="w-mask" style="display: none;"></div>
+<!--确认信息弹出层-->
+<div class="w-msgbox" tabindex="0" style="display:none;left: 700.5px; top: 110px;margin: auto;">
+    <a pro="close" href="javascript:void(0);" class="w-msgbox-close">&times;</a>
+    <div class="w-msgbox-hd" pro="header"></div>
+    <div class="w-msgbox-bd w-msgbox-bd-hasIcon" pro="entry">
+        <i class="w-msgbox-ico ico ico-alert-m"></i>
+        <div class="w-msgbox-cont">
+            <h2 class="w-msgbox-title">确定提交以下收货地址吗？</h2>
+            <div id="pro-view-65">
+                <p>收货人：<span class="receiver"></span></p>
+                <p>联系电话：<span class="mobile"></span></p>
+                <p>收货地址：<span class="address"></span></p>
+                <p class="txt-red">（注意：确认之后不能修改！）</p>
+            </div>
+        </div>
+    </div>
+    <div pro="footer" class="w-msgbox-ft">
+        <button class="w-button w-button-main confirm_ok" type="button" id="pro-view-67"><span>确定</span></button>
+        <button class="w-button w-button-aside confirm_cancel" type="button" id="pro-view-68"><span>取消</span></button>
+    </div>
+</div>
+<div id="charge_modal_fee" style="display: none">
+    <div class="charge_modal ld-cm-h">
+    <h4>充值话费</h4>
+    <div class="cm-main">
+        <ul>
+            <li>
+                <span>1</span>
+                <h6>移动充值卡</h6>
+                <p>拨打10086或者13800138000根据语音提示选择充值卡
+                    充值</p>
+            </li>
+            <li>
+                <span>2</span>
+                <h6>联通充值卡</h6>
+                <p>拨打10011根据语音提示选择充值卡充值</p>
+            </li>
+            <li>
+                <span>3</span>
+                <h6>电信充值卡</h6>
+                <p>拨打11888输入18位密码充值。卡号只做备查使用，充值
+                    不需要输入卡号</p>
+            </li>
+        </ul>
+    </div>
+    <div class="cm-btn">
+        <a class="cm-btn-cancel" style="visibility: hidden;">取消</a>
+        <a class="cm-btn-sure">确定</a>
+    </div>
+</div>
+</div>
+<div id="charge_modal_zfb" style="display: none">
+    <div class="charge_modal ld-cm-z">
+    <h4>充值支付宝余额</h4>
+    <div class="cm-main">
+        <ul>
+            <li>
+                <span>1</span>
+                <h6>打开支付宝“我的”--“余额”页面</h6>
+            </li>
+            <li>
+                <span>2</span>
+                <h6>点击“充值”并选择“使用话费卡充值”</h6>
+            </li>
+            <li>
+                <span>3</span>
+                <h6>输入卡号/卡密确认充值即可</h6>
+            </li>
+        </ul>
+        <a href="https://cshall.alipay.com/lab/help_detail.htm?help_id=212250" target="_blank">查看官方图文教程</a>
+    </div>
+    <div class="cm-btn">
+        <a class="cm-btn-cancel" style="visibility: hidden;">取消</a>
+        <a class="cm-btn-sure">确定</a>
+    </div>
+</div>
+</div>
+<div id="charge_notice_success" style="display:none;">
+    <div class="charge_notice">
+        <span class="cnm_contra"></span>
+        <h6>香肠币已到账，请注意查收！</h6>
+        <div class="cnm_btns" style="width:145px;">
+            <a class="cnm_btn_sure">确定</a>
+        </div>
+    </div>
+</div>
+<div id="charge_notice_sel"  style="display:none;">
+    <div class="charge_notice">
+        <h6>您将得到该充值卡的卡号和密码</h6>
+        <!--<div class="cnm_btns">-->
+            <!--<a class="cnm_btn_cancel">取消</a>-->
+            <!--<a class="cnm_btn_sure">确定</a>-->
+        <!--</div>-->
+    </div>
+</div>
+
+<input id="card_money" name="url_choose_reward" value="{$card_info.money}" type="hidden">
+<input id="url_choose_reward_charge" name="url_choose_reward" value="{:U('ucenter/choose_reward','type=charge')}" type="hidden">
+<input id="url_choose_reward_card" name="url_choose_reward" value="{:U('ucenter/choose_reward','type=card')}" type="hidden">
+{/block}
+{block name="user_js"}
+{js href="__yyg__/js/ucenter/luck_detail.js" /}
+{/block}

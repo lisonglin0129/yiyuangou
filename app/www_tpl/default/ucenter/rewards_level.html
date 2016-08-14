@@ -1,0 +1,27 @@
+<a href="{:U('promote_detail')}">全部记录</a>
+<table width="100%"  border="0" class="pro-table" align="center" cellpadding="0" cellspacing="0">
+    <tr align="center">
+        <th>消费日期</th>
+        <th id="user_level">一级用户</th>
+        <th>消费金额</th>
+        <th>推广奖励</th>
+        <th>详情记录</th>
+    </tr>
+    {notempty name="list['data']"}
+    {volist name="list['data']" id="vo"}
+    <tr align="center" class="even">
+        <td>{$vo.time}</td>
+        <td>{$vo.username}</td>
+        <td>￥{$vo.total}</td>
+        <td class="pro-t-income">￥<span>{$vo.reward}</span></td>
+        <td class="">
+            <a class="pd-t-btn pro-modal-show" level="{$vo.level}" data-id="{$vo.uid}">查看详情</a>
+        </td>
+    </tr>
+    {/volist}
+    {/notempty}
+
+</table>
+<div class="xc_pages" data-flag="deposer">
+    {$pages}
+</div>

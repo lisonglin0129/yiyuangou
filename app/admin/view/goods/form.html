@@ -1,0 +1,296 @@
+{extend name="base/base" /}
+{block name="css"}
+{css href="__common__/admin/css/goods/form.css" /}
+{css href="__plugin__/umeditor/themes/default/css/umeditor.min.css"/}
+{/block}
+{block name="content"}
+<div class="page-content">
+    <div class="page-header">
+        <h1>
+            商品管理
+            <small>
+                <i class="icon-double-angle-right"></i>
+                {notempty name='type'}
+                {switch name='type'}
+                {case value='add'}添加{/case}
+                {case value='edit'}编辑{/case}
+                {default /}查看
+                {/switch}
+                {/notempty}
+            </small>
+        </h1>
+    </div><!-- /.page-header -->
+
+    <div class="row">
+        <div class="col-xs-12">
+            <!-- PAGE CONTENT BEGINS -->
+            <form class="form-horizontal" role="form" id="form_content">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right"> 状态 </label>
+                    <div class="col-sm-6">
+                        <select class="col-xs-10 col-sm-5" data-placeholder="请选择" name="status">
+                            <option value="1" {if condition="!empty($info['status']) AND $info['status'] eq '1'"}selected="selected"{/if} >正常</option>
+                            <option value="-2" {if condition="!empty($info['status']) AND $info['status'] eq '-2'"}selected="selected"{/if} >下架</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="space-4"></div>
+
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right">商品名称</label>
+                    <div class="col-sm-6">
+                        <input type="text" placeholder="请输入商品显示的主标题" class="col-xs-10 col-sm-5" name="name" value="{$info.name|default=''}"/>
+                    </div>
+                </div>
+                <div class="space-4"></div>
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right">商品副标题</label>
+                    <div class="col-sm-6">
+                        <input type="text" placeholder="请输入商品副标题" class="col-xs-10 col-sm-5" name="sub_title" value="{$info.sub_title|default=''}"/>
+                    </div>
+                </div>
+                <div class="space-4"></div>
+
+
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right">商品分类</label>
+                    <div class="col-sm-6">
+                        <select class="col-xs-10 col-sm-5" data-placeholder="请选择" name="category">
+                            <option value="">请选择</option>
+                            {volist name='cat_list' id='vo'}
+                            <option value="{$vo.id|default=''}" {if condition='!empty($info["category"]) AND ($info["category"] EQ $vo["id"])'}selected="selected"{/if}>{$vo.name|default=''}</option>
+                            {/volist}
+                        </select>
+                    </div>
+                </div>
+                <div class="space-4"></div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right">奖品类型</label>
+                    <div class="col-sm-6">
+                        <select class="col-xs-10 col-sm-5" data-placeholder="请选择" name="reward_type">
+                            <option value="0" {if condition="!empty($info['reward_type']) AND $info['reward_type'] eq '0'"}selected="selected"{/if} >实物奖品</option>
+                            <option value="1" {if condition="!empty($info['reward_type']) AND $info['reward_type'] eq '1'"}selected="selected"{/if} >在线卡密</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="space-4"></div>
+{php}
+if(!empty($info) && $info['reward_type']==1){
+                echo '<div class="form-group reward_category_sel" id="reward_type_1" >';
+}else{
+                echo '<div class="form-group reward_category_sel" id="reward_type_1" style="display:none;" >';
+}
+{/php}
+                    <label class="col-sm-3 control-label no-padding-right">卡密分类  </label>
+                    <div class="col-sm-6">
+                        <select class="col-xs-10 col-sm-5" data-placeholder="请选择" name="reward_data">
+                            <option>选择分类</option>
+                            {notempty name="reward_data"}
+                            {volist name="reward_data" id="cat"}
+                            <option value= "{$cat.id}" {if condition="!empty($info['reward_data']) AND $info['reward_data'] eq $cat['id']"}selected="selected"{/if} >{$cat.title}</option>
+                            {/volist}
+                            {/notempty}
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right">夺宝类型  </label>
+                    <div class="col-sm-6">
+                        <select class="col-xs-10 col-sm-5" data-placeholder="请选择" name="deposer_type" >
+                            {volist name='deposer_list' id='vo'}
+                            <option value="{$vo.id|default=''}" {if condition="!empty($info['deposer_type']) AND $info['deposer_type'] eq $vo['id']"}selected="selected"{/if}>{$vo.name|default=''}</option>
+                            {/volist}
+                        </select>
+                    </div>
+                </div>
+                <div class="space-4"></div>
+                {if condition="!empty($zero_start) AND $zero_start eq 1"}
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right">是否参与0元抢宝  </label>
+                    <div class="col-sm-6">
+                        <select class="col-xs-10 col-sm-5" data-placeholder="请选择" name="is_zero" >
+                           <option value="0" {if condition="empty($info['is_zero']) eq true"}selected="selected"{/if} >不参与</option>
+                            <option value="1" {if condition="!empty($info['is_zero']) AND $info['is_zero'] eq 1"}selected="selected"{/if} >参与</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="space-4"></div>
+                {/if}
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right">商品价格</label>
+                    <div class="col-sm-6">
+                        <input type="text" placeholder="请输入商品的金额" class="col-xs-10 col-sm-5" name="price" value="{$info.price|default=''}"/>
+                    </div>
+                </div>
+                <div class="space-4"></div>
+
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right">初始化购买倍数</label>
+                    <div class="col-sm-6">
+                        <input type="text" placeholder="请输入用户打开页面时初始化显示的购买数" class="col-xs-10 col-sm-5" name="init_times" value="{notempty name='info'}{:ceil($info['init_times']/$info['min_times'])}{else/}1{/notempty}" />
+                    </div>
+                </div>
+                <div class="space-4"></div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right">是否秒开</label>
+                    <div class="col-sm-6">
+                        <select class="col-xs-10 col-sm-5" data-placeholder="请选择" name="sec_open">
+                            <option value="0" {if condition="isset($info['sec_open']) AND $info['sec_open'] eq 0"}selected="selected"{/if} >否</option>
+                            <option value="1" {if condition="isset($info['sec_open']) AND $info['sec_open'] eq 1"}selected="selected"{/if} >是</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="space-4"></div>
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right">是否配置微信红包</label>
+                    <div class="col-sm-6">
+                        <select class="col-xs-10 col-sm-5" data-placeholder="请选择" name="is_packet" id="is_packet">
+                            <option value="0" {if condition="isset($info['is_packet']) AND $info['is_packet'] eq 0"}selected="selected"{/if} >不配置</option>
+                            <option value="1" {if condition="isset($info['is_packet']) AND $info['is_packet'] eq 1"}selected="selected"{/if} >配置</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="space-4"></div>
+                <div class="form-group" {if condition="$type eq 'add' OR ($type eq 'edit' AND empty($info['is_packet']) eq true)"}style="display: none;"{/if} id="packet_num">
+                    <label class="col-sm-3 control-label no-padding-right">红包领取人数</label>
+                    <div class="col-sm-6">
+                        <input type="text" placeholder="请输入红包领取人数" class="col-xs-10 col-sm-5" name="packet_num" value="{$info.packet_num|default=''}"/>
+                    </div>
+                </div>
+                <div class="space-4"></div>
+                <div class="form-group" {if condition="$type eq 'add' OR ($type eq 'edit' AND empty($info['is_packet']) eq true)"}style="display: none;"{/if} id="packet_money">
+                    <label class="col-sm-3 control-label no-padding-right">红包总金额</label>
+                    <div class="col-sm-6">
+                        <input type="text" placeholder="请输入红包总金额" class="col-xs-10 col-sm-5" name="packet_money" value="{$info.packet_money|default=''}"/>
+                    </div>
+                </div>
+                <div class="space-4"></div>
+
+
+                <!--<div class="form-group">-->
+                    <!--<label class="col-sm-3 control-label no-padding-right">每次最少购买份数</label>-->
+                    <!--<div class="col-sm-6">-->
+                        <!--<input type="text" placeholder="请输入用户每次增加或减少的次数" class="col-xs-10 col-sm-5" name="min_times" value="{$info.min_times|default='1'}"/>-->
+                        <!--<span class="help-inline col-xs-12 col-sm-7">-->
+						    <!--<span class="middle">用户单次增加或减少的最小倍数</span>-->
+                        <!--</span>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="space-4"></div>-->
+
+                <div class="space-4"></div>
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right">请选择商品图片</label>
+                    <div class="col-sm-6">
+                        <div class="col-xs-10 col-sm-5 img_thumb">
+                            <input type="button" class="btn btn-success btn-sm upload_img" value="请选择图片(支持:jpg,png,gif,bmp)">
+                            <!--商品图片缩略图-->
+                        </div>
+                    </div>
+                </div>
+                <div class="space-4"></div>
+                <!--图片展示-->
+                <div class="form-group">
+                    <div class="col-sm-9">
+                        <label class="col-sm-4 control-label no-padding-right"></label>
+                        <div class="col-xs-10 col-sm-5 img_thumb">
+                            <ul class="img_list">
+                                <!--图片列表-->
+                                {notempty name="img_list"}
+                                {volist name="img_list" id='vo'}
+                                    <li data-id="{$vo.id|default=''}">
+                                        <div class="img_exec_box">
+                                            <span class="set_img_main">主图</span>
+                                            <span class="del_img">删除</span>
+                                        </div>
+                                        <img src="{$vo.img_path|default='__common__/img/empty_img.jpg'}" data-id="{$vo.id|default=''}" alt="">
+                                        <span class="success"></span>
+                                    </li>
+                                {/volist}
+                                {else /}
+                                {/notempty}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="space-4"></div>
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right">请填写商品的详情</label>
+                    <div class="col-sm-9">
+                        <div class="col-xs-10 col-sm-7">
+                            <!-- 加载编辑器的容器 -->
+                            <script id="detail" name="detail" type="text/plain">{$info.detail|default=''}</script>
+                        </div>
+                    </div>
+                </div>
+                <div class="space-4"></div>
+
+
+                <!--操作按钮-->
+                <div class="clearfix form-actions">
+                    <div class="col-md-offset-3 col-md-9">
+                        {notempty name='type'}
+                        {switch name='type'}
+                        {case value='add'}
+                        <button class="btn btn-info submit_btn" type="button">
+                            <i class="icon-ok bigger-110"></i>
+                            提交表单
+                        </button>
+                        &nbsp; &nbsp; &nbsp;
+                        <button class="btn" type="reset">
+                            <i class="icon-undo bigger-110"></i>
+                            重置
+                        </button>
+                        &nbsp; &nbsp; &nbsp;
+                        <button class="btn btn-default close_page" type="button">
+                            <i class="fa fa-times bigger-110"></i>
+                            关闭页面
+                        </button>
+                        {/case}
+                        {case value='edit'}
+                        <button class="btn btn-info submit_btn" type="button">
+                            <i class="icon-ok bigger-110"></i>
+                            保存内容
+                        </button>
+                        <button class="btn btn-default close_page" type="button">
+                            <i class="fa fa-times bigger-110"></i>
+                            关闭页面
+                        </button>
+                        {/case}
+                        {default /}
+                        {/switch}
+                        {/notempty}
+                    </div>
+                </div>
+                <input type="hidden" name="id" value="{$info.id|default=''}">
+                <input type="hidden" name="pic_list" value="{$info.pic_list|default=''}"><!--图片列表-->
+                <input type="hidden" name="index_img" value="{$info.index_img|default=''}"><!--首图展示-->
+            </form>
+        </div><!-- /.row -->
+    </div><!-- /.page-content -->
+</div>
+
+<input type="hidden" id="submit_url" value="{:U('goods/update')}">
+<input type="hidden" id="root_url" value="{if condition='$from_zero eq  1'}{:U('zero/goods_list')}{else /}{:U('goods/index')}{/if}">
+<input type="hidden" id="sel_plat_url" value="{:U('sel_plat')}">
+<input type="hidden" id="type" value="{$type|default='add'}">
+<input type="hidden" id="category" value="{$info.category|default=''}">
+<input type="hidden" id="mid" value="{$info.mid|default=''}">
+{/block}
+{block name="js"}
+{js href='__common__/admin/js/goods/form.js' /}
+{js href='__plugin__/umeditor/umeditor.config.js' /}
+{js href='__plugin__/umeditor/umeditor.min.js' /}
+{js href='__plugin__/umeditor/lang/zh-cn/zh-cn.js' /}
+
+
+
+
+{/block}

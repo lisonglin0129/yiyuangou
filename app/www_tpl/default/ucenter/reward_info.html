@@ -1,0 +1,20 @@
+<div class="pro-modal-main">
+    <span class="iconfont pd-m-close">&#xe648;</span>
+    <table width="100%"  border="0" class="pro-table" align="center" cellpadding="0" cellspacing="0">
+        <tr align="center">
+            <th>消费日期</th>
+            <th>消费金额</th>
+            <th>推广奖励</th>
+        </tr>
+        {volist name="list['data']" id="vo"}
+        <tr align="center" class="even">
+            <td>{:date('Y-m-d',$vo['create_time'])}</td>
+            <td>￥{$vo.total}</td>
+            <td class="pro-t-income">￥<span>{$vo.reward}</span></td>
+        </tr>
+        {/volist}
+    </table>
+    <div class="xc_pages" data-flag="deposer">
+        {$pages}
+    </div>
+</div>

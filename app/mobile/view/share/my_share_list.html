@@ -1,0 +1,119 @@
+
+{extend name="base/common"}
+
+{block name="title"}
+个人中心 - 我的晒单
+{/block}
+
+{block name="head"}
+<meta name="viewport" content="width=640px, user-scalable=0">
+<link href="__MOBILE_CSS__/user.css" rel="stylesheet"/>
+<link href="__MOBILE_CSS__/style1.css" rel="stylesheet"/>
+<script src="__MOBILE_JS__/jquery.min.js"></script>
+<script src="__MOBILE_JS__/js.js"></script>
+<style type="text/css">
+    .img166 {
+    width: 20%;
+    height: 55px;
+    display: block;
+    float: left;
+    line-height: 132px;
+    text-align: center;
+    background-size: 40px 39px;}
+.img174 {
+    background-size: 40px 37px;
+    color: #999;
+
+}
+.menu2{height: 85px;font-size: 15px;}
+</style>
+{/block}
+
+
+{block name="main"}
+
+
+<div class="m-user mm czz xxf" id="dvWrapper">
+
+	<div class="m-simpleHeader" id="dvHeader" style="height: 60px;padding-top: 15px;border-bottom: 1px solid #ccc;margin-bottom: 30px;">
+		<a href="javascript:history.go(-1);" data-pro="back" data-back="true" class="m-simpleHeader-back"><i class="ico ico-back" style="font-size: 30px;width: 21px;height: 21px;"></i></a>
+		<h1 style="font-family:Microsoft YaHei;font-size: 30px;font-weight: 700;">我的晒单</h1>
+	</div>
+
+    {empty name="my_share_list"}
+        <section style="width: 100%;height: 50px;margin-top: 100px;color: #000;font-size: 20px;font-weight: 700;"><p style="width: 200px;margin:10px auto;">我的晒单记录为空</p></section>
+    {else /}
+
+        {volist name="my_share_list" id="vo"}
+
+
+            {if condition="($vo['complete'] == 1)"}
+
+                <div class="wdsd">
+                    <div class="wdsd-1">{$vo.title}</div>
+                    <div class="wdsd-2">
+
+                                <span style="display:block;float:left;">订单状态：
+
+                                    {if condition="($vo['status'] == 1)"}
+                                        <span style="color:red">通过审核</span>
+                                    {elseif condition="($vo['status'] == 3)"/}
+                                        <span style="color:red">尚未审核</span>
+                                    {else /}
+                                        <span style="color:red">不通过审核</span>
+                                    {/if}
+                                </span>
+
+                        <span style="float:right">{$vo.create_time}</span>
+                    </div><div class="clr"></div>
+                    <div class="wdsd-3">
+                        <img src="{$vo.img_path}" class="wdsd-3-img" />
+                        <div class="wdsd-5">{$vo.content}</div>
+                    </div>
+                </div>
+
+
+            {else /}
+
+                <div class="body123">
+                    <div class="wdsd5">
+                        <img src="{$vo.goods_img}" class="wdsd5-img"/>
+                        <div class="wdsd5-nav">
+                            <section>{$vo.goods_name}</section>
+                            <section>期号：{$vo.nper_id|num_base_mask=0}</section>
+                            <a href="{:U('Buy/submit_share_order',array('share_id'=>$vo['share_id']))}"><div class="wdsd5-nav2">立即晒单</div></a>
+                        </div>
+                        <div class="clr"></div>
+                    </div>
+                </div>
+
+
+            {/if}
+
+
+
+
+
+        {/volist}
+
+
+        <section class="zh-1">已经没有更多</section>
+
+
+
+
+
+        <div class="clear"></div>
+
+    {/empty}
+
+
+
+
+
+
+
+
+</div>
+
+{/block}

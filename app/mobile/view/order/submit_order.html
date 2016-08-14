@@ -1,0 +1,230 @@
+{extend name="base/common"}
+
+{block name="head"}
+<link href="__MOBILE_CSS__/user.css"  rel="stylesheet" />
+<script src="__MOBILE_JS__/jquery.min.js"></script>
+<script src="__MOBILE_JS__/index.js"></script>
+<script src="__MOBILE_JS__/js.js"></script>
+<script>
+
+    $(function(){
+
+        //提交按钮按一次之后灰化不准再按
+        $("form").submit(function(){
+            $("#brt20").attr("disabled","disabled")
+            $("#brt20").css("background-color","rgb(204,202,203)");
+        });
+
+        //格式
+
+
+        $('#balance-button').click(function () {
+
+            var pay_type = parseInt($("input[name='pay_type']").val());
+
+            if(pay_type == 3) {
+
+                var total_price = parseFloat($('#total-price').text());
+                var use_balance = parseFloat($('#use-balance').text());
+
+
+                if($("input[name='use_balance']").val() == '1') {
+                    $("input[name='use_balance']").val('0');
+                    $('#total-price').text((total_price+use_balance).toFixed(2));
+                    $('.balance').hide();
+                    //$(this).removeClass('w-checkbox');
+                }else{
+                    $("input[name='use_balance']").val('1');
+                    $('#total-price').text((total_price-use_balance).toFixed(2));
+                    $('.balance').show();
+                    //$(this).addClass('w-checkbox');
+                }
+
+            }
+
+        });
+
+        $(".ddzf1-yue").click(function(){
+            $(".txt-red1,.w-checkbox").toggle();
+        });
+
+        var time=new Date();
+        time.setMinutes(30);
+        time.setSeconds(0);
+        var timeout;
+        var timeshow=document.getElementById("timeshow");
+        function countdown(){
+            var hour=time.getHours();
+            var min=time.getMinutes();
+            var second=time.getSeconds();
+            if(hour=="0"&&min=="0"&&second=="0"){
+                layer.open({
+                    content: "Time Out!",
+                    time: 1 //1秒后自动关闭
+                });
+                clearInterval(timeout);
+            }
+            time.setSeconds(second-1);
+            hour<10?hour="0"+hour:hour;
+            min<10?min="0"+min:min;
+            second<10?second="0"+second:second;
+            timeshow.innerHTML=+min+"分"+second+"秒"+"完成支付";
+        }
+        timeout= setInterval(countdown,1000);
+
+
+        //选取支付方式
+
+        $("input[name='other_pay_type']").click(function(){
+            if($(this).val() == 'weixin'){
+                $('form').attr('action',"{:U('Weixin/pay')}");
+            }else if($(this).val() == 'alipay'){
+                $('form').attr('action',"{:U('Alipay/alipay_api')}");
+            }else if($(this).val() == 'wx')
+            {
+            	 $('form').attr('action',"{:U('Wxpay/pay')}");
+            }else{
+                $('form').attr('action',"{:U('Aipay/index')}");
+            }
+        });
+
+        var select = $("input[name='other_pay_type']").eq(0);
+        select.attr('checked','checked');
+        $('form').attr('action',select.attr('data-value'));
+
+
+
+
+
+
+
+    })
+
+</script>
+
+{/block}
+
+
+
+
+
+{block name="main"}
+
+{empty name="order_info"}
+订单为空
+{else /}
+
+
+{if condition="$order_info['pay_type'] eq 1 "}
+
+    <form action="{:U('Order/personal_pay')}" method="post" target="_self">
+
+{else /}
+    <form action="{:U('Aipay/index')}" method="post" target="_self">
+
+{/if}
+
+    <input type="hidden" name="order_num" value="{$order_info.order_num}"/>
+
+    <input type="hidden" name="pay_type" value="{$order_info.pay_type}"/>
+
+    {if condition="$order_info['pay_type'] eq 3 "}
+
+        <input type="hidden" name="use_balance" value="1"/>
+
+    {/if}
+
+    <div class="m-user" id="dvWrapper">
+        <div class="m-simpleHeader" id="dvHeader">
+            <a href="javascript:history.go(-1);" data-pro="back" data-back="true" class="m-simpleHeader-back"><i class="ico ico-back"></i></a>
+            <h1>支付订单</h1>
+        </div>
+
+        <div class="ddzf1-top">
+            <div class="header" id="idOrderHeader">
+                <p>订单已经提交,请在</p>
+                <div id="timeshow" style="margin:0 auto;"></div>
+
+            </div>
+            <div class="detail">
+                商品合计：<em class="txt-red">{$order_info.total_price}<span id="currency">{:C('MONEY_NAME')}</span></em>
+            </div>
+        </div>
+
+
+        {if condition="$order_info['pay_type'] neq 2 "}
+
+            <div class="w-checkBar w-bar w-checkBar-checked" id="pro-view-33">
+                    <span id="pro-view-63" style="font-size: 10px;"><span>余额支付（余额：{$order_info.user_money}{:C('MONEY_UNIT')}{:C('MONEY_NAME')}）</span>
+
+                        {if condition="$order_info['pay_type'] eq 3 "}
+
+                            <span class="w-bar-extText txt-red balance"><span id="use-balance">{$order_info.user_money}</span>{:C('MONEY_NAME')}</span>
+
+                        {/if}
+
+                        {if condition="$order_info['pay_type'] eq 1 "}
+
+                            <span class="w-bar-extText txt-red balance"><span id="use-balance">{$order_info.total_price}</span>{:C('MONEY_NAME')}</span>
+
+                        {/if}
+
+                    </span>
+                <div class="w-bar-ext">
+                    <b data-pro="switcher" id="balance-button" class="w-checkbox"></b><input type="checkbox"  value="0">
+                </div>
+
+
+            </div>
+
+        {/if}
+
+
+        {if condition="$order_info['pay_type'] neq 1 "}
+            <div class="w-checkBar w-bar w-checkBar-checked" id="pro-view-3">
+                    <span id="pro-view-6">其他支付方式
+                        <span class="w-bar-extText txt-red"><span id="total-price">{$order_info.remain_price}</span>{:C('MONEY_NAME')}</span>
+                    </span>
+                <div class="w-bar-ext"><b data-pro="switcher" class=""></b>
+                    <input type="checkbox"/>
+                </div>
+            </div>
+
+
+
+
+            <div style="width: 90%;height: 10px;">
+                {if condition="$pay_type['ALI_PAY'] eq 1 "}
+                <input type="radio" name="other_pay_type" data-value="{:U('Alipay/alipay_api')}" value="alipay"/> 支付宝
+                {/if}
+                {if condition="$pay_type['W_PAY'] eq 1 "}
+              	  <input type="radio" name="other_pay_type" data-value="{:U('Weixin/pay')}" value="weixin"/>  微信支付
+                {/if}
+                {if condition="$pay_type['WX_THREE_PAY'] eq 1 "}
+              	  <input type="radio" name="other_pay_type" data-value="{:U('Wxpay/pay')}" value="wx"/>  微信支付
+                {/if}
+                {if condition="$pay_type['AIBEI_PAY'] eq 1 "}
+                <input type="radio" name="other_pay_type" data-value="{:U('Aipay/index')}" checked="checked" value="aipay">爱贝支付
+                {/if}
+            </div>
+        {/if}
+
+
+
+
+
+
+        <div class="m-cashier-button ">
+            <button  type="submit" id="brt20"> 确认支付</button>
+        </div>
+
+    </div>
+
+
+
+
+</form>
+
+{/empty}
+
+{/block}

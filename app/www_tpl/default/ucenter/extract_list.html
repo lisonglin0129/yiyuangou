@@ -1,0 +1,72 @@
+{extend name="base/base"/}
+{block name="title"}我的推广{/block}
+{block name="user_css"}
+{css href="__static__/css/usercenter.css" /}
+{css href="__static__/css/promote.css" /}
+{/block}
+{block name='content'}
+<div class="g-body">
+    <div class="m-user">
+        <div class="g-wrap">
+            <div class="m-user-frame-wraper">
+                <!--用户中心  菜单-->
+                {include file="ucenter/_nav" /}
+                <!--用户中心 main-->
+                <div class="m-user-frame-colMain ">
+                    <div class="m-user-frame-content" >
+                        <ul class="w-crumbs f-clear">
+                            <li class="w-crumbs-item">当前位置：</li>
+                            <li class="w-crumbs-item"><a href="{:U('promote')}">我的推广</a><span class="w-crumbs-split">&gt;</span></li>
+                            <li class="w-crumbs-item w-crumbs-active">提现记录</li>
+                        </ul>
+                        <div class="m-user-comm-wraper pro-el-detail">
+                            <div class="pro-title">
+                                <h2>提现记录</h2>
+                                <div class="pd-search pds-date">
+                                    <label>开始日期:</label>
+                                    <div class="pd-s-year" >
+                                        <input readonly="readonly" onclick="laydate({istime: false, format: 'YYYY-MM-DD'})">
+                                        <i class="iconfont">&#xe647;</i>
+                                    </div>
+                                    <label>结束日期:</label>
+                                    <div class="pd-s-month">
+                                        <input readonly="readonly" onclick="laydate({istime: false, format: 'YYYY-MM-DD'})">
+                                        <i class="iconfont">&#xe647;</i>
+                                    </div>
+                                    <a class="pd-s-btn">搜索</a>
+                                </div>
+                            </div>
+                            <div class="pro-detail ">
+                                <div id="pro-detail">
+                                <div pro="userCommLoading" class="w-loading"><b
+                                        class="w-loading-ico"></b><span class="w-loading-txt">正在努力加载……</span>
+                                </div>
+                                    </div>
+                                <div class="pec-notice">
+                                    <span><i class="iconfont pec-n-ti">&#xe64c;</i></span>
+                                    <div class="pec-n-t">
+                                        <h4>注意事项</h4>
+                                        <p>
+
+                                            1、跨行转账，款项转移以后一般需要1-5个工作日到账，请耐心等待。<br>
+                                            2、提现成功以后，实际需要1-2个工作日内到账。
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="m-user-frame-clear"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<input type="hidden" id="extract_list_url" value="{:U('extract_show_list')}">
+<input type="hidden" id="extract_del_url" value="{:U('extract_del')}">
+{/block}
+{block name="user_js"}
+{js href="__common__/plugin/laydate/laydate.js" /}
+{js href="__static__/js/ucenter/extract_list.js" /}
+{/block}

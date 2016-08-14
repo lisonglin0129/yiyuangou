@@ -1,0 +1,14 @@
+{extend name="base/common"}
+{block name="title"}{$m.title}{/block}
+{block name="head"}
+<link href="__MOBILE_CSS__/help.css" rel="stylesheet" />{/block}
+
+
+{block name="main"}
+
+<div style="padding: 19px">
+   <h1 style="font-size: larger;">{$m.title}</h1>
+    <p>{:date('Y-m-d H:i:s',$m['create_time'])}</p>
+    {$m.content|default='暂无内容'}
+</div>
+{/block}

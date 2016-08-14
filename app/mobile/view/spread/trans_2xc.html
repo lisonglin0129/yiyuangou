@@ -1,0 +1,131 @@
+{extend name="base/base"}
+{block name="head"}
+<link rel="stylesheet" href="__MOBILE_FONTS__/iconfont.css">
+<link href="__MOBILE_CSS__/common1.css" rel="stylesheet">
+<link href="__MOBILE_CSS__/indexho.css" rel="stylesheet">
+<link href="__MOBILE_CSS__/reward.css" rel="stylesheet">
+<script type="text/javascript"  src="__MOBILE_JS__/jquery.min.js"></script>
+<script type="text/javascript"  src="__MOBILE_JS__/indexho.js"></script>
+<script>
+    $(function(){
+        $('#buy_all').click(function () {
+            $('#money').val($('#cash').html());
+        })
+        $('.cx-sub').click(function () {
+            var money=$('#money').val();
+            var cash=$('#cash').html();
+            var c_score = parseInt($("#c_score").val());
+            var c_money = parseInt($("#c_money").val());
+
+            if(!money){
+                layer.open({
+                    content:'请输入兑换积分',
+                });
+                return false;
+            }
+            if(parseInt(money)!=money){
+                layer.open({
+                    content:'转换积分不是整数',
+                });
+                return false;
+            }
+            // alert(money+'--'+cash)
+            if(parseFloat(money)>parseFloat(cash)){
+                layer.open({
+                    content:'转换积分超过总积分',
+                });
+                return false;
+            }
+            var password=$('#password').val();
+            if(!password){
+                layer.open({
+                    content:'请输入密码',
+                });
+                return false;
+            }
+
+            var url=$('#apply_url').val();
+            var font_res_money =  parseInt(money)/c_score*c_money;
+            var param = {score:money,password:password,font_res_money:font_res_money.toFixed(2)};
+
+            $.ajaxSetup({
+                async:false
+            });
+
+            $.post(url,param,function(rt1){
+                if ( rt1 == '-103' ) {
+                    layer.open({
+                        content:'积分输入错误',
+                    });
+                    return;
+                } else if ( rt1 == '-104' ) {
+                    layer.open({
+                        content:'密码输入错误',
+                    });
+                    return;
+                } else if ( rt1 == '-105' ) {
+                    layer.open({
+                        content:'校验失败,无法转换',
+                    });
+                    return;
+                }
+                layer.open({
+                    content:'转换成功',
+                });
+                location.href=$('#root_url').val();
+            })
+        })
+    })
+</script>
+{/block}
+{block name="main"}
+<div class="home">
+    <!-- 头部 -->
+
+    <header>
+        <a href="javascript:history.back(-1)" class="heads"><i class="icon iconfont cio1">&#xe600;</i></a>
+        <span class="heads-p">转为{:C('MONEY_NAME')}</span>
+    </header>
+
+
+    <section style="height:1100px;width: 750px;">
+
+        <div class="cx-top1">
+            <span class="cx-sp1">账户积分</span><span id="cash">{$info.score|default='0.00'}</span>积分
+            <a href="javascript:;" class="cx-a" id="buy_all">全部转出</a>
+        </div>
+        <form action="form_action.asp" method="get">
+
+            <div class="cx-top1 cx-top1s">
+                <span class="cx-sp1">转换积分</span>
+                <input type="text" name="money" class="xc-inp1" id="money"/>
+                <span class="cx-sp1 cx-sp1s">* 您的转出的积分</span>
+            </div>
+
+
+            <div class="cx-top1 cx-top1s cx-top2s">
+                <span class="cx-sp1">用户密码</span>
+                <input type="password" name="password" class="xc-inp1" id="password"/>
+                <span class="cx-sp1 cx-sp1s">* 密码为您的账户登录密码</span>
+            </div>
+            <a  class="cx-subs cx-sub" />提交</a>
+        </form>
+    </section>
+    <!-- 底部 -->
+    <div class="foots"></div>
+    <footer>
+        <a href="{:wap_dwz_filter('Index/index')}" class="foots1">夺宝</a>
+        <a href="{:wap_dwz_filter('Index/all_goods', array('cate'=> '0-1'))}" class="foots2">全部商品</a>
+        <a href="{:wap_dwz_filter('Index/all_share_order')}" class="foots3">晒单</a>
+        <a href="{:wap_dwz_filter('Cart/cart_list')}" class="foots4">购物车</a>
+        <a href="{:wap_dwz_filter('Users/personal_center')}" class="foots5 act">我的</a>
+    </footer>
+    <input type="hidden" id="check_url" value="{:U('extract/extract_check')}">
+    <input type="hidden" id="root_url" value="{:U('score_trans_success')}">
+    <input type="hidden" id="apply_url" value="{:U('transensure')}">
+
+    <input type="hidden" id="c_score" value="{$c_score|default=''}">
+    <input type="hidden" id="c_money" value="{$c_money|default=''}">
+    <input type="hidden" id="my_score" value="{$info.score|default=0}">
+</div>
+{/block}

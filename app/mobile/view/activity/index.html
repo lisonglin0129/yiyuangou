@@ -1,0 +1,93 @@
+{extend name="base/base"}
+{block name="head"}
+<link rel="stylesheet" href="__MOBILE_FONTS__/iconfont.css">
+<link href="__MOBILE_CSS__/common1.css" rel="stylesheet">
+<link href="__MOBILE_CSS__/express.css" rel="stylesheet">
+<script type="text/javascript"  src="__MOBILE_JS__/jquery.min.js"></script>
+<style type="text/css">
+    html body{background-color: #f7f7f7}
+</style>
+{/block}
+{block name="main"}
+
+   
+
+
+
+<div class="home homes_new">
+    <!-- 头部 -->
+    <header class="header_news header_act">
+        <span class="heads-p heads-p-news heads-p-act">活动</span>
+    </header>
+
+
+    <!-- 页面主体 -->
+        <section>
+
+        <section class="act_banner"></section> 
+
+        <a href="" class="act_list">
+             <i class="icon iconfont act_ico1">&#xe61f;</i>
+             <span class="act_span">限时抢购</span>
+             <i class="icon iconfont act_ico1 act_right">&#xe60d;</i>
+        </a> 
+
+        <a href="" class="act_list">
+             <i class="icon iconfont act_ico1 act_ico2">&#xe620;</i>
+             <span class="act_span">充值限购</span>
+             <i class="icon iconfont act_ico1 act_right">&#xe60d;</i>
+        </a> 
+
+        <a href="" class="act_list">
+             <i class="icon iconfont act_ico1 act_ico3">&#xe621;</i>
+             <span class="act_span">积分限购</span>
+             <i class="icon iconfont act_ico1 act_right">&#xe60d;</i>
+        </a> 
+
+        <a href="" class="act_list">
+             <i class="icon iconfont act_ico1 act_ico4">&#xe622;</i>
+             <span class="act_span">推广限购</span>
+             <i class="icon iconfont act_ico1 act_right">&#xe60d;</i>
+        </a> 
+
+
+
+
+
+
+
+        </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- 底部 -->
+    <footer>
+        <a href="{:wap_dwz_filter('Index/index')}" class="foots1">夺宝</a>
+        <a href="{:wap_dwz_filter('Index/all_goods', array('cate'=> '0-1'))}" class="foots2">全部商品</a>
+        <a href="{:wap_dwz_filter('Index/all_share_order')}" class="foots3">晒单</a>
+        <a href="{:wap_dwz_filter('Cart/cart_list')}" class="foots4">购物车</a>
+        <a href="{:wap_dwz_filter('Users/personal_center')}" class="foots5 act">我的</a>
+    </footer>
+
+</div>
+<!-- <script type="text/javascript"  src="__MOBILE_JS__/login.js"></script> -->
+{/block}

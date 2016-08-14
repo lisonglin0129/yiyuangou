@@ -1,0 +1,134 @@
+{extend name="base/base" /}
+{block name="content"}
+<div class="page-content">
+    <div class="page-header">
+        <h1>
+            菜单
+            <small>
+                <i class="icon-double-angle-right"></i>
+                {notempty name='type'}
+                {switch name='type'}
+                {case value='add'}添加{/case}
+                {case value='edit'}编辑{/case}
+                {default /}查看
+                {/switch}
+                {/notempty}
+            </small>
+        </h1>
+    </div><!-- /.page-header -->
+    <div class="row">
+        <div class="col-xs-12">
+            <!-- PAGE CONTENT BEGINS -->
+            <form class="form-horizontal" role="form" id="form_content">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right"> 名称 </label>
+                    <div class="col-sm-6">
+                        <input type="text" placeholder="请输入" class="col-xs-10 col-sm-5" name="name" value="{$info.name|default=''}"/>
+                        <span class="help-inline col-xs-12 col-sm-7">
+						    <span class="middle">菜单的名称</span>
+                        </span>
+                    </div>
+                </div>
+                <div class="space-4"></div>
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right"> 上级菜单 </label>
+                    <div class="col-sm-6">
+
+                        <select class="col-xs-10 col-sm-5" data-placeholder="请选择" name="pid" id="pid">
+                         <option value="0" data-val="{$p_count}">顶级菜单</option>
+                            {notempty name="menus"}
+                            {volist name="menus" id='vo'}
+                            <option value="{$vo.id}" data-val="{$vo.son_count}" {if condition="!empty($info['pid']) AND ($vo['id'] eq $info['pid'])"}selected{/if} >{$vo.name}</option>
+                            {/volist}
+                            {/notempty}
+                        </select>
+                        <span class="help-inline col-xs-12 col-sm-7">
+						    <span class="middle">选择上级菜单</span>
+                        </span>
+                    </div>
+                </div>
+                <div class="space-4"></div>
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right"> 类型 </label>
+                    <div class="col-sm-6">
+
+                        <select class="col-xs-10 col-sm-5" data-placeholder="请选择" name="type">
+
+                            <option value="click" {if condition="!empty($info['type']) AND $info['type'] eq 'click'"}selected="selected"{/if}>关键字触发</option>
+                            <option value="view" {if condition="!empty($info['type']) AND $info['type'] eq 'view'"}selected="selected"{/if}>url链接</option>
+                        </select>
+                        <span class="help-inline col-xs-12 col-sm-7">
+						    <span class="middle">菜单类型</span>
+                        </span>
+                    </div>
+                </div>
+                <div class="space-4"></div>
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right"> 菜单对应的值 </label>
+                    <div class="col-sm-6">
+                        <input type="text" placeholder="请输入" class="col-xs-10 col-sm-5" name="val" value="{$info.val|default=''}"/>
+                        <span class="help-inline col-xs-12 col-sm-7">
+						    <span class="middle">view：输入链接 click：输入关键字</span>
+                        </span>
+                    </div>
+                </div>
+                <div class="space-4"></div>
+
+
+
+                <!--操作按钮-->
+                <div class="clearfix form-actions">
+                    <div class="col-md-offset-3 col-md-9">
+                        {notempty name='type'}
+                        {switch name='type'}
+                        {case value='add'}
+                        <button class="btn btn-info submit_btn" type="button">
+                            <i class="icon-ok bigger-110"></i>
+                            提交表单
+                        </button>
+                        &nbsp; &nbsp; &nbsp;
+                        <button class="btn" type="reset">
+                            <i class="icon-undo bigger-110"></i>
+                            重置
+                        </button>
+                        &nbsp; &nbsp; &nbsp;
+                        <button class="btn btn-default close_page" type="button">
+                            <i class="fa fa-times bigger-110"></i>
+                            关闭页面
+                        </button>
+                        {/case}
+                        {case value='edit'}
+                        <button class="btn btn-info submit_btn" type="button">
+                            <i class="icon-ok bigger-110"></i>
+                            保存内容
+                        </button>
+                        <button class="btn btn-default close_page" type="button">
+                            <i class="fa fa-times bigger-110"></i>
+                            关闭页面
+                        </button>
+                        {/case}
+                        {default /}
+                        {/switch}
+                        {/notempty}
+                    </div>
+                </div>
+                <input type="hidden" name="id" id="menu_id" value="{$info.id|default=''}">
+                {if condition="!empty($info['id']) AND $info['pid'] gt 0 "}
+                <input type="hidden" name="level" id="level" value="2">
+                {else /}
+                <input type="hidden" name="level" id="level" value="1">
+                {/if}
+
+            </form>
+        </div><!-- /.row -->
+    </div><!-- /.page-content -->
+</div>
+<input type="hidden" id="submit_url" value="{:U('update')}">
+<input type="hidden" id="root_url" value="{:U('menus')}">
+{/block}
+{block name="js"}
+{js href='__common__/admin/js/wechat_menu/form.js' /}
+{/block}

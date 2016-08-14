@@ -1,0 +1,559 @@
+{extend name="base/base_new"}
+{block name="css"}
+<link rel="stylesheet" type="text/css" href="/common/plugin/mScrollbar/jquery.mCustomScrollbar.css">
+<link rel="stylesheet" type="text/css" href="/common/admin/css/common.css">
+<link rel="stylesheet" type="text/css" href="/common/admin/css/animation.css">
+<link rel="stylesheet" type="text/css" href="/common/admin/css/app.css">
+
+{/block}
+{block name="js"}
+<script type="text/javascript" src="/common/plugin/mScrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
+<script type="text/javascript" src="/common/plugin/tabs/tabs.js"></script>
+<script type="text/javascript" src="/common/admin/js/common.js"></script>
+<script type="text/javascript" >
+    $(function(){
+        app.main();
+    });
+</script>
+
+{/block}
+{block name="content"}
+<div class="main app_main">
+    <header class="tooltop">
+        <a class="t_logo" href="/index.html">
+            梦蝶一元购管理后台
+        </a>
+        <div class="t_userInfo">
+            <div class="t_new_mes">
+                <i class="iconfont">&#xe602;</i>
+                <span>8</span>
+            </div>
+            <div class="t_user_name"><a href="javascript:;">管理员</a>,您好!</div>
+        </div>
+        <a class="log_out">
+            <i class="iconfont">&#xe603;</i>
+            <span>退出</span>
+        </a>
+    </header>
+    <div class="am ">
+        <nav class="am-menu">
+            <div class="am-menu-wap">
+                <div class="am-m-top">
+                    <h4>功能菜单</h4>
+                    <i class="iconfont">&#xe609;</i>
+                </div>
+                <ul class="am-m-fm">
+
+                    <li>
+                        <a class="am-m-f-link"  >
+                            <i class="iconfont">&#xe60f;</i>
+                            <label>一元购管理</label>
+                            <span></span>
+                        </a>
+                        <ul class="am-m-cm">
+                            <li>
+                                <a  data-link="/index.php/admin/win/index.html"   >
+                                    <i class="iconfont">&#xe60a;</i>
+                                    <label>中奖记录</label>
+                                </a>
+                            </li>
+                            <li>
+                                <a  data-link="/index.php/admin/nper/index.html"  >
+                                    <i class="iconfont">&#xe60a;</i>
+                                    <label>全部期数</label>
+                                </a>
+                            </li>
+                            <li>
+                                <a  data-link="/index.php/admin/order/index.html"  >
+                                    <i class="iconfont">&#xe60a;</i>
+                                    <label>购买订单列表</label>
+                                </a>
+                            </li>
+                            <li>
+                                <a  data-link="/index.php/admin/goods/exec.html?type=add"  >
+                                    <i class="iconfont">&#xe60a;</i>
+                                    <label>添加商品</label>
+                                </a>
+                            </li>
+                            <li>
+                                <a  data-link="/index.php/admin/goods/index.html"  >
+                                    <i class="iconfont">&#xe60a;</i>
+                                    <label>全部商品</label>
+                                </a>
+                            </li>
+                            <li>
+                                <a  data-link="/index.php/admin/win/index.html"  >
+                                    <i class="iconfont">&#xe60a;</i>
+                                    <label>中奖记录</label>
+                                </a>
+                            </li>
+                            <li>
+                                <a  data-link="/index.php/admin/win/index.html"   >
+                                    <i class="iconfont">&#xe60a;</i>
+                                    <label>中奖记录</label>
+                                </a>
+                            </li>
+                            <li>
+                                <a  data-link="/index.php/admin/win/index.html"   >
+                                    <i class="iconfont">&#xe60a;</i>
+                                    <label>中奖记录</label>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="am-m-f-link">
+                            <i class="iconfont">&#xe60c;</i>
+                            <label>用户管理</label>
+                            <span></span>
+                        </a>
+                        <ul class="am-m-cm">
+                            <li>
+                                <a  data-link="/index.php/admin/win/index.html" >
+                                    <i class="iconfont">&#xe60a;</i>
+                                    <label>中奖记录</label>
+                                </a>
+                            </li>
+                            <li>
+                                <a  data-link="/index.php/admin/nper/index.html" >
+                                    <i class="iconfont">&#xe60a;</i>
+                                    <label>全部期数</label>
+                                </a>
+                            </li>
+                            <li>
+                                <a  data-link="/index.php/admin/order/index.html" >
+                                    <i class="iconfont">&#xe60a;</i>
+                                    <label>购买订单列表</label>
+                                </a>
+                            </li>
+                            <li>
+                                <a  data-link="/index.php/admin/goods/exec.html?type=add" >
+                                    <i class="iconfont">&#xe60a;</i>
+                                    <label>添加商品</label>
+                                </a>
+                            </li>
+                            <li>
+                                <a  data-link="/index.php/admin/goods/index.html" >
+                                    <i class="iconfont">&#xe60a;</i>
+                                    <label>全部商品</label>
+                                </a>
+                            </li>
+                            <li>
+                                <a  data-link="/index.php/admin/win/index.html" >
+                                    <i class="iconfont">&#xe60a;</i>
+                                    <label>中奖记录</label>
+                                </a>
+                            </li>
+                            <li>
+                                <a  data-link="/index.php/admin/win/index.html" >
+                                    <i class="iconfont">&#xe60a;</i>
+                                    <label>中奖记录</label>
+                                </a>
+                            </li>
+                            <li>
+                                <a  data-link="/index.php/admin/win/index.html" >
+                                    <i class="iconfont">&#xe60a;</i>
+                                    <label>中奖记录</label>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="am-m-f-link">
+                            <i class="iconfont">&#xe60e;</i>
+                            <label>app管理</label>
+                            <span></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="am-m-f-link">
+                            <i class="iconfont">&#xe611;</i>
+                            <label>商家管理</label>
+                            <span></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="am-m-f-link">
+                            <i class="iconfont">&#xe614;</i>
+                            <label>营销管理</label>
+                            <span></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="am-m-f-link">
+                            <i class="iconfont">&#xe613;</i>
+                            <label>0元抢管理</label>
+                            <span></span>
+                        </a>
+                        <ul class="am-m-cm">
+                            <li>
+                                <a  data-link="/index.php/admin/win/index.html" >
+                                    <i class="iconfont">&#xe60a;</i>
+                                    <label>中奖记录</label>
+                                </a>
+                            </li>
+                            <li>
+                                <a  data-link="/index.php/admin/nper/index.html" >
+                                    <i class="iconfont">&#xe60a;</i>
+                                    <label>全部期数</label>
+                                </a>
+                            </li>
+                            <li>
+                                <a  data-link="/index.php/admin/order/index.html" >
+                                    <i class="iconfont">&#xe60a;</i>
+                                    <label>购买订单列表</label>
+                                </a>
+                            </li>
+                            <li>
+                                <a  data-link="/index.php/admin/goods/exec.html?type=add" >
+                                    <i class="iconfont">&#xe60a;</i>
+                                    <label>添加商品</label>
+                                </a>
+                            </li>
+                            <li>
+                                <a  data-link="/index.php/admin/goods/index.html" >
+                                    <i class="iconfont">&#xe60a;</i>
+                                    <label>全部商品</label>
+                                </a>
+                            </li>
+                            <li>
+                                <a  data-link="/index.php/admin/win/index.html" >
+                                    <i class="iconfont">&#xe60a;</i>
+                                    <label>中奖记录</label>
+                                </a>
+                            </li>
+                            <li>
+                                <a  data-link="/index.php/admin/win/index.html" >
+                                    <i class="iconfont">&#xe60a;</i>
+                                    <label>中奖记录</label>
+                                </a>
+                            </li>
+                            <li>
+                                <a  data-link="/index.php/admin/win/index.html" >
+                                    <i class="iconfont">&#xe60a;</i>
+                                    <label>中奖记录</label>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="am-m-f-link">
+                            <i class="iconfont">&#xe60d;</i>
+                            <label>微信公共平台管理</label>
+                            <span></span>
+                        </a>
+                        <ul class="am-m-cm">
+                            <li>
+                                <a  data-link="/index.php/admin/win/index.html" >
+                                    <i class="iconfont">&#xe60a;</i>
+                                    <label>中奖记录</label>
+                                </a>
+                            </li>
+                            <li>
+                                <a  data-link="/index.php/admin/nper/index.html" >
+                                    <i class="iconfont">&#xe60a;</i>
+                                    <label>全部期数</label>
+                                </a>
+                            </li>
+                            <li>
+                                <a  data-link="/index.php/admin/order/index.html" >
+                                    <i class="iconfont">&#xe60a;</i>
+                                    <label>购买订单列表</label>
+                                </a>
+                            </li>
+                            <li>
+                                <a  data-link="/index.php/admin/goods/exec.html?type=add" >
+                                    <i class="iconfont">&#xe60a;</i>
+                                    <label>添加商品</label>
+                                </a>
+                            </li>
+                            <li>
+                                <a  data-link="/index.php/admin/goods/index.html" >
+                                    <i class="iconfont">&#xe60a;</i>
+                                    <label>全部商品</label>
+                                </a>
+                            </li>
+                            <li>
+                                <a  data-link="/index.php/admin/win/index.html" >
+                                    <i class="iconfont">&#xe60a;</i>
+                                    <label>中奖记录</label>
+                                </a>
+                            </li>
+                            <li>
+                                <a  data-link="/index.php/admin/win/index.html" >
+                                    <i class="iconfont">&#xe60a;</i>
+                                    <label>中奖记录</label>
+                                </a>
+                            </li>
+                            <li>
+                                <a  data-link="/index.php/admin/win/index.html" >
+                                    <i class="iconfont">&#xe60a;</i>
+                                    <label>中奖记录</label>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="am-m-f-link">
+                            <i class="iconfont">&#xe60b;</i>
+                            <label>提现管理</label>
+                            <span></span>
+                        </a>
+                        <ul class="am-m-cm">
+                            <li>
+                                <a  data-link="/index.php/admin/win/index.html" >
+                                    <i class="iconfont">&#xe60a;</i>
+                                    <label>中奖记录</label>
+                                </a>
+                            </li>
+                            <li>
+                                <a  data-link="/index.php/admin/nper/index.html" >
+                                    <i class="iconfont">&#xe60a;</i>
+                                    <label>全部期数</label>
+                                </a>
+                            </li>
+                            <li>
+                                <a  data-link="/index.php/admin/order/index.html" >
+                                    <i class="iconfont">&#xe60a;</i>
+                                    <label>购买订单列表</label>
+                                </a>
+                            </li>
+                            <li>
+                                <a  data-link="/index.php/admin/goods/exec.html?type=add" >
+                                    <i class="iconfont">&#xe60a;</i>
+                                    <label>添加商品</label>
+                                </a>
+                            </li>
+                            <li>
+                                <a  data-link="/index.php/admin/goods/index.html" >
+                                    <i class="iconfont">&#xe60a;</i>
+                                    <label>全部商品</label>
+                                </a>
+                            </li>
+                            <li>
+                                <a  data-link="/index.php/admin/win/index.html" >
+                                    <i class="iconfont">&#xe60a;</i>
+                                    <label>中奖记录</label>
+                                </a>
+                            </li>
+                            <li>
+                                <a  data-link="/index.php/admin/win/index.html" >
+                                    <i class="iconfont">&#xe60a;</i>
+                                    <label>中奖记录</label>
+                                </a>
+                            </li>
+                            <li>
+                                <a  data-link="/index.php/admin/win/index.html" >
+                                    <i class="iconfont">&#xe60a;</i>
+                                    <label>中奖记录</label>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="am-m-f-link">
+                            <i class="iconfont">&#xe610;</i>
+                            <label>机器人管理</label>
+                            <span></span>
+                        </a>
+                        <ul class="am-m-cm">
+                            <li>
+                                <a  data-link="/index.php/admin/win/index.html" >
+                                    <i class="iconfont">&#xe60a;</i>
+                                    <label>中奖记录</label>
+                                </a>
+                            </li>
+                            <li>
+                                <a  data-link="/index.php/admin/nper/index.html" >
+                                    <i class="iconfont">&#xe60a;</i>
+                                    <label>全部期数</label>
+                                </a>
+                            </li>
+                            <li>
+                                <a  data-link="/index.php/admin/order/index.html" >
+                                    <i class="iconfont">&#xe60a;</i>
+                                    <label>购买订单列表</label>
+                                </a>
+                            </li>
+                            <li>
+                                <a  data-link="/index.php/admin/goods/exec.html?type=add" >
+                                    <i class="iconfont">&#xe60a;</i>
+                                    <label>添加商品</label>
+                                </a>
+                            </li>
+                            <li>
+                                <a  data-link="/index.php/admin/goods/index.html" >
+                                    <i class="iconfont">&#xe60a;</i>
+                                    <label>全部商品</label>
+                                </a>
+                            </li>
+                            <li>
+                                <a  data-link="/index.php/admin/win/index.html" >
+                                    <i class="iconfont">&#xe60a;</i>
+                                    <label>中奖记录</label>
+                                </a>
+                            </li>
+                            <li>
+                                <a  data-link="/index.php/admin/win/index.html" >
+                                    <i class="iconfont">&#xe60a;</i>
+                                    <label>中奖记录</label>
+                                </a>
+                            </li>
+                            <li>
+                                <a  data-link="/index.php/admin/win/index.html" >
+                                    <i class="iconfont">&#xe60a;</i>
+                                    <label>中奖记录</label>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="am-m-f-link">
+                            <i class="iconfont">&#xe612;</i>
+                            <label>卡密管理</label>
+                            <span></span>
+                        </a>
+                        <ul class="am-m-cm">
+                            <li>
+                                <a  data-link="/index.php/admin/win/index.html" >
+                                    <i class="iconfont">&#xe60a;</i>
+                                    <label>中奖记录</label>
+                                </a>
+                            </li>
+                            <li>
+                                <a  data-link="/index.php/admin/nper/index.html" >
+                                    <i class="iconfont">&#xe60a;</i>
+                                    <label>全部期数</label>
+                                </a>
+                            </li>
+                            <li>
+                                <a  data-link="/index.php/admin/order/index.html" >
+                                    <i class="iconfont">&#xe60a;</i>
+                                    <label>购买订单列表</label>
+                                </a>
+                            </li>
+                            <li>
+                                <a  data-link="/index.php/admin/goods/exec.html?type=add" >
+                                    <i class="iconfont">&#xe60a;</i>
+                                    <label>添加商品</label>
+                                </a>
+                            </li>
+                            <li>
+                                <a  data-link="/index.php/admin/goods/index.html" >
+                                    <i class="iconfont">&#xe60a;</i>
+                                    <label>全部商品</label>
+                                </a>
+                            </li>
+                            <li>
+                                <a  data-link="/index.php/admin/win/index.html" >
+                                    <i class="iconfont">&#xe60a;</i>
+                                    <label>中奖记录</label>
+                                </a>
+                            </li>
+                            <li>
+                                <a  data-link="/index.php/admin/win/index.html" >
+                                    <i class="iconfont">&#xe60a;</i>
+                                    <label>中奖记录</label>
+                                </a>
+                            </li>
+                            <li>
+                                <a  data-link="/index.php/admin/win/index.html" >
+                                    <i class="iconfont">&#xe60a;</i>
+                                    <label>中奖记录</label>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="am-m-f-link">
+                            <i class="iconfont">&#xe615;</i>
+                            <label>配置管理</label>
+                            <span></span>
+                        </a>
+                        <ul class="am-m-cm">
+                            <li>
+                                <a  data-link="/index.php/admin/win/index.html" >
+                                    <i class="iconfont">&#xe60a;</i>
+                                    <label>中奖记录</label>
+                                </a>
+                            </li>
+                            <li>
+                                <a  data-link="/index.php/admin/nper/index.html" >
+                                    <i class="iconfont">&#xe60a;</i>
+                                    <label>全部期数</label>
+                                </a>
+                            </li>
+                            <li>
+                                <a  data-link="/index.php/admin/order/index.html" >
+                                    <i class="iconfont">&#xe60a;</i>
+                                    <label>购买订单列表</label>
+                                </a>
+                            </li>
+                            <li>
+                                <a  data-link="/index.php/admin/goods/exec.html?type=add" >
+                                    <i class="iconfont">&#xe60a;</i>
+                                    <label>添加商品</label>
+                                </a>
+                            </li>
+                            <li>
+                                <a  data-link="/index.php/admin/goods/index.html" >
+                                    <i class="iconfont">&#xe60a;</i>
+                                    <label>全部商品</label>
+                                </a>
+                            </li>
+                            <li>
+                                <a  data-link="/index.php/admin/win/index.html" >
+                                    <i class="iconfont">&#xe60a;</i>
+                                    <label>中奖记录</label>
+                                </a>
+                            </li>
+                            <li>
+                                <a  data-link="/index.php/admin/win/index.html" >
+                                    <i class="iconfont">&#xe60a;</i>
+                                    <label>中奖记录</label>
+                                </a>
+                            </li>
+                            <li>
+                                <a  data-link="/index.php/admin/win/index.html" >
+                                    <i class="iconfont">&#xe60a;</i>
+                                    <label>中奖记录</label>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <div class="menu_bot">
+                    <a>
+                        <i class="iconfont">&#xe600;</i>
+                        <span>帮助中心</span></a>
+                    <p>
+                        © Lingjiang
+                    </p>
+                </div>
+            </div>
+
+        </nav>
+        <div class="am-con">
+            <div class="am-welcome">
+                <div class="am-wcon">
+                    <div>
+                        欢迎！<br>
+                        <h2>梦蝶CMS管理后台</h2>
+                    </div>
+                </div>
+
+            </div>
+            <div id="am-tab" class="tabs">
+                <ul class="am-tabs-top">
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="t_footer">
+    <p>Powered by LingJiang tech. © 2016 | 苏ICP备16018502号-4<br>
+        徐州灵匠信息科技有限公司 版权所有</p>
+</div>
+
+
+{/block}

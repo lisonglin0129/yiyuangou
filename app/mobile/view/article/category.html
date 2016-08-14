@@ -1,0 +1,91 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>购买咨询 - 1元夺宝</title>
+	<meta name="description" content="1元夺宝，就是指只需1元就有机会获得一件商品，是基于邮箱平台孵化的新项目，好玩有趣，不容错过。" />
+    <meta name="keywords" content="1元,一元,1元夺宝,1元购,1元购物,1元云购,{:C('WEBSITE_NAME')},一元购,一元购物,一元云购,夺宝奇兵" />
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, width=device-width">
+    <link rel="shortcut icon" type="image/x-icon" href="__MOBILE_CSS__/favicon.ico.css" >
+    <link rel="icon" type="image/x-icon" href="__MOBILE_CSS__/favicon.ico.css" >
+<meta content="telephone=no" name="format-detection" />
+        <link href="__MOBILE_CSS__/common.css" rel="stylesheet" />
+        <link href="__MOBILE_CSS__/user.css" rel="stylesheet" />
+		<script src="__MOBILE_JS__/jquery.min.js"></script>
+		<script src="__MOBILE_JS__/js.js"></script>
+</head>
+
+
+
+<style>
+.ee{margin-top:3px;}
+.ee:after{visibility:hidden;height:0;content:'.';clear:both;display:block;}
+</style>
+
+
+<body class="qwe">
+{volist name="category" id="list"}
+<div class="ee" style="margin-top:0px;">
+	<div class="gr-1 w-nav-item wt-11 ah1">
+	<div class="fx hp0">?</div>{$list.name}
+	<span style="float:right;margin-right:15px;color:#a9a9a9;" class="zxc1"><i class="ico ico-next"></i></span>
+	</div>
+	<div class="bs2" style="display:none">
+        {volist name="title" id="vo"}
+        {eq name="vo.category" value="$list.id"}
+		<a href="{:U('Article/article',array('id'=>$vo.id))}"><div class="w-nav-item wt-12 jk">{$vo.title}<span style="float:right;margin-right:15px;color:#a9a9a9;" class="zxc1"><i class="ico ico-next"></i></span></div></a>
+		</a>
+        {/eq}
+        {/volist}
+	</div>
+</div>
+{/volist}
+
+<script>
+	$(function(){
+		
+		
+		 $(".ee").on("click",function(){
+			$(this).find(".bs2").toggle();
+         });
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	})
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+ 
+ 
+   
+
+   
+   
+   
+   
+   
+
+</body>
+</html>
+

@@ -1,0 +1,32 @@
+{extend name="base/base_no_menu"/}
+{block name="user_css"}
+{css href="__static__/css/register.css" /}
+{css href="__plugin__/nice-validator/jquery.validator.css" /}
+<style>
+    .show_jiyan {
+        overflow: hidden;
+        width: 315px;
+        height: 195px;
+        padding: 20px 0px 10px 20px;
+    }
+    .vacode.disabled{
+        background-color: #eee;
+        color: #aaaaaa;
+        border: 1px solid #aaaaaa;
+    }
+    .w-miniCart{
+        display:none;
+    }
+</style>
+{/block}
+{block name="title"}{$agreement.title|default=''}{/block}
+{block name="content"}
+<div class="register">
+    <div style="padding: 0 330px;margin:0 auto;">
+        {$agreement.content|default=''}
+    </div>
+</div>
+{/block}
+
+{block name='user_js'}
+{/block}

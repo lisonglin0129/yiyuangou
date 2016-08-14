@@ -1,0 +1,105 @@
+{extend name="base/base"}
+{block name="head"}
+<link rel="stylesheet" href="__MOBILE_FONTS__/iconfont.css">
+<link href="__MOBILE_CSS__/common1.css" rel="stylesheet">
+<link href="__MOBILE_CSS__/usercenter.css" rel="stylesheet">
+<script type="text/javascript"  src="__MOBILE_JS__/jquery.min.js"></script>
+<script type="text/javascript"  src="__MOBILE_JS__/indexho.js"></script>
+<script src="__common__/plugin/copy/jquery.zclip.min.js"></script>
+<!--<script>-->
+    <!--$(function(){-->
+        <!--$('#look_pic').click(function () {-->
+            <!--var obj=$(this);-->
+            <!--var qr_url=obj.attr('url');-->
+            <!--layer.open({-->
+                <!--type: 1,-->
+                <!--shade: false,-->
+                <!--title: false, //不显示标题-->
+                <!--content: '<div style="text-align:center;color:black;word-wrap:break-word;overflow:hidden"><p><img src="'+qr_url+'" style="width:300px;height:300px"></p></div>'//捕获的元素-->
+            <!--});-->
+        <!--})-->
+    <!--})-->
+<!--</script>-->
+{/block}
+{block name="main"}
+<div class="spr_modal">
+    <div class="x-lyers"></div>
+
+    <div class="y-lyers">
+        <div class="lyers-top1"></div>
+        <span class="spr_m_close"></span>
+        <ul>
+            {volist name="notice" id="vo"}
+            <li>
+                <label></label>
+                <span class="lyers-s2">{$vo.value}</span>
+            </li>
+            {/volist}
+        </ul>
+    </div>
+</div>
+
+<div class="home">
+    <!-- 头部 -->
+        <!-- 头部 -->
+
+
+    <header>
+        <a href="javascript:history.back(-1)" class="heads"><i class="icon iconfont cio1">&#xe600;</i></a>
+        <span class="heads-p">推广中心</span>
+    </header>
+
+
+    <section>
+        <div class="cen-top1">
+            <img src="{$info.img_path}" class="img1">
+            <div class="img1-le">
+                <section>{$info.nick_name} </section>
+                <section class="img1-less">当前账户：{$info.money|default="0.00"}{$m_name}</section>
+
+
+                <section>账户余额：{$info.cash|default=0.00}元</section>
+                <section>冻结余额：{$v_money|default="0.00"}元</section>
+            </div>
+            <a href="" data-href="{:U('extract/index')}" class="aa12">提现</a>
+
+               <a href="{:U('trans_xc')}"  class="use-tx1">转为{:C('MONEY_NAME')}</a>
+        </div>
+        <section class="t-detail">推广▪方式</section>
+        <div class="lianjie">
+
+            <i class="icon iconfont ico133">&#xe60f;</i>
+            <section class="lianjie-2">您的推广二维码</section>
+            <a href="{:U('me_codes')}">
+            <section class="lianjie-3"  >查看二维码</section>
+                </a>
+        </div>
+        {if condition="empty($level) eq false AND $level['status'] eq '1'"}
+        <section class="t-detail">分销▪推广</section>
+
+        <div class="mx1">
+            <a href="{:U('promote_detail')}"><section class="mx1-le">推广明细</section></a>
+           <a href="{:U('promote_reward')}"> <section class="mx1-le mx1-les">奖励模式</section></a>
+        </div>
+        {/if}
+        {if condition="empty($register) eq false AND $register['status'] eq '1'"}
+        <section class="t-detail">注册▪推广</section>
+        <div class="mx1">
+            <a href="{:U('register_detail')}"><section class="mx1-le mx1-lee1s">注册明细</section></a>
+            <a href="{:U('register_reward')}"><section class="mx1-le mx1-les mx1-lee2s">奖励模式</section></a>
+
+        </div>
+       {/if}
+    </section>
+    <input type="hidden" id="down_url" value="{:U('down_pic')}">
+    <!-- 底部 -->
+    <div class="foots"></div>
+    <footer>
+        <a href="{:U('Index/index')}" class="foots1">夺宝</a>
+        <a href="{:U('Index/all_goods', array('cate'=> '0-1'))}" class="foots2">全部商品</a>
+        <a href="{:U('Index/all_share_order')}" class="foots3">晒单</a>
+        <a href="{:U('Cart/cart_list')}" class="foots4">购物车</a>
+        <a href="{:U('Users/personal_center')}" class="foots5 act">我的</a>
+    </footer>
+</div>
+{/block}

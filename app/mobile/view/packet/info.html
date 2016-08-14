@@ -1,0 +1,100 @@
+{extend name="base/base"}
+{block name="head"}
+<link rel="stylesheet" href="__MOBILE_FONTS__/iconfont.css">
+<link href="__MOBILE_CSS__/common1.css" rel="stylesheet">
+<link href="__MOBILE_CSS__/usercenter.css" rel="stylesheet">
+<script type="text/javascript"  src="__MOBILE_JS__/jquery.min.js"></script>
+<script>
+    window.scrollFlag = true;
+    window.first = 10;
+    window.page = 1;
+    window.count='{$num}';
+    $(window).scroll(function () {
+        if (window.page < window.count) {
+            if (window.scrollFlag) {
+                if ($(document).scrollTop() >= ($('#load-more').offset().top + $('#load-more').outerHeight() - $(window).height() - 20)) {
+                    setTimeout(function(){
+                        $.ajax({
+                            url: "{:U('packet/ajax_records')}",
+                            type: 'POST',
+                            data: {
+                                offset: window.first,
+                                packet_id : $('#packet_id').val()
+                            },
+                            success: function(data, response, status){
+                                $('#load-more').before(data);
+                            }
+                        });
+                        window.scrollFlag = true;
+                        window.first += 10;
+                        window.page += 1;
+                    }, 500);
+                    window.scrollFlag = false;
+                }
+            }
+        } else {
+            $('#load-more').html('没有更多数据');
+        }
+    });
+</script>
+
+<script>
+    $(function(){
+        $('.w-wechat-open').click(function () {
+            var url=$('#knock_url').val();
+            $.post(url,{packet_id:$('#packet_id').val()},function(data){
+                if(data.code==1){
+                    layer.open({
+                        content: data.msg,
+                        time: 2
+                    });
+                    setTimeout(function(){
+                        location.href='{:U("reg",["uid"=>$uid])}';
+                    },2000)
+                }else{
+                    layer.open({
+                        content: data.msg,
+                        time: 2
+                    });
+                }
+            },'json')
+        })
+    })
+</script>
+{/block}
+{block name="main"}
+<div class="home">
+    <!-- 头部 -->
+    <header style="text-align: center" class="w-header w-headers-red" >
+        <!--<a href="javascript:;" class="heads w-swweep">关闭</a>-->
+        <span class="heads-p w-heads-p">领取{$wap_title|default=''}红包</span>
+    </header>
+    <section class="w-wechat-m">
+        <section class="w-wechat-open"></section>
+        <p class="w-wechat-p1">{$user.nick_name|default=''}的红包</p>
+        <p class="w-wechat-p2">恭喜发财，大吉大利！</p>
+        <p class="w-wechat-p3">{$packet.money|default=''}元</p>
+    </section>
+    <section class="w-wechat-sect1">
+        <span>已领{$num|default=0}/{$packet.num|default=''}个，共{$total|default=0}/{$packet.money|default=''}元</span>
+    </section>
+  {notempty name='list'}
+    {volist name='list' id='vo'}
+    <section class="w-wechat-user">
+        <img src="{$vo.wx_head|default=''}" class="w-u-img">
+        <section class="w-u-sect">
+            <p>{$vo.wx_name|default=''}</p>
+            <p>{:date('Y-m-d H:i:s',$vo['create_time'])}</p>
+        </section>
+        <section class="w-u-sect2">{$vo.money|default=''}元</section>
+    </section>
+    {/volist}
+    <p id="load-more" align="center" style="color: #333"></p>
+    {else /}
+    <p align="center" style="color: #333">暂无数据</p>
+    {/notempty}
+    <input type="hidden" id="packet_id" value="{$packet_id|default=''}">
+    <input type="hidden" id="knock_url" value="{:U('knock_packet')}">
+    <input type="hidden" id="uid" value="{$uid}">
+</div>
+{/block}

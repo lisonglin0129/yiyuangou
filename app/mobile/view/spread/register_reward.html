@@ -1,0 +1,58 @@
+{extend name="base/base"}
+{block name="head"}
+<link rel="stylesheet" href="__MOBILE_FONTS__/iconfont.css">
+<link href="__MOBILE_CSS__/common1.css" rel="stylesheet">
+<link href="__MOBILE_CSS__/indexho.css" rel="stylesheet">
+<link href="__MOBILE_CSS__/reward.css" rel="stylesheet">
+<script type="text/javascript"  src="__MOBILE_JS__/jquery.min.js"></script>
+<script type="text/javascript"  src="__MOBILE_JS__/indexho.js"></script>
+{/block}
+{block name="main"}
+<div class="home">
+    <div class="home" style="padding-top: 80px;">
+        <!-- 头部 -->
+
+        <header>
+            <a href="javascript:history.back(-1)" class="heads"><i class="icon iconfont cio1">&#xe600;</i></a>
+            <span class="heads-p">注册奖励</span>
+        </header>
+
+        {if condition="isset($register['content_mob'])"}
+        {$register.content_mob}
+       <!-- <section style="background-color:#fffae3;height:1150px;width: 750px;">
+            <div class="rewards rewards1"></div>
+            <section class="rew-sct rew-sct1">“{:C('WEBSITE_NAME')}”推行</section>
+            <section class="rew-sct rew-sct1"> “推广好友注册送现金”的奖励模式</section>
+            <section class="rew-sct2">
+                <div class="rew-sct2-left">1</div>
+                <section class="rew-sct2-right">每个用户在注册时生成一个唯一独立的推广ID</section>
+            </section>
+
+            <section class="rew-sct2 rew-sct3">
+                <div class="rew-sct2-left rew-sct2-left1">2</div>
+                <span class="rew-sct2-right2">推广链接发送给您的好友注册，立即送10元现金到您的账户，现金可以进行提现。</span>
+
+            </section>
+
+        </section>-->
+        {else /}
+        <div class="rewards" style="background: #f7f7f7"></div>
+        <section class="rew-sct">文章丢失,请联系管理员后台添加文章,并设置识别码为:REGISTER(区分大小写)</section>
+        </section>
+
+        {/if}
+
+        <!-- 底部 -->
+        <div class="foots"></div>
+        <footer>
+            <a href="{:U('Index/index')}" class="foots1">夺宝</a>
+            <a href="{:U('Index/all_goods', array('cate'=> '0-1'))}" class="foots2">全部商品</a>
+            <a href="{:U('Index/all_share_order')}" class="foots3">晒单</a>
+            <a href="{:U('Cart/cart_list')}" class="foots4">购物车</a>
+            <a href="{:U('Users/personal_center')}" class="foots5 act">我的</a>
+        </footer>
+
+    </div>
+    </div>
+    
+{/block}

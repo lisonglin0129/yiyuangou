@@ -1,0 +1,10 @@
+{volist name='list' id='vo'}
+<section class="w-wechat-user">
+    <img src="{$vo.wx_head|default=''}" class="w-u-img">
+    <section class="w-u-sect">
+        <p>{$vo.wx_name|default=''}</p>
+        <p>{:date('Y-m-d H:i:s',$vo['create_time'])}</p>
+    </section>
+    <section class="w-u-sect2">{$vo.money|default=''}元</section>
+</section>
+{/volist}

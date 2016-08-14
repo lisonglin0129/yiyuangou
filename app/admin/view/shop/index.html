@@ -1,0 +1,122 @@
+{extend name="base/base"}
+
+{block name="content"}
+<div class="page-content">
+
+    <div class="row">
+        <div class="col-xs-12 ad-index">
+            <h4>
+                <i class="ace-icon fa fa-bell"></i>
+                欢迎使用
+                <strong class="green">
+                    梦蝶后台管理系统
+                    <small>(v0.3)</small>
+                </strong>
+            </h4>
+
+            <!-- PAGE CONTENT BEGINS -->
+            <!--            <div class="alert alert-block alert-success">
+                            <button type="button" class="close" data-dismiss="alert">
+                                <i class="icon-remove"></i>
+                            </button>
+
+                            <i class="icon-ok green"></i>
+
+                        </div>-->
+            <!-- PAGE CONTENT ENDS -->
+        </div><!-- /.col -->
+    </div><!-- /.row -->
+    <div class="row ad-qbox">
+        <div class="col-sm-6">
+            <div class="widget-box">
+                <div class="widget-header widget-header-flat widget-header-small">
+                    <h5 class="widget-title">
+                        用户信息
+                    </h5>
+                </div>
+                <div class="widget-body ad-line1">
+                    <div class="widget-main">
+                        <ul class="ad-u-info">
+                            <li><label>管理账户：</label><span>{$admin_info.username}</span></li>
+                            <li><label>管理员角色：</label><span>{$admin_info.role_name|default='--'}</span><li>
+                            <li><label>上次登录时间：</label><span>{$admin_info.last_login_time|default='--'}</span><li>
+                            <li><label>上次登录IP：</label><span>{$admin_info.last_login_ip}<br></span><li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="widget-box">
+                <div class="widget-header widget-header-flat widget-header-small">
+                    <h5 class="widget-title">
+                        快捷菜单
+                    </h5>
+                </div>
+                <div class="widget-body ad-line1">
+                    <div class="widget-main">
+                        <div class="ad-qumenu">
+                            <a class="aqbtn-btn1" href="{:U('goods/exec',array('type'=>'add'))}"><span>添加商品</span></a>
+                            <a class="aqbtn-btn2" href="{:U('shop/info')}"><span>商家信息</span></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row ad-qbox">
+        <div class="col-xs-6">
+            <div class="row">
+                <div class="widget-box ad-about">
+                    <div class="widget-header widget-header-flat widget-header-small">
+                        <h5 class="widget-title">
+                            关于我们
+                        </h5>
+                    </div>
+                    <div class="widget-body ad-line2">
+                        <div class="widget-main ">
+                            <ul>
+                                <li>更新时间 ：<span>2016-01-01</span></li>
+                                <li>开发团队 ：<span>灵匠科技</span></li>
+                                <li>二次开发 ：<span>QQ: 1234567</span></li>
+                                <li>官网地址 ：<span>www.lingjiang.com</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-6">
+            <div class="widget-box sys-info">
+                <div class="widget-header widget-header-flat widget-header-small">
+                    <h5 class="widget-title">
+                        数据统计
+                    </h5>
+                </div>
+                <div class="widget-body ad-line2">
+                    <div class="widget-main">
+                        <ul>
+                            <li>商品数量 :  {$data_statistics.goods_count|default=0}</li>
+                            <li>用户数量 :  {$data_statistics.users_count|default=0}</li>
+                            <li>今日新增用户数量 :  {$data_statistics.today_user_add_count|default=0}</li>
+                            <li>今日消费金额 :  {$data_statistics.today_money|default=0}</li>
+                            <li>总消费金额 :  {$data_statistics.total_money|default=0}</li>
+                            <li>{:C('MONEY_NAME')}消费金额 :  {$data_statistics.buy_money|default=0}</li>
+                            <li>充值金额 :  {$data_statistics.charge_money|default=0}</li>
+                            <a href="{:U('shop/win_users')}"> <li>中奖用户数量 :  {$data_statistics.win_users_count|default=0}</li></a>
+                            <li>商品总销量 :  {$data_statistics.goods_sale_count|default=0}</li>
+                            <li>揭晓商品数量 :  {$data_statistics.nper_list_count|default=0}</li>
+                            <li>晒单总数 :  {$data_statistics.show_order_count|default=0}</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 以上 -->
+
+
+
+</div><!-- /.page-content -->
+{/block}

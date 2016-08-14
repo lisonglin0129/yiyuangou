@@ -1,0 +1,196 @@
+<!doctype html>
+<html>
+<head>
+    {include file="base/head" /}
+</head>
+<body>
+<div class="wrap">
+    {include file="base/header" /}
+    <section class="section">
+        <div class="step">
+            <ul class="unstyled">
+                <li class="on"><em>1</em>检测环境</li>
+                <li class="current"><em>2</em>创建数据</li>
+                <li><em>3</em>完成安装</li>
+            </ul>
+        </div>
+        <form id="form_content"  method="post">
+            <input type="hidden" name="force" value="0"/>
+            <div class="server">
+                <table width="100%">
+                    <tr>
+                        <td class="td1" width="100">数据库信息</td>
+                        <td class="td1" width="200">&nbsp;</td>
+                        <td class="td1">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td class="text-left">数据库服务器：</td>
+                        <td><input type="text" name="db_host" id="db_host" value="127.0.0.1" class="input"></td>
+                        <td>
+                            <div id="js-install-tip-dbhost">
+                                <span class="gray">数据库服务器地址，一般为localhost</span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="text-left">数据库端口：</td>
+                        <td><input type="text" name="db_port" id="db_port" value="3306" class="input"></td>
+                        <td>
+                            <div id="js-install-tip-dbport">
+                                <span class="gray">数据库服务器端口，一般为3306</span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="text-left">数据库用户名：</td>
+                        <td><input type="text" name="db_user" id="db_user" value="root" class="input"></td>
+                        <td>
+                            <div id="js-install-tip-dbuser"><span class="gray">请填写您的数据库名称</span></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="text-left">数据库密码：</td>
+                        <td><input type="password" name="db_pass" id="db_pass" value="" class="input" autoComplete="off"
+                                   onblur="TestDbPwd()"></td>
+                        <td>
+                            <div id="js-install-tip-dbpw"><span class="gray">请填写您的数据库密码</span></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="text-left">数据库名：</td>
+                        <td><input type="text" name="db_name" id="db_name" value="yiyuangou" class="input"></td>
+                        <td>
+                            <div id="js-install-tip-dbname"><span class="gray">您的数据库的库名字</span></div>
+                        </td>
+                    </tr>
+                </table>
+                <table width="100%">
+                    <tr>
+                        <td class="td1" width="100">网站配置</td>
+                        <td class="td1" width="200">&nbsp;</td>
+                        <td class="td1">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td class="text-left">网站名称：</td>
+                        <td><input type="text" name="web_name" value="梦蝶软件-香肠一元购" class="input"></td>
+                        <td>
+                            <div id="js-install-tip-sitename"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="text-left">网站域名：</td>
+                        <td><input type="text" name="domain_name" value="http://{$host|default=''}" class="input"
+                                   autoComplete="off"></td>
+                        <td>
+                            <div id="js-install-tip-siteurl">
+                                <span class="gray">请填写您的网站域名,</span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="text-left">关键词：</td>
+                        <td><input type="text" name="keywords"
+                                   value="香肠一元购，就是指用户只需要一根香肠（一元钱），就有机会获得一件商品。香肠一元购，最专业的一元购物平台，一元抢购，1元买车，1元买房，只需1元就能实现您的梦想。"
+                                   class="input" autoComplete="off"></td>
+                        <td>
+                            <div id="js-install-tip-sitekeywords"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="text-left">描述：</td>
+                        <td><input type="text" name="desc" class="input"
+                                   value="一元,一元购,一元云购,一元夺宝,一元抢购,1元购物,1元夺宝,1元抢购"></td>
+                        <td>
+                            <div id="js-install-tip-siteinfo"></div>
+                        </td>
+                    </tr>
+                </table>
+                <table width="100%">
+                    <tr>
+                        <td class="td1" width="100">创始人信息</td>
+                        <td class="td1" width="200">&nbsp;</td>
+                        <td class="td1">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td class="text-left">管理员帐号：</td>
+                        <td><input type="text" name="username" value="admin" class="input"></td>
+                        <td>
+                            <div id="js-install-tip-manager"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="text-left">密码：</td>
+                        <td><input type="password" name="password" value="admin" id="js-manager-pwd" class="input"
+                                   autoComplete="off"></td>
+                        <td>
+                            <div id="js-install-tip-manager_pwd"><span class="grey">默认密码为admin</span></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="text-left">重复密码：</td>
+                        <td><input type="password" name="re_password" value="admin" class="input" autoComplete="off">
+                        </td>
+                        <td>
+                            <div id="js-install-tip-manager_ckpwd"></div>
+                        </td>
+                    </tr>
+                </table>
+                <div id="js-response-tips" style="display: none;"></div>
+            </div>
+            <div class="bottom text-center">
+                <a href="{:U('step2')}" class="btn btn-primary">上一步</a>
+                <button type="button" class="btn btn-primary start_create">创建数据</button>
+            </div>
+        </form>
+    </section>
+    <script>
+
+    </script>
+</div>
+{include file="base/footer" /}
+<script>
+    $(function () {
+        var func = {
+            init: function () {
+
+            },
+            //检测数据库链接
+            chk_db_con: function () {
+                var url = "{:U('chk_step3')}";
+                var param = $('#form_content').serialize();
+                common.ajax_post(url, param, true, function (rt) {
+                    var obj = common.str2json(rt);
+                    if(obj.code && obj.code=='2'){
+                        layer.confirm('数据库不为空,继续操作将覆盖数据库原有数据,确定安装吗',{
+                            btn:['我确定继续安装','取消']
+                        },function(){
+                            layer.msg('正在启动安装程序,请稍等..', {icon: 1,shade:[0.4,"#aaa"]});
+                            common.delay(function(){
+                                location.href="{:U('step4')}";
+                            },1000,1);
+                        });
+                    }
+                    else{
+                        common.post_tips(rt,function(obj){
+                            layer.msg(obj.msg, {icon: 1,shade:[0.4,"#aaa"]});
+                            common.delay(function(){
+                                location.href="{:U('step4')}";
+                            },1000,1);
+                        },function(obj){
+                            layer.msg(obj.msg, {icon: 2});
+                        });
+                    }
+                },true,[0.4,'#aaa']);
+            }
+        };
+
+
+        //提交
+        $(document).on('click', '.start_create', function () {
+            func.chk_db_con();//检测数据库链接
+        });
+    });
+</script>
+
+</body>
+</html>

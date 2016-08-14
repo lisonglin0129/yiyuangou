@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{block name="title"}{$wap_config_info.title|default='--'}{/block}</title>
+    <meta name="description" content="1元夺宝，就是指只需1元就有机会获得一件商品，是基于{:C('WEBSITE_NAME')}邮箱平台孵化的新项目，好玩有趣，不容错过。" />
+    <meta name="keywords" content="1元,一元,1元夺宝,1元购,1元购物,1元云购,{:C('WEBSITE_NAME')},一元购,一元购物,一元云购,夺宝奇兵" />
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, width=device-width">
+    <link href="__MOBILE_CSS__/common.css"  rel="stylesheet" />
+    {block name="head"}引入外部文件{/block}
+</head>
+<body>
+
+{block name="main"}页面主题部分{/block}
+
+<div class="menu1"></div>
+{if condition="!isset($_GET['a'])"}
+<div class="menu2">
+    <ul>
+        <a href="{:U('Index/index')}" class="img166 img171 {if condition='!empty($index)'}act{/if}">夺宝</a>
+        <a href="{:U('Index/all_goods', array('cate'=> '0-1'))}" class="img166 img172 {if condition='!empty($all_goods_cate)'}act{/if}">全部商品</a>
+        <a href="{:U('Index/all_share_order')}" class="img166 img173 {if condition='!empty($shareOrder)'}act{/if}">晒单</a>
+        <a href="{:U('Cart/cart_list')}" class="img166 img171 img174 {if condition='!empty($cart_select)'}act{/if}">购物车</a>
+        <a href="{:U('Users/personal_center')}" class="img166 img175 {if condition='!empty($personal_center)'}act{/if}">我的</a>
+    </ul>
+</div>
+{/if}
+
+{js href='__common__/plugin/layer_mobile/layer.js' /}
+
+<!--{js href='__common__/plugin/layer/layer.js' /}-->
+
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1259010002'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s95.cnzz.com/z_stat.php%3Fid%3D1259010002%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+</body>
+</html>

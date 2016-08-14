@@ -1,0 +1,231 @@
+{extend name="base/base_new"}
+{block name="css"}
+<link rel="stylesheet" type="text/css" href="/common/plugin/mScrollbar/jquery.mCustomScrollbar.css">
+<link rel="stylesheet" type="text/css" href="/common/admin/css/home.css">
+<link rel="stylesheet" type="text/css" href="/common/admin/css/common.css">
+{/block}
+{block name="js"}
+<script type="text/javascript" src="/common/plugin/mScrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
+<script type="text/javascript" src="/common/admin/js/common.js"></script>
+{/block}
+{block name="content"}
+<div class="main">
+    <header class="tooltop">
+        <a class="t_logo" href="/index.html">
+            梦蝶一元购管理后台
+        </a>
+        <div class="t_userInfo">
+            <a class="t_new_mes">
+                <i class="iconfont">&#xe602;</i>
+                <span>8</span>
+            </a>
+            <div class="t_user_name"><a href="javascript:;">管理员</a>,您好!</div>
+        </div>
+        <a class="log_out">
+            <i class="iconfont">&#xe603;</i>
+            <span>退出</span>
+        </a>
+    </header>
+    <nav class="t_menu">
+        <ul>
+            <li class="active">
+                <a href="index.html">首&nbsp;&nbsp;页</a>
+            </li>
+            <li>
+                <a href="index.html">一元购管理</a>
+            </li>
+            <li>
+                <a href="index.html">提现管理</a>
+            </li>
+            <li>
+                <a href="index.html">用户管理</a>
+            </li>
+            <li>
+                <a href="index.html">0元抢管理</a>
+            </li>
+            <li>
+                <a href="index.html">营销管理</a>
+            </li>
+            <li>
+                <a href="index.html">商家管理</a>
+            </li>
+            <li>
+                <a href="index.html">机器人管理</a>
+            </li>
+            <li>
+                <a href="index.html">卡密管理</a>
+            </li>
+            <li>
+                <a href="index.html">配置管理</a>
+            </li>
+        </ul>
+    </nav>
+    <section class="t_banner">
+        <div class="ba-main">
+            <img src="/common/admin/images/avater.png">
+            <div class="bam-text">
+                <h4><span>管理员</span>,欢迎您!</h4>
+                <div class="bam-loginfo">
+                    <h6>上次登录时间:<span>2015-12-30</span>|上次登录IP:<span>192.100.100.122</span></h6>
+                    <p>角色:<span>管理员</span></p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="index_main">
+        <div class="im-quickmenu">
+            <div class="im-title">
+                今日统计
+            </div>
+            <div class="im-qm iqm-income">
+                <span class="iqm-logo">
+                    <i class="iconfont">&#xe604;</i>
+                </span>
+                <div class="iqm-text">
+                    <h4 class="iqm-t-val">
+                        <label>1234</label>
+                        <span>元</span>
+                    </h4>
+                    <label>今日帐户收入</label>
+                </div>
+            </div>
+            <div class="im-qm iqm-neworder">
+                <span class="iqm-logo">
+                    <i class="iconfont">&#xe606;</i>
+                </span>
+                <div class="iqm-text">
+                    <h4 class="iqm-t-val">
+                        <label>1234</label>
+                        <span>元</span>
+                    </h4>
+                    <label>今日新增订单</label>
+                </div>
+            </div>
+            <div class="im-qm iqm-newgoods">
+                <span class="iqm-logo">
+                    <i class="iconfont">&#xe607;</i>
+                </span>
+                <div class="iqm-text">
+                    <h4 class="iqm-t-val">
+                        <label>1234</label>
+                        <span>元</span>
+                    </h4>
+                    <label>今日新增商品</label>
+                </div>
+            </div>
+            <div class="im-qm iqm-newusers">
+                <span class="iqm-logo">
+                    <i class="iconfont">&#xe601;</i>
+                </span>
+                <div class="iqm-text">
+                    <h4 class="iqm-t-val">
+                        <label>1234</label>
+                        <span>元</span>
+                    </h4>
+                    <label>今日新增用户</label>
+                </div>
+            </div>
+        </div>
+        <div class="im-notice ">
+            <div class="imo-top">
+                <span class="imo-logo">
+                    <i class="iconfont icon-animated-vertical">&#xe608;</i>
+                    系统通知
+                </span>
+                <h4 class="imo-num">
+                    12345
+                </h4>
+            </div>
+            <div class="m_scrollbar imo-list">
+                <ul>
+                    <li>
+                        <span></span>
+                        <div class="imo-text">
+                            <h4>机器人 sdfasdf 未晒单, 请晒单!</h4>
+                            <p>2015-01-01</p>
+                        </div>
+                    </li>
+                    <li>
+                        <span></span>
+                        <div class="imo-text">
+                            <h4>机器人 sdfasdf 未晒单, 请晒单!</h4>
+                            <p>2015-01-01</p>
+                        </div>
+                    </li>
+                    <li>
+                        <span></span>
+                        <div class="imo-text">
+                            <h4>机器人 sdfasdf 未晒单, 请晒单!</h4>
+                            <p>2015-01-01</p>
+                        </div>
+                    </li>
+                    <li>
+                        <span></span>
+                        <div class="imo-text">
+                            <h4>机器人 sdfasdf 未晒单, 请晒单!</h4>
+                            <p>2015-01-01</p>
+                        </div>
+                    </li>
+                    <li>
+                        <span></span>
+                        <div class="imo-text">
+                            <h4>机器人 sdfasdf 未晒单, 请晒单!</h4>
+                            <p>2015-01-01</p>
+                        </div>
+                    </li>
+                    <li>
+                        <span></span>
+                        <div class="imo-text">
+                            <h4>机器人 sdfasdf 未晒单, 请晒单!</h4>
+                            <p>2015-01-01</p>
+                        </div>
+                    </li>
+                    <li>
+                        <span></span>
+                        <div class="imo-text">
+                            <h4>机器人 sdfasdf 未晒单, 请晒单!</h4>
+                            <p>2015-01-01</p>
+                        </div>
+                    </li>
+                    <li>
+                        <span></span>
+                        <div class="imo-text">
+                            <h4>机器人 sdfasdf 未晒单, 请晒单!</h4>
+                            <p>2015-01-01</p>
+                        </div>
+                    </li>
+                    <li>
+                        <span></span>
+                        <div class="imo-text">
+                            <h4>机器人 sdfasdf 未晒单, 请晒单!</h4>
+                            <p>2015-01-01</p>
+                        </div>
+                    </li>
+                    <li>
+                        <span></span>
+                        <div class="imo-text">
+                            <h4>机器人 sdfasdf 未晒单, 请晒单!</h4>
+                            <p>2015-01-01</p>
+                        </div>
+                    </li>
+                    <li>
+                        <span></span>
+                        <div class="imo-text">
+                            <h4>机器人 sdfasdf 未晒单, 请晒单!</h4>
+                            <p>2015-01-01</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+    <div class="t_footer">
+        <p>Powered by LingJiang tech. © 2016 | 苏ICP备16018502号-4<br>
+            徐州灵匠信息科技有限公司 版权所有</p>
+    </div>
+</div>
+
+
+
+{/block}

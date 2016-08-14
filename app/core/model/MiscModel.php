@@ -1,0 +1,23 @@
+<?php
+namespace app\core\model;
+//杂项统一归类
+Class MiscModel
+{
+    public $m_misc;
+    public function __construct()
+    {
+        $this->m_misc = M();
+    }
+    //首页轮播图
+    public function get_home_promo($type){
+        $home_promo = $this->m_misc
+            ->table('sp_home_carouse h')
+            ->field('h.*,i.img_path')
+            ->join('sp_image_list i ON i.id = h.image_id')
+            ->where(['platform'=>$type,'flag'=>1])
+            ->order('sort desc')
+            ->select();
+
+        return $home_promo;
+    }
+}

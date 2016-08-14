@@ -1,0 +1,63 @@
+{extend name="base/base"}
+{block name="head"}
+<link rel="stylesheet" href="__MOBILE_FONTS__/iconfont.css">
+<link href="__MOBILE_CSS__/common1.css" rel="stylesheet">
+<link href="__MOBILE_CSS__/promote.css" rel="stylesheet">
+<link href="__MOBILE_CSS__/patt.css" rel="stylesheet">
+<script type="text/javascript"  src="__MOBILE_JS__/jquery.min.js"></script>
+<script src="__MOBILE_JS__/records.js"></script>
+<style>
+
+</style>
+{/block}
+{block name="main"}
+<div class="home home_ht">
+
+    <header>
+        <a href="javascript:history.back(-1)" class="heads headss"><i class="icon iconfont cio1">&#xe600;</i></a>
+        <span class="heads-p">兑换香肠币</span>
+    </header>
+
+
+    <section class="pattsss">
+       <p class="sau_p">你将得到200根香肠币</p>
+        <section class="sau_sect">
+            <span class="sau_sp">20</span>
+            <section class="sau_s_s">
+              <span class="sau_red">兑换的香肠币可用户平台夺宝</span>
+              <span class="sau_sp2">兑换时间：2016-05-06</span>
+              <span class="sau_sp2">兑换时间：2016-05-06</span>
+            </section>
+            <section class="sau_sect2">
+                   香肠币
+            </section>
+        </section>
+
+    
+        <a href="" class="affirm">确认兑换</a>
+
+       
+
+      
+
+      
+
+
+
+
+
+    </section>
+
+    <!-- 底部 -->
+    <div class="foots"></div>
+    <footer>
+        <a href="{:U('Index/index')}" class="foots1">夺宝</a>
+        <a href="{:U('Index/all_goods', array('cate'=> '0-1'))}" class="foots2">全部商品</a>
+        <a href="{:U('Index/all_share_order')}" class="foots3">晒单</a>
+        <a href="{:U('Cart/cart_list')}" class="foots4">购物车</a>
+        <a href="{:U('Users/personal_center')}" class="foots5 act">我的</a>
+    </footer>
+
+</div>
+{/block}
+

@@ -1,0 +1,10 @@
+<?php
+//000000003600a:18:{s:12:"website_name";s:14:"51幸运夺宝";s:15:"website_keyword";s:88:"一元,一元购,一元云购,一元夺宝,一元抢购,1元购物,1元夺宝,1元抢购";s:12:"website_desc";s:236:"
+香肠一元购，就是指用户只需要一根香肠（一元钱），就有机会获得一件商品。香肠一元购，最专业的一元购物平台，一元抢购，1元买车，1元买房，只需1元就能实现您的梦想。";s:17:"website_tongji_bd";s:54:"<script>
+console.log('WEBSITE_TONGJI_BD');
+</script>";s:19:"website_tongji_cnzz";s:56:"<script>
+console.log('WEBSITE_TONGJI_CNZZ');
+</script>";s:17:"website_tongji_ym";N;s:13:"website_beian";s:22:"苏ICP备16018502号-4";s:15:"website_welcome";s:7:"welcome";s:12:"website_logo";s:40:"http://www.51db888.com/static/img/pc.png";s:16:"website_logo_sub";s:43:"http://www.51db888.com/static/img/logo2.png";s:20:"website_company_name";s:12:"公司名称";s:20:"website_company_link";s:1:"#";s:14:"website_qrcode";s:43:"http://www.51db888.com/static/img/logo2.png";s:18:"website_sina_weibo";s:1:"#";s:16:"website_qq_group";s:101:"http://shang.qq.com/wpa/qunwpa?idkey=c7e63addc1fd74214c8cee2d17b168c19a8202f8d13b42bd8561b2113be57930";s:11:"website_url";s:22:"http://www.51db888.com";s:18:"website_avatar_def";s:1:"1";s:18:"website_tongji_wap";s:56:"<script>
+console.log('WEBSITE_TONGJI_CNZZ');
+</script>";}
+?>

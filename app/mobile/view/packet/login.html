@@ -1,0 +1,112 @@
+{extend name="base/base"}
+{block name="head"}
+<link rel="stylesheet" href="__MOBILE_FONTS__/iconfont.css">
+<link href="__MOBILE_CSS__/common1.css" rel="stylesheet">
+<link href="__MOBILE_CSS__/usercenter.css" rel="stylesheet">
+<script type="text/javascript"  src="__MOBILE_JS__/jquery.min.js"></script>
+<script>
+
+    /**
+     * TODO 弹出框美化
+     * 点击登录按钮
+     */
+    $(function(){
+        function checkPhone() {
+            return $("#phone").val().match(/^((1)\d{10})$/) ? true : false;
+        }
+        $('.login').click(function () {
+            if($('#phone').val() == '') {
+                layer.open({
+                    content: '不得为空',
+                    time: 1 //1秒后自动关闭
+                });
+                return;
+            }
+            if($('#pwd').val() == '') {
+                layer.open({
+                    content: '密码不得为空',
+                    time: 1 //1秒后自动关闭
+                });
+                return;
+            }
+            if(!checkPhone()) {
+                layer.open({
+                    content: '手机号码不符合规范，请重新填写',
+                    time: 1
+                });
+                return false;
+            }
+
+            $.ajax({
+                url : $('#login-url').val(),
+                type : 'POST',
+                data : {
+                    phone : $('#phone').val(),
+                    password : $('#pwd').val()
+                },
+                beforeSend : function () {
+
+                },
+                success : function (data, response, status) {
+
+
+                    var response_data = $.parseJSON(data);
+
+
+
+                    if (response_data.status == 'fail') {
+                        layer.open({
+                            content: response_data.message,
+                            time: 1
+                        });
+                        return;
+                    }
+                    if(response_data.status == 'success') {
+                        layer.open({
+                            content: '登录成功',
+                            time: 1
+                        });
+                        window.location.href = '{:U("qr_code")}';
+                    }
+                }
+            });
+
+
+        });
+    })
+
+
+</script>
+{/block}
+{block name="main"}
+<div class="home">
+    <!-- 头部 -->
+    <header style="text-align: center" class="w-header w-headers-red" >
+        <!--<a href="javascript:;" class="heads w-swweep">关闭</a>-->
+        <span class="heads-p w-heads-p">领取{$wap_title|default=''}红包</span>
+    </header>
+
+    <section class="red-user-se red-user-se1s">
+        <img src="{:session('share_head')}" class="red_user red_users"/>
+        <p class="red-user-p1">{:session('share_nick_name')}的红包</p>
+        <p class="red-user-p2">{:session('money')} <span class="red-user-p2-s">元</span></p>
+        <p class="red-user-p3">领取金额：{:session('money')}元，注册{$wap_title|default=''}，</p>
+        <p class="red-user-p3"> 关注微信公众号，把现金带回家。</p>
+    </section>
+    <div style="width: 750px;height: 20px;background-color: #ededed"></div>
+
+
+        <section class="red-user-se2">
+            <input type="phone" class="red-user-inp1s"  id="phone" placeholder="请输入您的手机号码"/>
+            <span class="red-user-span1s">手机号：</span>
+        </section>
+        <section class="red-user-se2 red-user-se3">
+            <input type="password" class="red-user-inp1s"  id="pwd" placeholder="请输入您密码" />
+            <span class="red-user-span1s">密码：</span>
+        </section>
+
+        <input type="button" class="red-user-inp login"  value="立即领取" />
+
+</div>
+<input type="hidden" value="{:U('OtherUsers/login')}" id="login-url"/>
+{/block}

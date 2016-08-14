@@ -1,0 +1,23 @@
+<a class="pd-t-btn-all" href="{:U('promote_detail')}">全部记录</a>
+<table width="100%"  border="0" class="pro-table" align="center" cellpadding="0" cellspacing="0">
+    <tr align="center">
+        <th>下级用户</th>
+        <th>推广收益</th>
+        <th>具体记录</th>
+    </tr>
+    {notempty name="list['data']"}
+    {volist name="list['data']" id="vo"}
+    <tr align="center" class="even">
+        <td>{$vo.level}级用户({$vo.level_count}人)</td>
+        <td>￥{$vo.reward}</td>
+        <td class="">
+            <a class="pd-t-btn pd-t-btn-detail" level="{$vo.level}">查看详情</a>
+        </td>
+    </tr>
+    {/volist}
+    {else /}
+    <tr class="address-bar f-clear" style="text-align: center;padding-top: 40px;">
+       <td> 暂无数据</td>
+    </tr>
+    {/notempty}
+</table>

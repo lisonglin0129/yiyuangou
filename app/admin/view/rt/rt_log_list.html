@@ -1,0 +1,64 @@
+
+
+
+
+<table id="sample-table-1" class="table table-striped table-bordered table-hover">
+    <thead>
+    <tr>
+        <th>类型</th>
+        <th style="width: 250px;">购买用户</th>
+        <th style="width: 250px;">购买用户昵称</th>
+        <th>数量</th>
+        <th>商品名称</th>
+        <th>期数ID</th>
+        <th>购买时间</th>
+        <th>状态</th>
+        <th>信息</th>
+    </tr>
+    </thead>
+    <tbody>
+    {volist name='list' id='vo'}
+    {if condition='!empty($vo["id"])'}
+    <tr>
+        {eq name="vo.type" value="gen"}
+        <td>循环生成</td>
+        {else/}
+        <td>购买</td>
+        {/eq}
+        <td>({$vo.uid|default='--'}) <span class="label label-default" style="font-weight: bold">{$vo.username|default='--'}</span></td>
+        <td>{$vo.nick_name|default='--'}</td>
+        <td>{$vo.num|default='--'}</td>
+        <td>({$vo.gid|default='--'}){$vo.goods_name|default='--'}</td>
+        <td>{$vo.nid|default='--'}</td>
+        <td>
+            {notempty name='vo.time'}
+            {$vo.time|date='Y-m-d H:i:s',###}
+            {else /}--
+            {/notempty}
+
+        </td>
+        <td>
+            {notempty name='vo.stat'}
+            {switch name='vo.stat'}
+            {case value='-1'}错误{/case}
+            {case value='0'}未执行{/case}
+            {case value='1'}完成{/case}
+            {default/}--
+            {/switch}
+            {else/}--
+            {/notempty}
+        </td>
+        <td>{$vo.msg|default='--'}</td>
+    </tr>
+    {/if}
+    {/volist}
+    </tbody>
+</table>
+<input type="hidden" id="submit" value="{:U('Order/update_order_status')}"/>
+<input type="hidden" id="trigger_url" value="{:U('core/gdfc/open_by_nper')}"/>
+<div class="page">
+    {$pages|default=''}
+</div>
+
+{js href='__common__/admin/js/nper/show_list.js' /}
+

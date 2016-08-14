@@ -1,0 +1,74 @@
+{extend name="base/base"/}
+{block name="user_css"}
+<!--第三方验证代码-->
+{:C('UNION_QQ_VERIFY_CODE')}
+{css href="__static__/css/join_history.css" /}
+{/block}
+{block name="title"}{:C('WEBSITE_NAME')}，一元任性买 ！{/block}
+{block name='content'}
+
+<div class="join_his">
+    <div class="join_his_block">
+        <div class="jh_top">
+            <h4>一元购历史记录</h4>
+        </div>
+
+        <div class="jh_table">
+            <ul class="jht_th">
+                <li class="jh-t">时间</li>
+                <li class="jh-name">账号</li>
+                <li class="jh-title">商品名称</li>
+                <li class="jh-count">购买次数</li>
+            </ul>
+            <ul class="jht_td">
+                <li class="jh-t">2013-1-1</li>
+                <li class="jh-name"><a href="">用户名</a></li>
+                <li class="jh-title"><a href="">商品名称</a></li>
+                <li class="jh-count">购买次数</li>
+            </ul>
+            <ul class="jht_td">
+                <li class="jh-t">2013-1-1</li>
+                <li class="jh-name"><a href="">用户名</a></li>
+                <li class="jh-title"><a href="">商品名称</a></li>
+                <li class="jh-count">购买次数</li>
+            </ul>
+            <ul class="jht_td">
+                <li class="jh-t">2013-1-1</li>
+                <li class="jh-name"><a href="">用户名</a></li>
+                <li class="jh-title"><a href="">商品名称</a></li>
+                <li class="jh-count">购买次数</li>
+            </ul>
+            <ul class="jht_td">
+                <li class="jh-t">2013-1-1</li>
+                <li class="jh-name"><a href="">用户名</a></li>
+                <li class="jh-title"><a href="">商品名称</a></li>
+                <li class="jh-count">购买次数</li>
+            </ul><ul class="jht_td">
+            <li class="jh-t">2013-1-1</li>
+            <li class="jh-name"><a href="">用户名</a></li>
+            <li class="jh-title"><a href="">商品名称</a></li>
+            <li class="jh-count">购买次数</li>
+        </ul><ul class="jht_td">
+            <li class="jh-t">2013-1-1</li>
+            <li class="jh-name"><a href="">用户名</a></li>
+            <li class="jh-title"><a href="">商品名称</a></li>
+            <li class="jh-count">购买次数</li>
+        </ul>
+            <ul class="jht_td">
+                <li class="jh-t">2013-1-1</li>
+                <li class="jh-name"><a href="">用户名</a></li>
+                <li class="jh-title"><a href="">商品名称</a></li>
+                <li class="jh-count">购买次数</li>
+            </ul>
+
+
+        </div>
+    </div>
+</div>
+<input type="hidden" id="join_history_link" value="{:U('index/join_history')}" />
+{/block}
+
+{block name="user_js"}
+{js href='__static__/js/count.js' /}
+{js href="__yyg__/js/index/join_history.js" /}
+{/block}

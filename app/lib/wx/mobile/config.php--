@@ -1,0 +1,30 @@
+<?php
+/* use \app\admin\model\ConfModel;
+function getConfigs($flag) {
+	$conf = new ConfModel();
+	$conf_list = $conf->get_conf_list();
+
+	foreach($conf_list['category_arr'] as $k =>$key ) {
+		foreach($key as $ks) {
+			if($ks['name'] == $flag) {
+				return $ks;
+			}
+		}
+	}
+	exit;
+}
+
+ */
+
+class Config{
+	private $cfg = array(
+        'url'=>'https://pay.swiftpass.cn/pay/gateway',
+        'mchId'=>'7551000001',
+        'key'=>'9d101c97133837e13dde2d32a5054abb',
+        'version'=>'1.0'
+	);
+	public function C($cfgName){
+		return $this->cfg[$cfgName];
+	}
+}
+?>

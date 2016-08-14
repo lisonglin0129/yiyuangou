@@ -1,0 +1,11 @@
+{extend name="base/common"}
+{block name="title"}1元夺宝 - 常见问题{/block}
+{block name="head"}
+<link href="__MOBILE_CSS__/help.css" rel="stylesheet" />{/block}
+
+
+{block name="main"}
+<div style="padding: 19px">
+{$content|default='暂无内容,请联系管理员,添加一篇识别码为:help的文章'}
+</div>
+{/block}

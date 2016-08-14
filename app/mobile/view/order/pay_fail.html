@@ -1,0 +1,52 @@
+
+{extend name="base/common"}
+
+{block name="head"}
+<link href="__MOBILE_CSS__/user.css"  rel="stylesheet" />
+<script src="__MOBILE_JS__/jquery.min.js"></script>
+<script src="__MOBILE_JS__/js.js"></script>
+<style>
+    body{font-family:Microsoft YaHei;}
+</style>
+
+
+
+{/block}
+
+
+
+
+
+{block name="main"}
+
+
+
+
+
+
+<div class="m-user" id="dvWrapper">
+
+    <div class="m-simpleHeader" id="dvHeader">
+      <a href="javascript:history.go(-1);" data-pro="back" data-back="true" class="m-simpleHeader-back"><i class="ico ico-back"></i></a>
+      <a href="{:U('Index/index')}" data-pro="ok" class="m-simpleHeader-ok" id="aHome"><i class="ico ico-home"></i></a>
+      <h1>支付结果</h1>
+	</div>
+
+	<div class="zfjg-nav1">
+		<section class="zfjg-set zfjg-set1">
+			{if condition="$status == 2"}
+				开通业务失败
+			{else /}
+			很抱歉,操作失败了:支付失败
+			{/if}
+		</section>
+	
+		<div class="zfjg-bot zfjg-bot1">
+			<a href="{:U('Index/index')}"><div class="zfjg-bot-left">返回首页</div></a>
+			<a href="{:U('Index/index')}"><div class="zfjg-bot-left zfjg-bot-right">返回继续购买</div></a>
+		</div>
+	</div>
+
+</div>      
+
+{/block}

@@ -1,0 +1,30 @@
+{extend name="base/base_no_menu"/}
+{block name="title"}微信支付{/block}
+{block name="user_css"}
+{css href="__static__/css/payment.css" /}
+{/block}
+{block name='content'}
+<div class="g-wrap">
+	<div class="m-weixin-header">
+		<p><strong>请您及时付款，以便订单尽快处理！订单号：{$order_id|default=''}</strong></p>
+		<p>请您在提交订单后30分钟内支付，否则订单会自动取消。</p>
+	</div>
+
+	<div class="m-weixin-main">
+		<h1 class="m-weixin-title">微信支付</h1>
+		<p class="m-weixin-money">扫一扫付款<br><strong>&yen;{$total_fee|default=''}</strong>
+		</p>
+		<p>
+			<img id="code" class="m-weixin-code" src="{:U('core/api/qr_base64',['text'=>base64_encode($code_url)])}" alt="二维码" width="260" height="260">
+			<img class="m-weixin-demo" src="__static__/img/weixin_0.png" alt="扫一扫">
+			<img src="__static__/img/weixin_1.png" alt="请使用微信扫描二维码以完成支付">
+		</p>
+	</div>
+</div>
+<input type="hidden" id="order_id" value="{$order_id|default=''}">
+<input type="hidden" id="url_pay_result" value="{:U('yyg/pay/pay_result',['id'=>$order_id])}">
+<input type="hidden" id="check_pay_status" value="{:U('core/pay/check_pay_status')}"><!--检测付款状态-->
+{/block}
+{block name="user_js"}
+{js href="__yyg__/js/pay/charge_wxscan.js" /}
+{/block}

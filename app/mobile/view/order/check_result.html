@@ -1,0 +1,73 @@
+{extend name="base/common"}
+
+{block name="head"}
+<link href="__MOBILE_CSS__/user.css"  rel="stylesheet" />
+<script src="__MOBILE_JS__/jquery.min.js"></script>
+<script src="__MOBILE_JS__/js.js"></script>
+<style>
+    body{font-family:Microsoft YaHei;}
+
+</style>
+
+{/block}
+
+{block name="main"}
+<script>
+    $(function(){
+        var index_chk_pay_result;
+        var step =0;
+
+        index_chk_pay_result = window.setInterval(function(){
+            step = step+1;
+            if ( step <= 1) {
+                $.ajax({
+                    url:$("#check_pay_status").val(),
+                    data:{order:$("#order_id").val()},
+                    type:'POST',
+                    success:function (rt) {
+                        var obj = JSON.parse(rt);
+                        if(obj.code == 1) {
+                            layer.open({
+                                content: '开通成功!',
+                            });
+
+                           window.location.href=$("#success").val();
+                        }
+
+                    }
+
+                });
+            } else {
+                var data = {transdata :$("#transdata").text()};
+                $.ajax({
+                    url: $("#check_res").val(),
+                    data: data,
+                    type: 'GET',
+                    success: function (rt) {
+                        var obj = JSON.parse(rt);
+                        if (obj.code == 100) {
+                            window.location.href=$("#success").val();
+                        } else {
+                            window.location.href=$("#fail").val();
+                        }
+
+                    }
+                })
+            }
+
+        },3000);
+
+    });
+</script>
+    <img src="__MOBILE_IMG__/loading2.gif">
+    <span>请等待,您的业务正在努力开通中,如遇开通失败,请联系网站客服处理..</span>
+
+<input type="hidden" id="check_pay_status" value="{:U('core/pay/check_pay_status')}"><!--检测付款状态-->
+<input type="hidden" id="order_id" value="{$order_id|default=''}">
+<input type="hidden" id="success" value="{:U('order/pay_success')}">
+<input type="hidden" id="fail" value="{:U('order/pay_fail')}">
+<input type="hidden" id="check_res" value="{:U('check_res')}">
+<textarea id="transdata" style="display: none">{$transdata|default=''}</textarea>
+
+{/block}
+

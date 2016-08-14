@@ -1,0 +1,164 @@
+{extend name="base/base" /}
+{block name="content"}
+<div class="page-content">
+    <div class="page-header">
+        <h1>
+            菜单
+            <small>
+                <i class="icon-double-angle-right"></i>
+                {switch name='type'}
+                {case value='add'}添加{/case}
+                {case value='edit'}编辑{/case}
+                {default /}查看
+                {/switch}
+            </small>
+        </h1>
+    </div><!-- /.page-header -->
+
+    <div class="row">
+        <div class="col-xs-12">
+            <!-- PAGE CONTENT BEGINS -->
+            <form class="form-horizontal" role="form" id="form_content">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right"> 商品 </label>
+                    <div class="col-sm-6">
+                        <input type="text" placeholder="" class="col-xs-10 col-sm-5" name="goods_name" value="{$info.goods_name|default=''}" disabled="disabled"/>
+                        <span class="help-inline col-xs-12 col-sm-7">
+						    <span class="middle">({$info.goods_id|default=''})</span>
+                        </span>
+                    </div>
+                </div>
+                <div class="space-4"></div>
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right"> 时间间隔 </label>
+                    <div class="col-sm-6">
+                        <input type="text" placeholder="请输入" class="col-xs-10 col-sm-5" name="interval" value="{$info.interval|default='300'}"/>
+                    </div>
+                </div>
+                <div class="space-4"></div>
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right"> 参与人次 </label>
+                    <div class="col-sm-6">
+                        <input type="text" placeholder="请输入" class="col-xs-10 col-sm-5" name="num_count" value="{$info.num_count|default='100'}"/>
+                    </div>
+                </div>
+                <div class="space-4"></div>
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right"> 最小购买次数 </label>
+                    <div class="col-sm-6">
+                        <input type="text" placeholder="请输入" class="col-xs-10 col-sm-5" name="num_min" value="{$info.num_min|default=$info.min_times}" readonly="readonly"/>
+                    </div>
+                </div>
+                <div class="space-4"></div>
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right"> 最大购买次数 </label>
+                    <div class="col-sm-6">
+                        <input type="text" placeholder="请输入" class="col-xs-10 col-sm-5" name="num_max" value="{$info.num_max|default=100}"/>
+                    </div>
+                </div>
+                <div class="space-4"></div>
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right"> 是否作弊 </label>
+                    <div class="col-sm-6">
+                        <select class="col-xs-10 col-sm-5" data-placeholder="请选择" name="cheat">
+                            {eq name="info.cheat" value="true"}
+                            <option value="true" selected="selected">是</option>
+                            <option value="false">否</option>
+                            {else/}
+                            <option value="true">是</option>
+                            <option value="false" selected="selected">否</option>
+                            {/eq}
+                        </select>
+                    </div>
+                </div>
+                <div class="space-4"></div>
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right"> 循环 </label>
+                    <div class="col-sm-6">
+                        <select class="col-xs-10 col-sm-5" data-placeholder="请选择" name="loop">
+                        {eq name="info.loop" value="true"}
+                        <option value="true" selected="selected">是</option>
+                        <option value="false">否</option>
+                        {else/}
+                        <option value="true">是</option>
+                        <option value="false" selected="selected">否</option>
+                        {/eq}
+                        </select>
+                    </div>
+                </div>
+                <div class="space-4"></div>
+                <!--操作按钮-->
+                <div class="clearfix form-actions">
+                    <div class="col-md-offset-3 col-md-9">
+                        {switch name='type'}
+                        {case value='add'}
+                        <button class="btn btn-info submit_btn" type="button">
+                            <i class="icon-ok bigger-110"></i>
+                            提交表单
+                        </button>
+                        &nbsp; &nbsp; &nbsp;
+                        <button class="btn" type="reset">
+                            <i class="icon-undo bigger-110"></i>
+                            重置
+                        </button>
+                        &nbsp; &nbsp; &nbsp;
+                        <button class="btn btn-default close_page" type="button">
+                            <i class="fa fa-times bigger-110"></i>
+                            关闭页面
+                        </button>
+                        {/case}
+                        {case value='edit'}
+                        <button class="btn btn-info submit_btn" type="button">
+                            <i class="icon-ok bigger-110"></i>
+                            保存内容
+                        </button>
+                        {eq name="info.enable" value="true"}
+                        <button class="btn btn-warning stop_btn" type="button">
+                            <i class="icon-stop bigger-110"></i>
+                            停止任务
+                        </button>
+                        {else/}
+                        <button class="btn btn-success start_btn" type="button">
+                            <i class="icon-play bigger-110"></i>
+                            生成任务
+                        </button>
+                        {/eq}
+                        <button class="btn btn-default close_page" type="button">
+                            <i class="fa fa-times bigger-110"></i>
+                            关闭页面
+                        </button>
+                        {/case}
+                        {default /}
+                        {/switch}
+                    </div>
+                </div>
+                <input type="hidden" name="id" value="{$info.id|default=''}">
+                <input type="hidden" name="gid" value="{$info.goods_id|default=''}">
+                <input type="hidden" name="min_times" value="{$info.min_times|default=''}">
+                <input type="hidden" name="sum_times" value="{$info.sum_times|default=''}">
+                <input type="hidden" name="max_times" value="{$info.max_times|default=''}">
+                <input type="hidden" name="enable" value="{$info.enable|default='false'}">
+            </form>
+        </div><!-- /.row -->
+    </div><!-- /.page-content -->
+</div>
+<input type="hidden" id="submit_url" value="{:U('update')}">
+<input type="hidden" id="save_and_start" value="{:U('save_and_start')}">
+<input type="hidden" id="save_and_stop" value="{:U('save_and_stop')}">
+<input type="hidden" id="root_url" value="{:U('index')}">
+<input type="hidden" id="upload_url" value='{:U("core/api/up_img")}'/>
+{/block}
+{block name="js"}
+{js href='__common__/admin/js/rt/form.js' /}
+
+<script>
+$(function(){
+});
+</script>
+{/block}

@@ -1,0 +1,46 @@
+{extend name="base/common"}
+
+{block name="title"}夺宝客服 - 1元夺宝{/block}
+{block name="head"}
+<link rel="shortcut icon" type="image/x-icon" href="__MOBILE_CSS__/favicon.ico.css" />
+<link rel="icon" type="image/x-icon" href="__MOBILE_CSS__/favicon.ico.css"/>
+<meta content="telephone=no" name="format-detection" />
+<link href="__MOBILE_CSS__/user.css" rel="stylesheet" />
+<script src="__MOBILE_JS__/jquery.min.js"></script>
+<script src="__MOBILE_JS__/js.js"></script>
+{/block}
+
+
+{block name="main"}
+<div class="m-user ad2" id="dvWrapper">
+    <div class="m-simpleHeader" id="dvHeader">
+        <a href="javascript:history.go(-1);" data-pro="back" data-back="true" class="m-simpleHeader-back"><i class="ico ico-back"></i></a>
+        <h1>夺宝客服</h1>
+    </div>
+	 <div class="db8">
+		<div class=" dbkf-left h0">新手指南</div>
+         {volist name="article" id="vo"}
+         {if condition="$vo.is_hide != 1"}
+         <a href="{:U('Article/article',array('id'=>$vo.id))}">
+         <div class="w-nav-item  dbkf-left dbkf-left2 co">{$vo.title}</div>
+         </a>
+         {/if}
+         {/volist}
+	 </div>
+	 
+</div>
+
+
+
+
+<script>
+
+    $('.w-nav-item').eq(0).removeClass('co');
+    $('.w-nav-item').eq(1).removeClass('co')
+
+</script>
+
+
+
+{/block}
+

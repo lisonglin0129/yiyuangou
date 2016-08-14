@@ -1,0 +1,69 @@
+
+
+
+<table id="sample-table-1" class="table table-striped table-bordered table-hover">
+    <thead>
+    <tr>
+        <th class="center">
+            <label>
+
+                <input type="checkbox" class="ace check_all"/>
+
+
+                <span class="lbl"></span>
+            </label>
+        </th>
+        <th>用户名</th>
+        <th>下级用户</th>
+        <th>用户等级</th>
+        <th>消费日期</th>
+        <th>消费金额</th>
+        <th>奖励金额</th>
+        <th>奖励积分</th>
+        <th>发放状态</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    {volist name='promote_list' id='vo'}
+    {if condition='!empty($vo["id"])'}
+    <tr>
+        <td class="center">
+
+            <label>
+
+                <input type="checkbox" class="ace check" data-id="{$vo['id']}"/>
+
+                <span class="lbl"></span>
+            </label>
+        </td>
+
+        <td>{$vo.spread_username|default=''}</td>
+        <td>{$vo.level_username|default='--'}</td>
+        <td>{$vo.level|default='--'}</td>
+        <td>{:date('Y-m-d',$vo['create_time'])}</td>
+        <td>{$vo.total|default='--'}</td>
+        <td>{$vo.reward|default='--'}</td>
+        <td>{$vo.reward_score|default='0'}</td>
+        <td class="status">{if condition="$vo['status'] eq 1"}已发放{else /}<button class="btn btn-success btn-sm audit_single" data-id="{$vo['id']}">发放</button>{/if}</td>
+        <td>
+            <button class="btn btn-xs btn-danger delete_promote" data-id="{$vo['id']}" title="删除">
+                <i class="icon-trash bigger-120"></i>
+            </button>
+        </td>
+
+
+
+    </tr>
+    {/if}
+    {/volist}
+    <tr><td>合计</td><td></td><td></td><td></td><td></td><td>{$total}</td><td>{$reward}</td><td>{$reward_score}</td><td></td><td></td></tr>
+    </tbody>
+</table>
+<!--<input type="hidden" id="audit_all" value="{:U('show_order/audit_all_status')}"/>-->
+<div class="page">
+    {$pages|default=''}
+</div>
+
+{js href='__common__/admin/js/spread/promote.js' /}
+

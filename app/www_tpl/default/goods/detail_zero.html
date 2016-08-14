@@ -1,0 +1,240 @@
+{extend name="base/base"/}
+{block name="title"}{$g_info.name}{/block}
+{block name="user_css"}
+{css href="__static__/css/detail.css" /}
+{css href="__static__/css/swiper.min.css" /}
+<style>
+    html,body{background-color: #f9f9f9}
+    .luck_num {
+        color: #fff;
+        background: #f36;
+    }
+
+    .list-join {
+        text-align: left;
+        color: #aaa;
+        font-size: 17px;
+    }
+</style>
+{/block}
+{block name='content'}
+<div class="g-body g-bodys">
+  
+    <div class="g-wrap g-body-hd f-clear">
+            <div class="g-main">
+                <div class="w-dir" style="font-weight: 700;">
+                    <a href="/">首页</a> &gt;{notempty name='cat_name'} <a href="{:dwz_filter('lists/index',['category'=>$g_info['category']])}">{$cat_name}</a> &gt; {/notempty}<span
+                        class="txt-gray">第{$now_issue|num_base_mask|default=''}期 {$g_info.name}</span>
+                </div>
+
+                <div class="detail-Information">
+                    <h1 class="detail-h1"><span>（第52355期）</span>Apple iMac  27英寸配备  Retina 5K  显示屏  MK482CH/A</h1>
+                    <h2 class="detail-h1">一元夺宝期号：10003273    每满总需999人次，即抽取1人获得该商品<i class="iconfont detail-ico">&#xe66d;</i></h2>
+                    <div class="detail-sect">
+                        <div class="swiper-container">
+                            <div class="swiper-wrapper">
+                                <div class="swiper-slide"><img src="img/b31.jpg"></div>
+                                <div class="swiper-slide"><img src="img/b31.jpg"></div>
+                                <div class="swiper-slide"><img src="img/b31.jpg"></div>
+                                <div class="swiper-slide"><img src="img/b31.jpg"></div>
+                                <div class="swiper-slide"><img src="img/b31.jpg"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="detail-partin">
+                     <div class="partin-left">
+                        <div class="partin-left1"></div>
+                        <h1 class="partin-h1">参与偶数夺宝</h1>
+
+                        <section class="partin-sect">
+                            <div class="partin-1"><div class="partin-1s"></div></div>
+                            <span class="partin-1-span">58.8%</span>
+                            <section class="partin-sevt1">
+                                <i class="iconfont detail-ico1">&#xe66e;</i>
+                                <span>支持人数</span>
+                                <span class="partin-sp1">1588人</span>
+                                <i class="iconfont detail-ico1">&#xe668;</i>
+                                <span>总需人数</span>
+                                <span class="partin-sp1">1588人</span>
+                            </section>
+                        </section>
+
+                        <section class="partin-sects1">
+                            <span class="partin-span2s">参与人次</span>
+                            <input type='button' onclick='aplus()' value='+' class="partin-inpt"/>
+                           <!--  <span id='num1'> 1 </span> -->
+
+                            <input type="number" value="0" id="num1"/>
+                            <input type='button' onclick='aplus1()' value='-' class="partin-inpt"/>
+                            <span class="partin-span3s">每次参与1元，参与次数需是10的倍数</span>    
+                        </section>
+
+                        <section class="partin-sect5s">
+                            <a href="" class="partin-a"><i class="iconfont detail-ico2">&#xe664;</i>0元抢宝</a>
+                             <a href="" class="partin-a partin-as"><i class="iconfont detail-ico2 detail-ico2s">&#xe66f;</i>加入清单</a>
+                        </section>
+                     </div>
+
+
+
+
+
+                    
+                     <div class="partin-left partin-right">
+                        <div class="partin-left1 partin-right1"></div>
+                        <h1 class="partin-h1">参与奇数夺宝</h1>
+
+                        <section class="partin-sect">
+                            <div class="partin-1"><div class="partin-1s"></div></div>
+                            <span class="partin-1-span">58.8%</span>
+                            <section class="partin-sevt1">
+                                <i class="iconfont detail-ico1">&#xe66e;</i>
+                                <span>支持人数</span>
+                                <span class="partin-sp1">1588人</span>
+                                <i class="iconfont detail-ico1">&#xe668;</i>
+                                <span>总需人数</span>
+                                <span class="partin-sp1">1588人</span>
+                            </section>
+                        </section>
+
+                        <section class="partin-sects1">
+                            <span class="partin-span2s">参与人次</span>
+                            <input type='button' onclick='plus()' value='+' class="partin-inpt"/>
+                           <!--  <span id='num'> 1 </span> -->
+                              <input type="number" value="0" id="num"/>
+                            <input type='button' onclick='plus1()' value='-' class="partin-inpt"/>
+                            <span class="partin-span3s">每次参与1元，参与次数需是10的倍数</span>    
+                        </section>
+
+                        <section class="partin-sect5s">
+                            <a href="" class="partin-a"><i class="iconfont detail-ico2">&#xe664;</i>0元抢宝</a>
+                             <a href="" class="partin-a partin-as"><i class="iconfont detail-ico2 detail-ico2s">&#xe66f;</i>加入清单</a>
+                        </section>
+                     </div>
+                </div>
+
+                <div class="detail-table">
+                    <div class="detail-table-top1">
+                        <ul>
+                                <li class="det-li" style="color: red">夺宝记录</li>
+                                <li class="det-li">商品详情</li>
+                                <li class="det-li"> <span class="li-span2">晒 单</span><span class="li-span1">123</span></li>
+                                <li class="det-li">往期夺宝</li>
+                        </ul>
+                    </div>
+
+                    <div class="detail-table-top2 detail-table-top2s" style="display: block;">
+                        <div class="evenNumber-left">
+                            <div class="evenNumber-top1"><div class="arrow-right1s"> </div>  偶数夺宝记录 </div>
+
+                            <div class="detailLeft1s clr">
+
+                                    <div class="asdff">
+                                        <section class="detailLeft1s-se3 clr">
+                                            <span class="detailLeft1s-span1">382920asasfdasfdasfdfafasfd20202</span>
+                                            <span class="detailLeft1s-span2">参与了10次</span>
+                                        </section>
+                                        <section class="detailLeft1s-se">
+                                            上海市宝山区电信 IP：58.41.71.92 拷贝 2
+                                        </section>
+                                    </div>
+                                        <div class="detailLeft1s-se1">
+                                         <img src="" class="detal-img"/>
+                                         12:00:00
+                                    </div>
+                            </div>  
+
+
+                            <div class="detailLeft1s clr">
+
+                                    <div class="asdff">
+                                        <section class="detailLeft1s-se3 clr">
+                                            <span class="detailLeft1s-span1">382920asasfdasfdasfdfafasfd20202</span>
+                                            <span class="detailLeft1s-span2">参与了10次</span>
+                                        </section>
+                                        <section class="detailLeft1s-se">
+                                            上海市宝山区电信 IP：58.41.71.92
+                                        </section>
+                                    </div>
+                                        <div class="detailLeft1s-se1">
+                                         <img src="" class="detal-img"/>
+                                         12:00:00
+                                    </div>
+                            </div>  
+
+                        </div>
+
+                        <div class="evenNumber-main">
+                                <div class="rounds"></div>
+                                <div class="rounds-line"></div>
+                        </div>
+                        <div class="evenNumber-right">
+                             <div class="evenNumber-top1 evenNumber-top1s"><div class="arrow-left1s"> </div>奇数夺宝记录</div>
+
+                             <div class="detailLeft1s detailLeft1s1 clr">
+                                 <div class="detailLeft1s-se1 detailLeft1s-se1s">
+                                             <img src="" class="detal-img detal-imgs"/>
+                                             12:00:00
+                                 </div>
+                                    <div class="asdff">
+                                        <section class="detailLeft1s-se3 clr">
+                                            <span class="detailLeft1s-span1">382920asasfdasfdasfdfafasfd20202</span>
+                                            <span class="detailLeft1s-span2">参与了10次</span>
+                                        </section>
+                                        <section class="detailLeft1s-se">
+                                            上海市宝山区电信 IP：58.41.71.92
+                                        </section>
+                                    </div>
+                                       
+                            </div>  
+
+
+                        </div>
+
+                    </div>
+                    <div class="detail-table-top2 detail-main1" >2222
+                             <!--  <h1 class="detail-table-top2-mian1">酸牛奶配送服务说明</h1> 
+                              <p>1、本商品默认由京东物流负责配送发货，物流无法配送的区域，用户可选择换购本商城同等价位的商品（一件或多件），或选择补差价换购高价位商品。</p>
+                              <p>2、由于业务发展变化、行政区域更名等因素，配送区域可能会不时有扩大、变更或调整，具体区域请以京东最新确认为准。</p>
+                              <p>3、由于商品存在厂家更换包装、不同批次、不同生产日期、不同生产工厂等情况，导致商品实物与图片存在微小差异，因此请您以收到的商品实物为准，同时我们会尽量做到及时更新，由此给您带来不便敬请谅解，谢谢。</p> -->
+                    </div>
+                    <div class="detail-table-top2">333</div>
+                    <div class="detail-table-top2">444</div>
+
+                </div>
+
+
+            </div>
+    </div>    
+
+    
+</div>
+{js href='__static__/js/swiper.min.js' /}
+<!--  -->
+
+<input type="hidden" id="get_calc_result_list" value="{:U('get_calc_result_list')}"><!--夺宝参与记录-->
+<input type="hidden" id="get_deposer_list" value="{:U('get_deposer_list')}"><!--夺宝参与记录-->
+<input type="hidden" id="get_delivery_list" value="{:U('get_delivery_list')}"><!--晒单-->
+<input type="hidden" id="get_history_list" value="{:U('get_history_list')}"><!--往期夺宝-->
+<input type="hidden" id="see_luck_num" value="{:U('see_luck_num')}"><!--获取用户购买幸运数字-->
+
+<input type="hidden" id="nper_id" value="{$n_info.id|default='0'}"><!--期数id-->
+<input type="hidden" id="goods_id" value="{$g_info.id|default='0'}"><!--商品id-->
+<input type="hidden" id="luck_uid" value="{$n_info.luck_uid|default='0'}"><!--幸运用户id-->
+
+<input type="hidden" id="add_to_cart_url" value="{:U('core/pay/add_to_cart')}"><!--添加到购物车-->
+<input type="hidden" id="quick_buy_url" value="{:U('Pay/quick_buy')}"><!--幸运用户id-->
+<input type="hidden" id="nper_open_api" value="{:U('core/Gdfc/open_by_nper')}"><!--开奖api-->
+<input type="hidden" id="nper_status" value="{$n_info['status']|default=1}"><!--开奖状态-->
+
+{/block}
+
+{block name="user_js"}
+{js href='__static__/js/goods/detail.js' /}
+{js href='__static__/js/img_modal.js' /}
+{js href="__yyg__/js/goods/detail.js" /}
+{js href="__static__/js/count_down.js" /}
+
+{/block}

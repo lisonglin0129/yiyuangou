@@ -1,0 +1,177 @@
+{extend name="base/common"}
+
+{block name="title"}
+幸运纪录
+{/block}
+
+{block name="head"}
+<link rel="stylesheet" href="__MOBILE_FONTS__/iconfont.css" xmlns="http://www.w3.org/1999/html">
+<link href="__MOBILE_CSS__/user.css" rel="stylesheet"/>
+<link href="__MOBILE_CSS__/reward.css" rel="stylesheet"/>
+<script src="__MOBILE_JS__/jquery.min.js"></script>
+<script src="__MOBILE_JS__/jquery.mobile-1.4.5.min.js"></script>
+<script src="__MOBILE_JS__/js.js"></script>
+<script>
+    $(function () {
+        $(document).on('click', '.card_prize', function () {
+            var obj = $(this);
+            var status = obj.data('status');
+            var win_id = obj.data('val');
+            var reward = obj.data('reward');
+            if (status >= 4) {
+                $.post($('#card_detail').val(), {win_id: win_id, reward: reward}, function (data) {
+                    if (data.code == 1) {
+                        $('.person_layers').html(data.html);
+                        $('.person_layers').show();
+                        $("body").addClass("n-clear");
+                    } else {
+                        layer.msg('获取数据失败');
+                    }
+                }, 'json')
+            } else {
+                location.href = '{:U("card/trans")}' + '?id=' + win_id;
+            }
+
+        });
+        $(document).on('click', '.win_exchanges', function () {
+            location.href=$(this).data('url');
+        })
+
+
+    })
+</script>
+
+
+{/block}
+
+
+{block name="main"}
+<div class="person_layers">
+    <section class="per_layers"></section>
+    <section class="per_layers_exchange">
+
+        <section class="per_section">
+            <h1 class="per_close_h1">您已兑换香肠币</h1>
+
+            <p>恭喜您</p>
+
+            <p> 恭喜您！兑换了<span id="money">100</span>元香肠币</p>
+            <section class="per_close_img"></section>
+        </section>
+        <div style="clear: both;"></div>
+        <div class="per_close">确定</div>
+    </section>
+</div>
+
+<div class="active win-active" id="dvWrapper">
+
+    <div class="m-simpleHeader" id="dvHeader">
+        <a href="javascript:history.go(-1);" data-pro="back" data-back="true" class="m-simpleHeader-back"><i
+                class="ico ico-back"></i></a>
+
+        <h1>幸运纪录</h1>
+    </div>
+
+
+    {empty name="orderList"}
+
+    {else /}
+
+
+    {volist name="orderList" id="vo"}
+    <div class="per_win">
+        <!--<a href="" class="win_exchanges">兑换  <i class="icon iconfont cio1s">&#xe60d;</i></a>-->
+        <a href="{:wap_dwz_filter('Buy/prize_info_confirm',array('win_record_id'=>$vo['win_record_id']))}">
+            <div class="xyjl-nav">
+
+                {if condition="!empty($vo['reward_type']) AND !empty($vo['reward_data']) AND $vo['reward_type'] eq 1 AND ($vo['prize_status'] lt 4 OR empty($vo['prize_status']))"}
+                <a href="javascript:;" class="win_exchanges" data-url="{:wap_dwz_filter('card/trans',['id'=>$vo['win_record_id']])}">兑换  <i class="icon iconfont cio1s">&#xe60d;</i></a>
+                {/if}
+                <a data-status="{$vo.prize_status|default=''}" data-val="{$vo.win_record_id|default=''}" data-reward="{$vo.reward_data|default=''}" {if condition="!empty($vo['reward_type']) AND $vo['reward_type'] eq 1"}href="javascript:;" class="card_prize" {else/}href="{:U('Buy/prize_info_confirm',array('win_record_id'=>$vo['win_record_id']))}"{/if}>
+                <div class="xyjl-nav">
+
+                    <div class="xyjl-nav1">
+                        <img src="{$vo.img_path}" class="xyjl-img" />
+                        <div class="xyjl-nav2">
+                            <section>{$vo.name}</section>
+                            <section style="color:#a19695;">总需：{$vo.sum_times|default='--'}人次</section>
+                            <section style="color:#a19695;">期号：{$vo.nper_id|num_base_mask=0|default='--'}</section>
+                            <section>幸运号码：{$vo.luck_num|default='--'}</section>
+                            <section>揭晓时间：{$vo.open_time|default='--'}</section>
+
+                            {if condition="$vo['luck_type'] eq 1"}
+                            {switch name="vo.prize_status"}
+
+                            {case value="0"}
+                            {if condition="!empty($vo['reward_type']) AND $vo['reward_type'] eq 1"}
+                            <section>商品状态：<span style="color:red">等待确认兑换方式</span></section>
+                            {else/}
+                            <section>商品状态：<span style="color:red">等待确认收货信息</span></section>
+                            {/if}
+                            {/case}
+
+                            {case value="1"}
+                            {if condition="!empty($vo['reward_type']) AND $vo['reward_type'] eq 1"}
+                            <section>商品状态：<span style="color:red">等待确认兑换方式</span></section>
+                            {else/}
+                            <section>商品状态：<span style="color:red">确认收货地址</span></section>
+                            {/if}
+                            {/case}
+
+                            {case value="2"}
+                            <section>商品状态：<span style="color:red">商品派发...</span></section>
+                            {/case}
+
+                            {case value="3"}
+                            <section>商品状态：<span style="color:red">确认收货</span></section>
+                            {/case}
+
+                            {case value="4"}
+                            <section>商品状态：<span style="color:red">已签收</span></section>
+                            {/case}
+                            {case value="5"}
+                            <section>商品状态：<span style="color:red">已签收</span></section>
+                            {/case}
+                            {default /}
+                            <section>商品状态：<span style="color:red">商品状态错误</span></section>
+                            {/switch}
+                            {else /}
+                            <section>商品状态：<span style="color:red">已完成</span></section>
+
+                            {/if}
+
+                        </div>
+
+                        <!--<a href=""><div class="xyjl-right"></div></a>-->
+                    </div>
+
+                </div>
+        </a>
+    </div>
+
+
+
+
+    {/volist}
+
+<div class="get-ajax-content"></div>
+
+
+{/empty}
+
+
+    <input id="ajax_person_indiana" type="hidden" value="{:U('buy/ajax_personal_win_record')}">
+    <input id="card_detail" type="hidden" value="{:U('card/ajax_detail')}">
+    <input id="pi_type" type="hidden" value="get-ajax-content">
+    <section class="zh-1">已经没有更多</section>
+
+
+
+
+
+    <div class="clear"></div>
+
+</div>
+<input type='hidden' id="win_record" value="1">
+
+{/block}

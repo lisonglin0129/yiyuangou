@@ -1,0 +1,79 @@
+{extend name="base/base"}
+{block name="head"}
+<link rel="stylesheet" href="__MOBILE_FONTS__/iconfont.css">
+<link href="__MOBILE_CSS__/common1.css" rel="stylesheet">
+<link href="__MOBILE_CSS__/promote.css" rel="stylesheet">
+<link href="__MOBILE_CSS__/patt.css" rel="stylesheet">
+<script type="text/javascript"  src="__MOBILE_JS__/jquery.min.js"></script>
+<script src="__MOBILE_JS__/records.js"></script>
+<script>
+    $(function(){
+        $('.affirm').click(function () {
+            $(this).attr('disabled','disabled');
+            $.post($('#trans_url').val(),{win_id:$('#win_id').val(),money:$('#money').val()}, function (data) {
+                   if(data.code==1){
+                     location.href='{:U("trans_success")}';
+                   }else{
+                       layer.msg(data.msg);
+                   }
+            },'json')
+        })
+    })
+</script>
+<style>
+
+</style>
+{/block}
+{block name="main"}
+<div class="home home_ht">
+
+    <header>
+        <a href="javascript:history.back(-1)" class="heads headss"><i class="icon iconfont cio1">&#xe600;</i></a>
+        <span class="heads-p">兑换{$money_name|default=''}</span>
+    </header>
+
+
+    <section class="pattsss">
+        <p class="sau_p">你将得到{:intval($card['money'])}{$money_unit|default=''}{$money_name|default=''}</p>
+        <section class="sau_sect">
+            <span class="sau_sp">{:intval($card['money'])}</span>
+            <section class="sau_s_s">
+                <span class="sau_red">兑换的{$money_name|default=''}可适用于平台夺宝</span>
+                <!--<span class="sau_sp2"></span>-->
+                <!--<span class="sau_sp2">兑换时间：2016-05-06</span>-->
+            </section>
+            <section class="sau_sect2">
+                {$money_name|default=''}
+            </section>
+        </section>
+
+        <input type="hidden" id="trans_url" value="{:U('do_trans')}">
+        <input type="hidden" id="win_id" value="{$card.win_id|default=''}">
+        <input type="hidden" id="money" value="{$card.money|default=''}">
+        <a href="javascript:;" class="affirm">确认兑换</a>
+
+
+
+
+
+
+
+
+
+
+
+    </section>
+
+    <!-- 底部 -->
+    <div class="foots"></div>
+    <footer>
+        <a href="{:U('Index/index')}" class="foots1">夺宝</a>
+        <a href="{:U('Index/all_goods', array('cate'=> '0-1'))}" class="foots2">全部商品</a>
+        <a href="{:U('Index/all_share_order')}" class="foots3">晒单</a>
+        <a href="{:U('Cart/cart_list')}" class="foots4">购物车</a>
+        <a href="{:U('Users/personal_center')}" class="foots5 act">我的</a>
+    </footer>
+
+</div>
+{/block}
+

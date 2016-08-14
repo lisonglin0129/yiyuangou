@@ -1,0 +1,70 @@
+{extend name='base/base' /}
+{block name='content'}
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('breadcrumbs', 'fixed')
+        } catch (e) {
+        }
+    </script>
+
+    <ul class="breadcrumb">
+        <li>
+            <i class="icon-home home-icon"></i>
+            <a href="javascript:">后台管理</a>
+        </li>
+        <li class="active">分销推广</li>
+    </ul><!-- .breadcrumb -->
+
+
+</div>
+
+<div class="page-content">
+    <div class="page-header">
+        <form id="form_condition" class="form-search">
+            <div class="row">
+                <div class="col-xs-6 col-sm-4">
+                    <div class="input-group">
+                        <select class="form-control fc-select" id="form-field-select-1" name="status">
+                            <option value="">全部</option>
+                            <option value="1">已发放</option>
+                            <option value="2">未发放</option>
+                        </select>
+
+                        <input class="form-control search-query fc-input" placeholder="请输入用户名" type="text" name="keywords">
+						<span class="input-group-btn">
+							<button type="button" class="btn btn-purple btn-sm search_btn">
+                                搜索
+                                <i class="icon-search icon-on-right bigger-110"></i>
+                            </button>
+						</span>
+                        <span class="input-group-btn">
+                            <button class="btn btn-success btn-sm audit_all">批量发放</button>
+                            <button class="btn btn-danger btn-sm del_all">批量删除</button>
+						</span>
+
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <!-- PAGE CONTENT BEGINS -->
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="table-responsive">
+                        <div id="form_content" data-url="{:U('promote_show_list')}"></div>
+                    </div><!-- /.table-responsive -->
+                </div><!-- /span -->
+            </div><!-- /row -->
+        </div><!-- /.col -->
+    </div><!-- /.row -->
+</div><!-- /.page-content -->
+<input type="hidden" id="submit" value="{:U('spread/update_promote_status')}"/>
+
+{/block}
+
+{block name="js"}
+{js href='__common__/admin/js/spread/index.js' /}
+{/block}

@@ -1,0 +1,29 @@
+
+
+{notempty name="indiana_array_doing"}
+
+{volist name="indiana_array_doing" id="vo"}
+
+<div class="zx-1 zx-0">
+    {if condition="$vo.code eq 'shiyuanduobao'"}
+    <img class="ico ico-label ico-label-goods w-cbn" src="__MOBILE_STATIC__/img/icon_ten.png">
+    {/if}
+    <img src="{$vo.img_path}" class="img123"/>
+    <div class="xz-3">
+        <section><a href="{:U('Goods/goods_detail',array('nper_id'=>$vo['nper_id']))}">{$vo.name}</a></section>
+        <section style="color:#999;">期号：{$vo.nper_id|num_base_mask=0}</section>
+        正在揭晓中，请稍等...
+        <div class="canyu">
+            <section style="float:left">总需<span>{$vo.sum_times}</span></section><section style="float:right;margin-top:-2px;"></section>
+        </div>
+        <div class="canyu">
+            <section style="float:left">参与人次：<span class="cs1">{$vo.join_num}</span>人次</section>
+            <!--<section style="float:right" class="se">-->
+            <!--<a href="../../app/mobile/view/cart/qd.html">追加</a>-->
+            <!--</section>-->
+        </div>
+    </div>
+</div>
+
+{/volist}
+{/notempty}

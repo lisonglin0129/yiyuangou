@@ -1,0 +1,784 @@
+
+
+{extend name="base/common"}
+
+{block name="title"}
+幸运详情
+{/block}
+
+{block name="head"}
+<meta name="viewport" content="width=640,user-scalable=no,target-densitydpi=device-dpi">
+<link href="__MOBILE_CSS__/style1.css"  rel="stylesheet" />
+<script src="__MOBILE_JS__/jquery.min.js"></script>
+<script src="__MOBILE_JS__/jquery.min.js" ></script>
+<style>
+    html,body{width:100%;height:100%;}
+    .menu2{
+        height: 90px;
+    }
+    .img166 {
+    width: 20%;
+    height: 55px;
+    display: block;
+    float: left;
+    line-height: 142px;
+    text-align: center;
+    background-position:50% 12px;
+    background-size: 49px 42px;
+  }
+.menu2 {
+    position: fixed;
+    z-index: 3;
+    bottom: 0px;
+    width: 100%;
+    height: 90px;
+    border-top: 1px solid #ccc;
+    background-color: #fff;
+    font-size: 20px;
+ }
+.img174 {
+    background-position:46% 9px;
+    background-size: 49px 42px;
+    color: #999;
+}
+</style>
+
+
+{/block}
+
+
+{block name="main"}
+
+
+
+
+
+
+
+<div class="body123">
+
+
+    <!--弹出框+遮罩层开始-->
+    <div class="body321" style="display: none;"></div>
+    <div class="body213" style="display: none;">
+        <div class="tcc5">请选择收货地址</div>
+
+        {notempty name="win_status.address_list"}
+
+            {volist name="win_status.address_list" id="data"}
+                <div class="tcc">
+                    <input type="hidden" class="address-list-id" value="{$data.address_id}"/>
+                    <span class="tcc1 address-name">{$data.name}</span>
+                    <span class="tcc2 address-phone">{$data.phone}</span>
+                    <section class="tcc3 address-detail">{$data.provice}{$data.city}{$data.area}{$data.address}</section>
+                </div>
+            {/volist}
+
+        {/notempty}
+
+
+
+
+    </div>
+
+    <!--弹出框+遮罩层结束-->
+
+
+<div class="ddjl-top1">
+		<a href="{:U('Buy/personal_win_record')}">幸运记录</a>
+		<span style="">信息确认</span>
+	</div>
+   {if condition="$win_status['goods_info']['luck_type'] eq 1"}
+    {switch name="win_status.now_status"}
+
+
+    {case value="1"}
+
+
+        <div class="dljl-nav">
+        <div class="dljl-nav1">
+
+            <div class="dljl-nav1-top1" style="background:none">
+                <div class="dljl-nav1-top1right dljl-nav2">
+                    <section>商品状态</section>
+
+                </div>
+            </div>
+
+            <div class="dljl-nav1-top1 dljl-nav1-top5">
+                <div class="dljl-nav1-top1left dljl-nav1-top1left1" style="background-color:#666;"></div>
+                <div class="dljl-nav1-top1right dljl-nav1-top1right1">
+                    <section>获得商品</section>
+                    <section>{$win_status.status_info[0]['create_time']}</section>
+                </div>
+            </div>
+
+
+
+
+
+
+
+
+
+
+            {empty name="win_status.default_address"}
+
+                <!--新增未确认收货地址-->
+                    <div class="dljl-nav1-top1 dljl-nav1-top6">
+                        <div class="dljl-nav1-top1left" style="background-color:red;"></div>
+                        <div class="dljl-nav1-top1right dljl-nav1-top1right1">
+                            <section>确认收货地址</section>
+                            <section class="yqrdz" style="">
+                                <a href="{:U('Users/add_address')}">新增地址</a>
+                            </section>
+
+                        </div>
+                    </div>
+                <!--新增未确认收货地址结束-->
+            {else /}
+
+                <!--未确认收货地址-->
+                <div class="dljl-nav1-top1 dljl-nav1-top5 dljl-nav1-top1right51">
+
+                    <div class="dljl-nav1-top1left" style="background-color:red;"></div>
+                    <div class="dljl-nav1-top1right dljl-nav1-top1right-new" id="default-address">
+                        <input type="hidden" id="address-id" value="{$win_status.default_address.address_id}"/>
+                        <div class="qrsh-1">确认收货地址</div>
+                        <div class="qrsh-2">
+                            <span class="address-name">{$win_status.default_address.name}</span>
+                            <span class="address-phone">{$win_status.default_address.phone}</span>
+                        </div>
+                        <div class="qrsh-2 address-detail">{$win_status.default_address.provice}{$win_status.default_address.city}{$win_status.default_address.area}{$win_status.default_address.address}</div>
+                        <div class="qrsh-2 qrsh-3">
+                            <a href=""><div class="qrsh-30-left" id="address-submit">确认</div></a>
+                            <a href=""><div class="qrsh-30-left qrsh-30-right" id="other-address">使用其他</div></a>
+                        </div>
+                    </div>
+                </div>
+                <!--未确认收货地址结束-->
+
+            {/empty}
+
+
+
+            <div class="dljl-nav1-top1">
+                <div class="dljl-nav1-top1left dljl-nav1-top1left1"></div>
+                <div class="dljl-nav1-top1right ddjl-set">
+                    <section style="color:#ccc;">商品派发</section>
+
+                </div>
+
+            </div>
+            <!--未确认收货--->
+            <div class="dljl-nav1-top1 dljl-nav1-top2">
+                <div class="dljl-nav1-top1left dljl-nav1-top1left1"></div>
+                <div class="dljl-nav1-top1right dljl-nav1-top1right1">
+                    <section style="color:#ccc;">确认收货</section>
+                </div>
+            </div>
+            <!--未确认收货结束--->
+
+            <!--未确认收货状态--->
+            <!-- <div class="dljl-nav1-top1 dljl-nav1-top2">
+                <div class="dljl-nav1-top1left dljl-nav1-top1left1"></div>
+                <div class="dljl-nav1-top1right dljl-nav1-top1right1">
+                    <section style="color:#ccc;">确认收货</section>
+                    <a href=""><div class="qrsh-qr">请确认收货</div></a>
+                </div>
+            </div> -->
+            <!--未确认收货状态--->
+
+            <div class="dljl-nav1-top1 dljl-nav1-top3">
+                <div class="dljl-nav1-top1left dljl-nav1-top1left1"></div>
+                <div class="dljl-nav1-top1right dljl-nav1-top1right1 dljl-nav1-top1right2">
+                    <section style="color:#ccc;">已签收</section>
+                </div>
+            </div>
+            <div class="clr"></div>
+        </div>
+    </div>
+
+
+
+
+    {/case}
+
+
+
+    {case value="2"}
+
+        <div class="dljl-nav">
+        <div class="dljl-nav1">
+
+            <div class="dljl-nav1-top1" style="background:none">
+                <div class="dljl-nav1-top1right dljl-nav2">
+                    <section>商品状态</section>
+
+                </div>
+            </div>
+
+            <div class="dljl-nav1-top1 dljl-nav1-top5">
+                <div class="dljl-nav1-top1left dljl-nav1-top1left1" style="background-color:#666;"></div>
+                <div class="dljl-nav1-top1right dljl-nav1-top1right1">
+                    <section>获得商品</section>
+                    <section>{$win_status.status_info[0]['create_time']}</section>
+                </div>
+            </div>
+
+            <!--已确认收货地址-->
+            <div class="dljl-nav1-top1 dljl-nav1-top5">
+                <div class="dljl-nav1-top1left dljl-nav1-top1left1" style="background-color:#666;"></div>
+                <div class="dljl-nav1-top1right dljl-nav1-top1right1">
+                    <section>确认收货地址</section>
+                    <section>{$win_status.status_info[1]['create_time']}</section>
+                </div>
+            </div>
+            <!--已确认收货地址结束-->
+
+
+
+
+
+            <div class="dljl-nav1-top1">
+                <div class="dljl-nav1-top1left"></div>
+                <div class="dljl-nav1-top1right ddjl-set">
+                    <section>商品派发</section>
+                    <section>请等待...</section>
+                </div>
+
+            </div>
+            <!--未确认收货--->
+            <!-- <div class="dljl-nav1-top1 dljl-nav1-top2">
+                <div class="dljl-nav1-top1left dljl-nav1-top1left1"></div>
+                <div class="dljl-nav1-top1right dljl-nav1-top1right1">
+                    <section style="color:#ccc;">确认收货</section>
+                </div>
+            </div> -->
+            <!--未确认收货结束--->
+
+            <!--未确认收货状态--->
+            <div class="dljl-nav1-top1 dljl-nav1-top2">
+                <div class="dljl-nav1-top1left dljl-nav1-top1left1"></div>
+                <div class="dljl-nav1-top1right dljl-nav1-top1right1">
+                    <section style="color:#ccc;">确认收货</section>
+
+                </div>
+            </div>
+            <!--未确认收货状态--->
+
+            <div class="dljl-nav1-top1 dljl-nav1-top3">
+                <div class="dljl-nav1-top1left dljl-nav1-top1left1"></div>
+                <div class="dljl-nav1-top1right dljl-nav1-top1right1 dljl-nav1-top1right2">
+                    <section style="color:#ccc;">已签收</section>
+                </div>
+            </div>
+            <div class="clr"></div>
+        </div>
+    </div>
+
+    {/case}
+
+
+
+    {case value="3"}
+
+        <div class="dljl-nav">
+        <div class="dljl-nav1">
+
+            <div class="dljl-nav1-top1" style="background:none">
+                <div class="dljl-nav1-top1right dljl-nav2">
+                    <section>商品状态</section>
+
+                </div>
+            </div>
+
+            <div class="dljl-nav1-top1 dljl-nav1-top5">
+                <div class="dljl-nav1-top1left dljl-nav1-top1left1" style="background-color:#666;"></div>
+                <div class="dljl-nav1-top1right dljl-nav1-top1right1">
+                    <section>获得商品</section>
+                    <section>{$win_status.status_info[0]['create_time']}</section>
+                </div>
+            </div>
+
+            <!--已确认收货地址-->
+            <div class="dljl-nav1-top1 dljl-nav1-top5">
+                <div class="dljl-nav1-top1left dljl-nav1-top1left1" style="background-color:#666;"></div>
+                <div class="dljl-nav1-top1right dljl-nav1-top1right1">
+                    <section>确认收货地址</section>
+                    <section>{$win_status.status_info[1]['create_time']}</section>
+                </div>
+            </div>
+            <!--已确认收货地址结束-->
+
+
+            <!--新增未确认收货地址-->
+            <!-- <div class="dljl-nav1-top1 dljl-nav1-top5 dljl-nav1-top1right51">
+                <div class="dljl-nav1-top1left" style="background-color:red;"></div>
+                <div class="dljl-nav1-top1right dljl-nav1-top1right1">
+                    <section>确认收货地址</section>
+                    <section class="yqrdz" style="">
+                        <a href="">新增地址</a>
+                    </section>
+
+                </div>
+            </div> -->
+            <!--新增未确认收货地址结束-->
+
+            <!--未确认收货地址-->
+            <!-- <div class="dljl-nav1-top1 dljl-nav1-top5 dljl-nav1-top1right51">
+
+                <div class="dljl-nav1-top1left" style="background-color:red;"></div>
+                <div class="dljl-nav1-top1right dljl-nav1-top1right-new">
+                    <div class="qrsh-1">确认收货地址</div>
+                    <div class="qrsh-2">
+                        <span>客户名称</span>
+                        <span>13145210399</span>
+                    </div>
+                    <div class="qrsh-2">江苏徐州泉山区科技大厦735</div>
+                    <div class="qrsh-2 qrsh-3">
+                        <a href=""><div class="qrsh-30-left">确认</div></a>
+                        <a href=""><div class="qrsh-30-left qrsh-30-right">使用其他</div></a>
+                    </div>
+                </div>
+            </div>  -->
+            <!--未确认收货地址结束-->
+
+
+            <div class="dljl-nav1-top1">
+                <div class="dljl-nav1-top1left dljl-nav1-top1left1" style="background-color:#666;"></div>
+                <div class="dljl-nav1-top1right">
+                    <section style="color:#666;">商品派发</section>
+                    <section style="color:#666;float: none;">物流:{$win_status.logistics_info.logistics_company}</section>
+                    <section style="color:#666">单号:{$win_status.logistics_info.logistics_number}</section>
+                    <section>{$win_status.status_info[2]['create_time']}</section>
+                </div>
+
+            </div>
+            <!--未确认收货--->
+            <!-- <div class="dljl-nav1-top1 dljl-nav1-top2">
+                <div class="dljl-nav1-top1left dljl-nav1-top1left1"></div>
+                <div class="dljl-nav1-top1right dljl-nav1-top1right1">
+                    <section style="color:#ccc;">确认收货</section>
+                </div>
+            </div> -->
+            <!--未确认收货结束--->
+
+            <!--未确认收货状态--->
+            <div class="dljl-nav1-top1 dljl-nav1-top2">
+                <div class="dljl-nav1-top1left" style="background-color:red;"></div>
+
+                <div class="dljl-nav1-top1right dljl-nav1-top1right1">
+                    
+                    <a href=""><div class="qrsh-qr" id="confirm-goods">请确认收货</div></a>
+                </div>
+            </div>
+            <!--未确认收货状态--->
+
+            <div class="dljl-nav1-top1 dljl-nav1-top3">
+                <div class="dljl-nav1-top1left dljl-nav1-top1left1"></div>
+                <div class="dljl-nav1-top1right dljl-nav1-top1right1 dljl-nav1-top1right2">
+                  
+                </div>
+            </div>
+            <div class="clr"></div>
+        </div>
+    </div>
+
+    {/case}
+
+
+    {case value="4"}
+
+        <div class="dljl-nav">
+        <div class="dljl-nav1">
+
+            <div class="dljl-nav1-top1" style="background:none">
+                <div class="dljl-nav1-top1right dljl-nav2">
+                    <section>商品状态</section>
+
+                </div>
+            </div>
+
+            <div class="dljl-nav1-top1 dljl-nav1-top5">
+                <div class="dljl-nav1-top1left dljl-nav1-top1left1" style="background-color:#666;"></div>
+                <div class="dljl-nav1-top1right dljl-nav1-top1right1">
+                    <section>获得商品</section>
+                    <section>2016-04-08 18:30</section>
+                </div>
+            </div>
+
+            <!--已确认收货地址-->
+            <div class="dljl-nav1-top1 dljl-nav1-top5">
+                <div class="dljl-nav1-top1left dljl-nav1-top1left1" style="background-color:#666;"></div>
+                <div class="dljl-nav1-top1right dljl-nav1-top1right1">
+                    <section>确认收货地址</section>
+                    <section>2016-04-08 18:30</section>
+                </div>
+            </div>
+            <!--已确认收货地址结束-->
+
+
+            <!--新增未确认收货地址-->
+            <!-- <div class="dljl-nav1-top1 dljl-nav1-top5 dljl-nav1-top1right51">
+                <div class="dljl-nav1-top1left" style="background-color:red;"></div>
+                <div class="dljl-nav1-top1right dljl-nav1-top1right1">
+                    <section>确认收货地址</section>
+                    <section class="yqrdz" style="">
+                        <a href="">新增地址</a>
+                    </section>
+
+                </div>
+            </div> -->
+            <!--新增未确认收货地址结束-->
+
+            <!--未确认收货地址-->
+            <!-- <div class="dljl-nav1-top1 dljl-nav1-top5 dljl-nav1-top1right51">
+
+                <div class="dljl-nav1-top1left" style="background-color:red;"></div>
+                <div class="dljl-nav1-top1right dljl-nav1-top1right-new">
+                    <div class="qrsh-1">确认收货地址</div>
+                    <div class="qrsh-2">
+                        <span>客户名称</span>
+                        <span>13145210399</span>
+                    </div>
+                    <div class="qrsh-2">江苏徐州泉山区科技大厦735</div>
+                    <div class="qrsh-2 qrsh-3">
+                        <a href=""><div class="qrsh-30-left">确认</div></a>
+                        <a href=""><div class="qrsh-30-left qrsh-30-right">使用其他</div></a>
+                    </div>
+                </div>
+            </div>  -->
+            <!--未确认收货地址结束-->
+
+
+            <div class="dljl-nav1-top1">
+                <div class="dljl-nav1-top1left dljl-nav1-top1left1" style="background-color:#666;"></div>
+                <div class="dljl-nav1-top1right ddjl-set">
+                    <section style="color:#666">商品派发</section>
+                </div>
+
+            </div>
+            <!--未确认收货--->
+            <!-- <div class="dljl-nav1-top1 dljl-nav1-top2">
+                <div class="dljl-nav1-top1left dljl-nav1-top1left1"></div>
+                <div class="dljl-nav1-top1right dljl-nav1-top1right1">
+                    <section style="color:#ccc;">确认收货</section>
+                </div>
+            </div> -->
+            <!--未确认收货结束--->
+
+            <!--未确认收货状态--->
+            <div class="dljl-nav1-top1 dljl-nav1-top2">
+                <div class="dljl-nav1-top1left" style="background-color:red;"></div>
+
+                <div class="dljl-nav1-top1right dljl-nav1-top1right1">
+                    <section style="color:#ccc;">确认收货</section>
+                    <a href=""><div class="qrsh-qr">请确认收货</div></a>
+                </div>
+            </div>
+            <!--未确认收货状态--->
+
+            <div class="dljl-nav1-top1 dljl-nav1-top3">
+                <div class="dljl-nav1-top1left dljl-nav1-top1left1"></div>
+                <div class="dljl-nav1-top1right dljl-nav1-top1right1 dljl-nav1-top1right2">
+                    <section style="color:#ccc;">已签收</section>
+                </div>
+            </div>
+            <div class="clr"></div>
+        </div>
+    </div>
+
+    {/case}
+
+    {case value="5"}
+
+            <div class="dljl-nav">
+        <div class="dljl-nav1">
+
+            <div class="dljl-nav1-top1" style="background:none">
+                <div class="dljl-nav1-top1right dljl-nav2">
+                    <section>商品状态</section>
+
+                </div>
+            </div>
+
+            <div class="dljl-nav1-top1 dljl-nav1-top5">
+                <div class="dljl-nav1-top1left dljl-nav1-top1left1" style="background-color:#666;"></div>
+                <div class="dljl-nav1-top1right dljl-nav1-top1right1">
+                    <section>获得商品</section>
+                    <section>{$win_status.status_info[0]['create_time']}</section>
+                </div>
+            </div>
+
+            <!--已确认收货地址-->
+            <div class="dljl-nav1-top1 dljl-nav1-top5">
+                <div class="dljl-nav1-top1left dljl-nav1-top1left1" style="background-color:#666;"></div>
+                <div class="dljl-nav1-top1right dljl-nav1-top1right1">
+                    <section>确认收货地址</section>
+                    <section>{$win_status.status_info[1]['create_time']}</section>
+                </div>
+            </div>
+            <!--已确认收货地址结束-->
+
+
+            <!--新增未确认收货地址-->
+            <!-- <div class="dljl-nav1-top1 dljl-nav1-top5 dljl-nav1-top1right51">
+                <div class="dljl-nav1-top1left" style="background-color:red;"></div>
+                <div class="dljl-nav1-top1right dljl-nav1-top1right1">
+                    <section>确认收货地址</section>
+                    <section class="yqrdz" style="">
+                        <a href="">新增地址</a>
+                    </section>
+
+                </div>
+            </div> -->
+            <!--新增未确认收货地址结束-->
+
+
+
+
+            <div class="dljl-nav1-top1">
+                <div class="dljl-nav1-top1left dljl-nav1-top1left1" style="background-color:#666;"></div>
+                <div class="dljl-nav1-top1right ddjl-set">
+                    <section>商品派发</section>
+                    <section style="color:#666;">{$win_status.status_info[2]['create_time']}</section>
+                </div>
+
+            </div>
+            <!--未确认收货--->
+            <!-- <div class="dljl-nav1-top1 dljl-nav1-top2">
+                <div class="dljl-nav1-top1left dljl-nav1-top1left1"></div>
+                <div class="dljl-nav1-top1right dljl-nav1-top1right1">
+                    <section style="color:#ccc;">确认收货</section>
+                </div>
+            </div> -->
+            <!--未确认收货结束--->
+
+            <!--未确认收货状态--->
+            <div class="dljl-nav1-top1 dljl-nav1-top2">
+                <div class="dljl-nav1-top1left dljl-nav1-top1left1" style="background-color:#666;"></div>
+                <div class="dljl-nav1-top1right dljl-nav1-top1right1">
+                    <section style="color:#666;">确认收货</section>
+                    <div class="qrsh-11">{$win_status.status_info[3]['create_time']}</div>
+                </div>
+            </div>
+            <!--未确认收货状态--->
+
+            <div class="dljl-nav1-top1 dljl-nav1-top3">
+                <div class="dljl-nav1-top1left dljl-nav1-top1left1" style="background-color:#666;"></div>
+                <div class="dljl-nav1-top1right dljl-nav1-top1right1 dljl-nav1-top1right2">
+                    <section style="color:#666;">已签收</section>
+                    <div class="qrsh-11">{$win_status.status_info[4]['create_time']}</div>
+                </div>
+            </div>
+            <div class="clr"></div>
+        </div>
+    </div>
+    {/case}
+
+
+    {default /}default
+
+
+    {/switch}
+
+
+
+	
+	
+	
+	
+	
+	
+	
+	
+	<!--当状态大于等于2的时候才显示地址信息-->
+    {if condition="strtoupper($win_status['now_status']) >= 2 "}
+
+        <!--==地址信息==-->
+        <div class="dljl-nav">
+            <div class="dzxx-1">地址信息</div>
+            <div class="dzxx-2">
+                <span style="float:left;">{$win_status.default_address.name}</span>
+                <span style="float:right;">{$win_status.default_address.phone}</span>
+            </div>
+            <div class="dzxx-2">
+                <span>{$win_status.default_address.provice}{$win_status.default_address.city}{$win_status.default_address.area}{$win_status.default_address.address}</span>
+            </div>
+        </div>
+    {/if}
+
+{/if}
+
+
+
+	
+	 	<div class="dljl-nav">
+			<div class="dzxx-1">商品信息</div>
+			<div class="dljl-news">
+				<img src="{$win_status.goods_info.img_path}" class="dljl-news-img"/>
+				<div class="dljl-news-1">
+					<section>{$win_status.goods_info.name}</section>
+					<section>总需：{$win_status.goods_info.sum_times}人次</section>
+					<section><span>期号：</span>	<span>{$win_status.goods_info.nper_id|num_base_mask=0}</span></section>
+                    {if condition="$win_status['goods_info']['luck_type'] eq 1"}
+					<section><span>幸运号码：</span>	<span style="color:red">{$win_status.goods_info.luck_num|num_base_mask=1}</span></section>
+                    {else /}
+                    <section><span>中奖金额：</span>	<span style="color:red">{$win_status.goods_info.money}</span></section>
+                    {/if}
+					<section><span>本期参与：</span>	<span><span style="color:red">{$win_status.goods_info.join_num}</span>人次</span></section>
+                    {if condition="$win_status['goods_info']['luck_type'] eq 1"}
+					<section>揭晓时间：{$win_status.status_info[0]['create_time']}</section>
+                    {else /}
+                    <section>到账时间：{$win_status['goods_info']['win_create_time']}</section>
+                    {/if}
+				</div>
+			</div>
+		</div>
+	</div>
+
+<input type="hidden" id="win-record-id" value="{$win_status.win_record_id}"/>
+
+
+<script>
+
+    $(function(){
+
+        var win_record_id = $('#win-record-id').val();
+
+
+
+        //确认地址
+        $('#address-submit').click(function(ev){
+
+            ev.preventDefault();
+
+            var address_id = $('#address-id').val();
+
+            $.ajax({
+                url : "{:U('Buy/confirm_send_address')}",
+                type : 'POST',
+                data : {
+                    win_record_id : win_record_id,
+                    address_id : address_id
+                },
+                beforeSend : function () {
+
+                },
+                success : function (data, response, status) {
+
+
+                    var response_data = $.parseJSON(data);
+
+
+
+                    if (response_data.status == 'fail') {
+                        layer.open({
+                            content: response_data.message,
+                            time: 1
+                        });
+                        return;
+                    }
+                    if(response_data.status == 'success') {
+                        layer.open({
+                            content: '确认地址成功',
+                            time: 1
+                        });
+                        location.reload();
+                    }
+                }
+            });
+
+
+        });
+
+
+        //确认收货
+        $('#confirm-goods').click(function(ev){
+            ev.preventDefault();
+            $.ajax({
+                url : "{:U('Buy/confirm_receipt')}",
+                type : 'POST',
+                data : {
+                    win_record_id : win_record_id
+                },
+                beforeSend : function () {
+
+                },
+                success : function (data, response, status) {
+
+
+                    var response_data = $.parseJSON(data);
+
+
+
+                    if (response_data.status == 'fail') {
+                        layer.open({
+                            content: response_data.message,
+                            time: 1
+                        });
+                        return;
+                    }
+                    if(response_data.status == 'success') {
+                        layer.open({
+                            content: '确认收货成功',
+                            time: 1
+                        });
+                        location.reload();
+                    }
+                }
+            });
+
+        });
+
+
+
+        //显示所有地址
+        $('#other-address').click(function(ev){
+            ev.preventDefault();
+            $('.body321').show();
+            $('.body213').show();
+
+        });
+
+        //选择其他地址
+        $('.tcc').click(function(){
+            var address_id = $(this).find('.address-list-id').val();
+            var address_phone = $(this).find('.address-phone').text();
+            var address_name = $(this).find('.address-name').text();
+            var address_detail = $(this).find('.address-detail').text();
+
+            //分别进行替换
+            $('#address-id').val(address_id);
+
+            var default_address = $('#default-address');
+
+            default_address.find('.address-name').text(address_name);
+            default_address.find('.address-phone').text(address_phone);
+            default_address.find('.address-detail').text(address_detail);
+
+            $('.body321').hide();
+            $('.body213').hide();
+
+
+        });
+
+
+
+
+    })
+
+</script>
+
+{/block}
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,39 @@
+
+
+{extend name="base/common"}
+
+{block name="head"}
+<link href="__MOBILE_CSS__/user.css"  rel="stylesheet" />
+<script src="__MOBILE_JS__/jquery.min.js"></script>
+<script src="__MOBILE_JS__/js.js"></script>
+<style>
+    body{font-family:Microsoft YaHei;}
+    
+</style>
+
+{/block}
+
+{block name="main"}
+
+
+
+<div class="m-user" id="dvWrapper">
+    <div class="m-simpleHeader" id="dvHeader">
+        <a href="javascript:history.go(-1);" data-pro="back" data-back="true" class="m-simpleHeader-back"><i class="ico ico-back"></i></a>
+        <a href="{:U('Index/index')}" data-pro="ok" class="m-simpleHeader-ok" id="aHome"><i class="ico ico-home"></i></a>
+      <h1>支付结果</h1>
+	</div>
+
+	<div class="zfjg-nav">
+		<section class="zfjg-set">恭喜您支付成功</section>
+		<div class="zfjg-bot">
+			<a href="{:U('Index/index')}"><div class="zfjg-bot-left">返回首页</div></a>
+			<a href="{:U('Users/personal_center')}"><div class="zfjg-bot-left zfjg-bot-right">个人中心</div></a>
+		</div>
+	</div>
+
+</div>      
+
+
+{/block}
+

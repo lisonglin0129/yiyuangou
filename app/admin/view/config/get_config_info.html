@@ -1,0 +1,607 @@
+
+ <!DOCTYPE html>
+ <html lang="en">
+ <head>
+     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+     <meta charset="utf-8" />
+     <title>Form Wizard - Ace Admin</title>
+
+     <meta name="description" content="and Validation" />
+     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+     {js href='__common__/js/jquery.min.js' /}
+     {js href='__common__/admin/js/conf/setup.js' /}
+     {js href='__common__/bootstrap/bootstrap/js/bootstrap.min.js' /}
+     {css href='__common__/bootstrap/bootstrap/css/bootstrap.min.css' /}
+     {js href='__common__/layer/layer/layer/layer.js' /}
+     {js href='__common__/js/common.js' /}
+     <!-- bootstrap & fontawesome -->
+     <link rel="stylesheet" href=" __common__/admin/css/assets/bootstrap.min.css" />
+     <link rel="stylesheet" href=" __common__/admin/css/assets/font-awesome.min.css" />
+
+     <!-- page specific plugin styles -->
+     <link rel="stylesheet" href=" __common__/admin/css/assets/select2.min.css" />
+
+     <!-- text fonts -->
+     <link rel="stylesheet" href=" __common__/admin/css/assets/fonts.googleapis.com.css" />
+
+     <!-- ace styles -->
+     <link rel="stylesheet" href=" __common__/admin/css/assets/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
+
+     <script src="__common__/admin/js/assets/ace-extra.min.js"></script>
+     <script src="__common__/bootstrap/bootstrap/js/bootstrap.min.js"></script>
+     <script src="__common__/admin/js/conf/get_config_info.js"></script>
+
+ </head>
+
+ <body class="no-skin">
+ <div class="row">
+     <div class="col-xs-12">
+         <!-- PAGE CONTENT BEGINS -->
+         <div class="hr hr-18 hr-double dotted"></div>
+
+         <div class="widget-box">
+             <div class="widget-header widget-header-blue widget-header-flat">
+                 <h4 class="widget-title lighter">网站配置</h4>
+                 <div class="wizard-actions">
+                     <button class="btn btn-success btn-next setup_btn" data-last="点击同步数据">
+                         点击同步数据
+                         <i class="ace-icon fa fa-arrow-right icon-on-right"></i>
+                     </button>
+                 </div>
+             </div>
+
+             <div class="widget-body">
+                 <div class="widget-main">
+                     <div id="fuelux-wizard-container">
+                         <div>
+                             <ul class="steps">
+                                 <li data-step="1" class="active">
+                                     <span class="step">1</span>
+                                     <span class="title">第一步</span>
+                                 </li>
+
+                                 <li data-step="2">
+                                     <span class="step">2</span>
+                                     <span class="title">第二步</span>
+                                 </li>
+
+                                 <li data-step="3">
+                                     <span class="step">3</span>
+                                     <span class="title">第三步</span>
+                                 </li>
+
+                                 <li data-step="4">
+                                     <span class="step">4</span>
+                                     <span class="title">第四步</span>
+                                 </li>
+                             </ul>
+                         </div>
+
+                         <hr />
+
+                         <div class="step-content pos-rel">
+                             <div class="step-pane active" data-step="1">
+                                 <h3 class="lighter block blue">极验证</h3>
+                                 <form id="sample-form" class="form-horizontal">
+                                     {volist name='$validate' id='vo'}
+                                     <div class="form-group has-info">
+                                         <label class="col-xs-12 col-sm-3 control-label no-padding-right" for="inputWarning">{$vo.title}</label>
+
+                                         <div class="col-xs-12 col-sm-5">
+                                                <span class="block input-icon input-icon-right">
+                                                    <input data-id="{$vo['id']}" type="text" class="width-100 conf_text" id="inputWarning" value="{$vo.value}">
+                                                    <i class="ace-icon fa fa-leaf"></i>
+                                                </span>
+                                         </div>
+                                         <div class="help-block col-xs-12 col-sm-reset inline">*此项必须填写！ </div>
+                                     </div>
+                                     {/volist}
+                                 </form>
+                             </div>
+
+                             <div class="step-pane" data-step="2">
+                                 <h3 class="lighter block blue">阿里大鱼</h3>
+                                 <form id="sample-form" class="form-horizontal">
+                                     {volist name='$ali_fish' id='vo'}
+                                     <div class="form-group has-info">
+                                         <label class="col-xs-12 col-sm-3 control-label no-padding-right " for="inputWarning">{$vo.title}</label>
+
+                                         <div class="col-xs-12 col-sm-5">
+                                                <span class="block input-icon input-icon-right">
+                                                    <input data-id="{$vo['id']}" type="text" class="width-100 conf_text" id="inputWarning" value="{$vo.value}">
+                                                    <i class="ace-icon fa fa-leaf"></i>
+                                                </span>
+                                         </div>
+                                         <div class="help-block col-xs-12 col-sm-reset inline">*此项必须填写！ </div>
+                                     </div>
+                                     {/volist}
+                                 </form>
+                             </div>
+
+                             <div class="step-pane" data-step="3">
+                                 {php}$pre_tmp = '';{/php}
+                                 {volist name='$pay_arr' id='vo'}
+                                 {neq name='vo.admin_tpl' value='$pre_tmp'}
+                                 <h3 class="blue lighter">{$vo.admin_tpl}</h3>
+                                 {/neq}
+                                 <form id="sample-form" class="form-horizontal">
+                                 {php}$pre_tmp = $vo['admin_tpl'];{/php}
+                                 {switch name='vo.type'}
+                                 {case value='input'}
+
+                                 <div class="form-group has-info">
+                                     <label class="col-xs-12 col-sm-3 control-label no-padding-right" for="inputWarning">{$vo.title}</label>
+
+                                     <div class="col-xs-12 col-sm-5">
+                                                <span class="block input-icon input-icon-right">
+                                                    <input data-id="{$vo['id']}" type="text" class="width-100 conf_text" id="inputWarning" value="{$vo.value}">
+                                                    <i class="ace-icon fa fa-leaf"></i>
+                                                </span>
+                                     </div>
+                                     <div class="help-block col-xs-12 col-sm-reset inline">*此项必须填写！ </div>
+                                 </div>
+                                 {/case}
+                                 {case value='radio'}
+                                 <div class="form-group has-info">
+                                     <label class="col-xs-12 col-sm-3 control-label no-padding-right" for="inputWarning">{$vo.title}</label>
+
+                                 {php}$tmp = json_decode($vo['exec_data'],true);{/php}
+                                 {foreach name='tmp' id='item' key='k'}
+                                     <input data-id="{$vo['id']}" class="conf_text" name="{$vo.name}" {if condition="$vo['value'] eq $item"}checked="checked"{/if} type="radio" value="{$item}">{$k} &nbsp;&nbsp;&nbsp;&nbsp;
+                                  {/foreach}
+                                 </div>
+
+                                 {/case}
+                                 {/switch}
+                                 {/volist}
+                                 </form>
+                             </div>
+
+                             <div class="step-pane" data-step="4">
+                                 <div class="center">
+                                     <h3 class="green"></h3>
+                                     {volist name="category_arr" id="value1" key="key1" }
+                                     <form class="form-horizontal" role="form" id="form_content{$key1}">
+                                         {php}$pre_tmp = '';{/php}
+                                         {volist name="value1" id="vo" }
+                                         <!--标记分割线-->
+                                         {neq name='vo.admin_tpl' value='$pre_tmp'}
+                                         <div class="form-group">
+                                             <label class="col-sm-3 control-label no-padding-right"> <span style="color:#438eb9;font-size: 18px;">{$vo.admin_tpl}</span>
+                                             </label>
+                                             <div class="col-sm-9">
+                                                 <hr style="border: 1px solid rgb(231, 231, 231) ;position: relative;top:-5px;width: 600px;float: left">
+                                             </div>
+                                         </div>
+                                         {/neq}
+                                         {php}$pre_tmp = $vo['admin_tpl'];{/php}
+                                         <div class="form-group has-info">
+                                             <label class="col-sm-3 control-label no-padding-right"> {$vo.title} </label>
+                                             <div class="col-sm-9">
+                                                 {switch name='vo.type'}
+                                                 {case value='textarea' break='1'}
+                                                 <textarea data-id="{$vo['id']}" class="col-xs-10 col-sm-5 conf_text" name="" id="" cols="30" rows="3">{$vo['value']|default=''}</textarea>
+                                                 {/case}
+                                                 {case value='select' break='1'}
+                                                 <select name="{$vo.name}" class="conf_text" data-id="{$vo['id']}">
+                                                     {php}$tmp = json_decode($vo['exec_data'],true);{/php}
+                                                     {foreach name='tmp' id='item' key='k'}
+                                                     <option  value="{$item}" {if condition="$vo['value'] eq $item"}selected="selected"{/if} >{$k}</option>
+                                                     {/foreach}
+                                                 </select>
+                                                 {/case}
+                                                 {case value='radio' break='1'}
+                                                 {php}$tmp = json_decode($vo['exec_data'],true);{/php}
+                                                 {foreach name='tmp' id='item' key='k'}
+                                                 <input data-id="{$vo['id']}" class="conf_text" name="{$vo.name}" {if condition="$vo['value'] eq $item"}checked="checked"{/if} type="radio" value="{$item}" style="float:left;">&nbsp;&nbsp;<span style="float:left;">{$k}</span> &nbsp;&nbsp;
+                                                 {/foreach}
+                                                 {/case}
+                                                 {case value='checkbox' break='1'}{/case}
+                                                 {case value='img_id' break='1'}
+                                                 <input type="text" data-id="{$vo['id']}" placeholder="请选取图片" class="col-xs-10 col-sm-5 conf_text" value="{$vo['value']}">
+                                                 <a href="javascript:;" class="btn btn-xs btn-info conf_upload_btn" data-type="img_id" title="上传" style="float:left;">
+                                                     <i class="icon-upload bigger-120" style="float:left;"></i>上传图片
+                                                 </a>
+                                                 <a href="javascript:;" class="btn btn-xs btn-info conf_preview_id_btn" title="上传" style="float:left;">
+                                                     <i class="icon-picture bigger-120" style="float:left;"></i>预览图片
+                                                 </a>
+                                                 {/case}
+                                                 {case value='img_addr' break='1'}
+                                                 <input type="text" data-id="{$vo['id']}" placeholder="请选取图片" class="col-xs-10 col-sm-5 conf_text" value="{$vo['value']}">
+                                                 <a href="javascript:;" class="btn btn-xs btn-info conf_upload_btn" data-type="img_addr" title="上传" style="float:left;">
+                                                     <i class="icon-upload bigger-120" style="float:left;"></i>上传图片
+                                                 </a>
+                                                 <a href="javascript:;" class="btn btn-xs btn-info conf_preview_addr_btn" title="上传" style="float:left;">
+                                                     <i class="icon-picture bigger-120" style="float:left;"></i>预览图片
+                                                 </a>
+                                                 {/case}
+                                                 {default /}
+                                                 <input type="text" data-id="{$vo['id']}" placeholder=""
+                                                        class="col-xs-10 col-sm-5 conf_text" value="{$vo['value']}">
+                                                 {/switch}
+                                             </div>
+                                         </div>
+                                         <div class="space-4"></div>
+                                         {/volist}
+                                     </form>
+                                     {/volist}
+                                 </div>
+                             </div>
+                         </div>
+                     </div>
+
+                     <hr />
+                     <div class="wizard-actions">
+                         <button class="btn btn-prev">
+                             <i class="ace-icon fa fa-arrow-left"></i>
+                             上一步
+                         </button>
+
+                         <button class="btn btn-success btn-next" data-last="结束">
+                             下一步
+                             <i class="ace-icon fa fa-arrow-right icon-on-right"></i>
+                         </button>
+                     </div>
+                 </div><!-- /.widget-main -->
+             </div><!-- /.widget-body -->
+         </div>
+
+         <div id="modal-wizard" class="modal">
+             <div class="modal-dialog">
+                 <div class="modal-content">
+                     <div id="modal-wizard-container">
+                         <div class="modal-header">
+                             <ul class="steps">
+                                 <li data-step="1" class="active">
+                                     <span class="step">1</span>
+                                     <span class="title">Validation states</span>
+                                 </li>
+
+                                 <li data-step="2">
+                                     <span class="step">2</span>
+                                     <span class="title">Alerts</span>
+                                 </li>
+
+                                 <li data-step="3">
+                                     <span class="step">3</span>
+                                     <span class="title">Payment Info</span>
+                                 </li>
+
+                                 <li data-step="4">
+                                     <span class="step">4</span>
+                                     <span class="title">Other Info</span>
+                                 </li>
+                             </ul>
+                         </div>
+
+                         <div class="modal-body step-content">
+                             <div class="step-pane active" data-step="1">
+                                 <div class="center">
+                                     <h4 class="blue">Step 1</h4>
+                                 </div>
+                             </div>
+
+                             <div class="step-pane" data-step="2">
+                                 <div class="center">
+                                     <h4 class="blue">Step 2</h4>
+                                 </div>
+                             </div>
+
+                             <div class="step-pane" data-step="3">
+                                 <div class="center">
+                                     <h4 class="blue">Step 3</h4>
+                                 </div>
+                             </div>
+
+                             <div class="step-pane" data-step="4">
+                                 <div class="center">
+                                     <h4 class="blue">Step 4</h4>
+                                 </div>
+                             </div>
+                         </div>
+                     </div>
+
+                     <div class="modal-footer wizard-actions">
+                         <button class="btn btn-sm btn-prev">
+                             <i class="ace-icon fa fa-arrow-left"></i>
+                             Prev
+                         </button>
+
+                         <button class="btn btn-success btn-sm btn-next" data-last="Finish">
+                             Next
+                             <i class="ace-icon fa fa-arrow-right icon-on-right"></i>
+                         </button>
+
+                         <button class="btn btn-danger btn-sm pull-left" data-dismiss="modal">
+                             <i class="ace-icon fa fa-times"></i>
+                             Cancel
+                         </button>
+                     </div>
+                 </div>
+             </div>
+         </div><!-- PAGE CONTENT ENDS -->
+     </div><!-- /.col -->
+ </div><!-- /.row -->
+ <input type="hidden" id="update_conf" value="{:U('config/update_conf')}"/>
+ <input type="hidden" id="check_conf" value="{:U('config/check_conf')}"/>
+ <!-- basic scripts -->
+
+ <!--[if !IE]> -->
+ <script src="__common__/admin/js/assets/jquery.2.1.1.min.js"></script>
+
+ <!-- <![endif]-->
+
+ <!--&lt;!&ndash;[if !IE]> &ndash;&gt;-->
+ <!--<script type="text/javascript">-->
+     <!--window.jQuery || document.write("<script src='assets/js/jquery.min.js'>"+"<"+"/script>");-->
+ <!--</script>-->
+
+ <!-- <![endif]-->
+
+ <script type="text/javascript">
+     if('ontouchstart' in document.documentElement) document.write("<script src='assets/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
+ </script>
+ <script src="__common__/admin/js/assets/bootstrap.min.js"></script>
+
+ <!-- page specific plugin scripts -->
+ <script src="__common__/admin/js/assets/fuelux.wizard.min.js"></script>
+ <script src="__common__/admin/js/assets/jquery.validate.min.js"></script>
+
+ <script src="__common__/admin/js/assets/bootbox.min.js"></script>
+ <script src="__common__/admin/js/assets/jquery.maskedinput.min.js"></script>
+ <script src="__common__/admin/js/assets/select2.min.js"></script>
+
+ <!-- ace scripts -->
+ <script src="__common__/admin/js/assets/ace-elements.min.js"></script>
+ <script src="__common__/admin/js/assets/ace.min.js"></script>
+
+ <!-- inline scripts related to this page -->
+ <script type="text/javascript">
+     jQuery(function($) {
+
+         $('[data-rel=tooltip]').tooltip();
+
+         $(".select2").css('width','200px').select2({allowClear:true})
+                 .on('change', function(){
+                     $(this).closest('form').validate().element($(this));
+                 });
+
+
+         var $validation = false;
+         $('#fuelux-wizard-container')
+                 .ace_wizard({
+                     //step: 2 //optional argument. wizard will jump to step "2" at first
+                     //buttons: '.wizard-actions:eq(0)'
+                 })
+                 .on('actionclicked.fu.wizard' , function(e, info){
+                     if(info.step == 1 && $validation) {
+                         if(!$('#validation-form').valid()) e.preventDefault();
+                     }
+                 })
+                 .on('finished.fu.wizard', function(e) {
+
+//                     bootbox.dialog({
+//                         message: "恭喜您完成了网站配置，点击OK继续使用网站！",
+//                         buttons: {
+//                             "success" : {
+//                                 "label" : "OK",
+//                                 "className" : "btn-sm btn-primary"
+//                             }
+//                         }
+//                     });
+                     var url = $('#check_conf').val();
+                     common.ajax_post(url,false,true,function(rt){
+                         common.post_tips(rt);
+                         var obj = JSON.parse(rt);
+                         if(obj.code == "1"){
+//                             window.location.href="http://xc.cn/index.php/admin/";
+                             location.href="{:U('admin/index/index')}";
+                         }
+//                         common.post_tips(rt,function(obj){
+//                             if(obj.code == "1"){
+//                                 window.location.href="{:U('admin/index/index')}";
+//                             };
+//                         });
+                     });
+                 }).on('stepclick.fu.wizard', function(e){
+             //e.preventDefault();//this will prevent clicking and selecting steps
+         });
+
+
+         //jump to a step
+         /**
+          var wizard = $('#fuelux-wizard-container').data('fu.wizard')
+          wizard.currentStep = 3;
+          wizard.setState();
+          */
+
+             //determine selected step
+             //wizard.selectedItem().step
+
+
+
+             //hide or show the other form which requires validation
+             //this is for demo only, you usullay want just one form in your application
+         $('#skip-validation').removeAttr('checked').on('click', function(){
+             $validation = this.checked;
+             if(this.checked) {
+                 $('#sample-form').hide();
+                 $('#validation-form').removeClass('hide');
+             }
+             else {
+                 $('#validation-form').addClass('hide');
+                 $('#sample-form').show();
+             }
+         })
+
+
+
+         //documentation : http://docs.jquery.com/Plugins/Validation/validate
+
+
+         $.mask.definitions['~']='[+-]';
+         $('#phone').mask('(999) 999-9999');
+
+         jQuery.validator.addMethod("phone", function (value, element) {
+             return this.optional(element) || /^\(\d{3}\) \d{3}\-\d{4}( x\d{1,6})?$/.test(value);
+         }, "Enter a valid phone number.");
+
+         $('#validation-form').validate({
+             errorElement: 'div',
+             errorClass: 'help-block',
+             focusInvalid: false,
+             ignore: "",
+             rules: {
+                 email: {
+                     required: true,
+                     email:true
+                 },
+                 password: {
+                     required: true,
+                     minlength: 5
+                 },
+                 password2: {
+                     required: true,
+                     minlength: 5,
+                     equalTo: "#password"
+                 },
+                 name: {
+                     required: true
+                 },
+                 phone: {
+                     required: true,
+                     phone: 'required'
+                 },
+                 url: {
+                     required: true,
+                     url: true
+                 },
+                 comment: {
+                     required: true
+                 },
+                 state: {
+                     required: true
+                 },
+                 platform: {
+                     required: true
+                 },
+                 subscription: {
+                     required: true
+                 },
+                 gender: {
+                     required: true,
+                 },
+                 agree: {
+                     required: true,
+                 }
+             },
+
+             messages: {
+                 email: {
+                     required: "Please provide a valid email.",
+                     email: "Please provide a valid email."
+                 },
+                 password: {
+                     required: "Please specify a password.",
+                     minlength: "Please specify a secure password."
+                 },
+                 state: "Please choose state",
+                 subscription: "Please choose at least one option",
+                 gender: "Please choose gender",
+                 agree: "Please accept our policy"
+             },
+
+
+             highlight: function (e) {
+                 $(e).closest('.form-group').removeClass('has-info').addClass('has-error');
+             },
+
+             success: function (e) {
+                 $(e).closest('.form-group').removeClass('has-error');//.addClass('has-info');
+                 $(e).remove();
+             },
+
+             errorPlacement: function (error, element) {
+                 if(element.is('input[type=checkbox]') || element.is('input[type=radio]')) {
+                     var controls = element.closest('div[class*="col-"]');
+                     if(controls.find(':checkbox,:radio').length > 1) controls.append(error);
+                     else error.insertAfter(element.nextAll('.lbl:eq(0)').eq(0));
+                 }
+                 else if(element.is('.select2')) {
+                     error.insertAfter(element.siblings('[class*="select2-container"]:eq(0)'));
+                 }
+                 else if(element.is('.chosen-select')) {
+                     error.insertAfter(element.siblings('[class*="chosen-container"]:eq(0)'));
+                 }
+                 else error.insertAfter(element.parent());
+             },
+
+             submitHandler: function (form) {
+             },
+             invalidHandler: function (form) {
+             }
+         });
+
+
+
+
+         $('#modal-wizard-container').ace_wizard();
+         $('#modal-wizard .wizard-actions .btn[data-dismiss=modal]').removeAttr('disabled');
+
+
+         /**
+          $('#date').datepicker({autoclose:true}).on('changeDate', function(ev) {
+					$(this).closest('form').validate().element($(this));
+				});
+
+          $('#mychosen').chosen().on('change', function(ev) {
+					$(this).closest('form').validate().element($(this));
+				});
+          */
+
+
+         $(document).one('ajaxloadstart.page', function(e) {
+             //in ajax mode, remove remaining elements before leaving page
+             $('[class*=select2]').remove();
+         });
+     })
+ </script>
+ <!-- Yandex.Metrika counter -->
+ <script type="text/javascript">
+     (function (d, w, c) {
+         (w[c] = w[c] || []).push(function() {
+             try {
+                 w.yaCounter25836836 = new Ya.Metrika({id:25836836,
+                     webvisor:true,
+                     clickmap:true,
+                     trackLinks:true,
+                     accurateTrackBounce:true});
+             } catch(e) { }
+         });
+
+         var n = d.getElementsByTagName("script")[0],
+                 s = d.createElement("script"),
+                 f = function () { n.parentNode.insertBefore(s, n); };
+         s.type = "text/javascript";
+         s.async = true;
+
+         if (w.opera == "[object Opera]") {
+             d.addEventListener("DOMContentLoaded", f, false);
+         } else { f(); }
+     })(document, window, "yandex_metrika_callbacks");
+ </script>
+ <noscript><div><img src="//mc.yandex.ru/watch/25836836" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+ <!-- /Yandex.Metrika counter -->
+ <script>
+     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                 (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+             m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+     })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+     ga('create', 'UA-38894584-2', 'auto');
+     ga('send', 'pageview');
+
+ </script>
+ </body>
+ </html>
+

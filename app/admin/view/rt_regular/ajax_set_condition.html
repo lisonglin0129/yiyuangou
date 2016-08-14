@@ -1,0 +1,25 @@
+<tr id="set_config_{$info.num}">
+    <td><input class="range-slider" name="data[{$info.num}][time_range]" type="hidden" value="0,1"/>  </td>
+    <td><input type="text" class="col-xs-10 col-sm-19" name="data[{$info.num}][min_time]" value="10"></td>
+    <td><input type="text" class="col-xs-10 col-sm-19" name="data[{$info.num}][max_time]"value="20"></td>
+        <td>
+            <input type="text" placeholder="请输入" class="col-xs-10 col-sm-19" name="data[{$info.num}][min_buy_times]"value="1">
+        </td>
+    <td> <input type="text" placeholder="请输入" class="col-xs-10 col-sm-19" name="data[{$info.num}][max_buy_times]" value="20"/></td>
+    <td>
+        <input
+                type="text"
+                placeholder="请输入"
+                class="col-xs-10 col-sm-19"
+                name="data[{$info.num}][multiples]"
+                value="{$info.num_min|default=''}"
+                readonly="readonly"/>
+
+    </td>
+    <td>
+        <a href="javascript:" data-id="set_config_{$info.num}" class="btn btn-xs btn-danger del_condition" title="删除参数">
+            <i class="icon-trash bigger-120"></i>
+        </a>
+
+    </td>
+</tr>

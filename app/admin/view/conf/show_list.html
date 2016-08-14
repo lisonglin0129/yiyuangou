@@ -1,0 +1,166 @@
+{php}
+$arr = array('test.xiangchang.com','1.xiangchang.com');
+if(in_array($_SERVER['HTTP_HOST'],$arr))
+{
+die("演示站配置不允许修改");
+}
+{/php}
+<style>
+    .form-group {
+        margin-bottom: 0;
+    }
+
+    .ask_btn {
+        color: #128f76;
+        cursor: pointer;
+    }
+
+    .ask_btn:hover {
+        color: #19cfac;
+    }
+    .web_url{
+        color: #f3ad36;
+    }
+</style>
+<div class="tabbable">
+    <ul class="nav nav-tabs padding-12 tab-color-blue background-blue" id="myTab4">
+        {volist name="category_info" id="vo" key="k" }
+        {if condition="($k == 1) "}
+        <li class="active">
+            {else /}
+        <li>
+            {/if}
+            <a data-toggle="tab" href="#home{$k}">{$vo.category}</a>
+        </li>
+        {/volist}
+    </ul>
+    <div class="tab-content">
+        {volist name="category_arr" id="value1" key="key1" }
+        {if condition="($key1 == 1) "}
+        <div id="home{$key1}" class="tab-pane active">
+            {else /}
+            <div id="home{$key1}" class="tab-pane">
+                {/if}
+                <form class="form-horizontal" role="form" id="form_content{$key1}">
+                    {php}$pre_tmp = '';{/php}
+                    {volist name="value1" id="vo" }
+                    <!--标记分割线-->
+                    {neq name='vo.admin_tpl' value='$pre_tmp'}
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label no-padding-right"> <span
+                                style="color:#438eb9;font-size: 18px;">{$vo.admin_tpl}</span>
+                        </label>
+                        <div class="col-sm-9">
+                            <hr style="border: 1px solid rgb(231, 231, 231) ;position: relative;top:-5px;width: 600px;float: left">
+                        </div>
+                    </div>
+                    {/neq}
+                    {php}$pre_tmp = $vo['admin_tpl'];{/php}
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label no-padding-right">
+
+                            {$vo.title|default=''}
+                            {if condition='!empty(trim($vo["remark"]))'}
+                            <i title="点击查看该配置帮助" class="fa fa-question-circle ask_btn
+                               {if condition="preg_match('/^http.*/',$vo['remark'])" }
+                                   web_url
+                                   {else /}
+                                content
+                                {/if}"
+                            data-id="{$vo.name|default=''}"
+                            ></i>
+                            {/if}
+                            <input type="hidden" id="{$vo.name|default=''}" value="{$vo.remark|default=''}">
+                            {if condition='!empty($vo["is_must"]) AND $vo["is_must"] EQ "true" '}<i title='如果使用[{$vo.admin_tpl|default=""}]功能,此项为必填项' style="color: #f36;" class="fa fa-star-o"></i>{/if}
+                        </label>
+                        <div class="col-sm-9">
+                            {switch name='vo.type'}
+                            {case value='textarea' break='1'}
+                            <textarea data-id="{$vo['id']}" class="col-xs-10 col-sm-5 conf_text" name="" id="" cols="30"
+                                      rows="3">{$vo['value']|default=''}</textarea>
+                            {/case}
+                            {case value='select' break='1'}
+                            <select name="{$vo.name}" class="conf_text" data-id="{$vo['id']}">
+                                {php}$tmp = json_decode($vo['exec_data'],true);{/php}
+                                {foreach name='tmp' id='item' key='k'}
+                              	  <option value="{$item}" {if condition="$vo['value'] eq $item" }selected="selected" {/if} >{$k}</option>
+                                {/foreach}
+                            </select>
+                            {/case}
+                            {case value='radio' break='1'}
+                            {php}$tmp = json_decode($vo['exec_data'],true);{/php}
+                            {foreach name='tmp' id='item' key='k'}
+                            <input data-id="{$vo['id']}" class="conf_text" name="{$vo.name}"
+                                   {if condition="$vo['value'] eq $item" }checked="checked" {/if} type="radio"
+                            value="{$item}">{$k} &nbsp;&nbsp;&nbsp;&nbsp;
+                            {/foreach}
+                            {/case}
+                            {case value='checkbox' break='1'}{/case}
+                            {case value='img_id' break='1'}
+                            <input type="text" data-id="{$vo['id']}" placeholder="请选取图片"
+                                   class="col-xs-10 col-sm-5 conf_text" value="{$vo['value']}">
+                            <a href="javascript:;" class="btn btn-xs btn-info conf_upload_btn" data-type="img_id"
+                               title="上传">
+                                <i class="icon-upload bigger-120"></i>上传图片
+                            </a>
+                            <a href="javascript:;" class="btn btn-xs btn-info conf_preview_id_btn" title="上传">
+                                <i class="icon-picture bigger-120"></i>预览图片
+                            </a>
+                            {/case}
+                            {case value='img_addr' break='1'}
+                            <input type="text" data-id="{$vo['id']}" placeholder="请选取图片"
+                                   class="col-xs-10 col-sm-5 conf_text" value="{$vo['value']}">
+                            <a href="javascript:;" class="btn btn-xs btn-info conf_upload_btn" data-type="img_addr"
+                               title="上传">
+                                <i class="icon-upload bigger-120"></i>上传图片
+                            </a>
+                            <a href="javascript:;" class="btn btn-xs btn-info conf_preview_addr_btn" title="上传">
+                                <i class="icon-picture bigger-120"></i>预览图片
+                            </a>
+                            {/case}
+                            {default /}
+                            <input type="text" data-id="{$vo['id']}" placeholder=""
+                                   class="col-xs-10 col-sm-5 conf_text" value="{$vo['value']}">
+                            {/switch}
+                        </div>
+                    </div>
+                    <div class="space-4"></div>
+                    {/volist}
+                </form>
+            </div>
+            {/volist}
+        </div>
+    </div>
+</div>
+<input type="hidden" id="update_conf" value="{:U('conf/update_conf')}"/>
+{js href='__common__/admin/js/conf/show_list.js' /}
+
+<script>
+    $(document).on("click", ".web_url", function () {
+        var obj = $(this);
+        var url = $("#" + obj.data("id")).val();
+        //访问网址显示网址内容
+        layer.open({
+            type: 2,
+            title: '配置指导',
+            shadeClose: true,
+            move:false,
+            shade: 0.3,
+            area: ['90%', '90%'],
+            content: url
+
+        });
+
+
+
+    });
+    $(document).on("click", ".content", function () {
+        var obj = $(this);
+        var content = $("#" + obj.data("id")).val();
+        //自定页
+        layer.alert(content,{"title":"配置指导",btn:false,move:false})
+
+    });
+
+</script>
+

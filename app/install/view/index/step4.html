@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+<head>
+    {include file="base/head" /}
+</head>
+<body>
+<div class="wrap">
+    {include file="base/header" /}
+    <section class="section">
+        <div class="step">
+            <ul class="unstyled">
+                <li class="on"><em>1</em>检测环境</li>
+                <li class="on"><em>2</em>创建数据</li>
+                <li class="current"><em>3</em>完成安装</li>
+            </ul>
+        </div>
+        <div class="install" id="log">
+            <ul id="loginner" class="unstyled"></ul>
+        </div>
+        <div class="bottom text-center">
+            <a href="javascript:;"><i class="fa fa-refresh fa-spin"></i>&nbsp;正在安装,请不要关闭当前页面,安装成功后自动跳转...</a>
+        </div>
+    </section>
+
+</div>
+{include file="base/footer" /}
+<script type="text/javascript">
+    function showmsg(content, status) {
+        var icon = '<i class="fa fa-check correct"></i> ';
+        if (status == "error") {
+            icon = '<i class="fa fa-remove error"></i> ';
+        }
+        $('#loginner').append("<li>" + icon + content + "</li>");
+        $("#log").scrollTop(1000000000);
+    }
+
+    function go_step5(){
+        layer.msg('安装完毕,页面即将跳转到下一步', {icon: 1,shade:[0.4,"#aaa"]});
+        common.delay(function(){
+            location.href="{:U('step5')}";
+        },3000,1);
+    }
+    function show_db_error(db_name){
+        layer.msg('数据库['+db_name+']不存在<br />请先创建数据库后,刷新本页面', {icon: 2,time:false,shade:[0.4,"#aaa"]});
+    }
+
+    $(function () {
+        var func = {
+            //初始化
+            init: function () {
+                func.init_install();
+            },
+            //请求安装
+            init_install:function(){
+                var url = "{:U('update_tables')}";
+                common.ajax_jsonp(url,false,function(rt){
+                    console.log(rt)
+                });
+            }
+        };
+
+        func.init();
+    });
+</script>
+
+
+</body>
+</html>

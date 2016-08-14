@@ -1,0 +1,40 @@
+
+{extend name="base/common"}
+
+
+
+{block name="head"}
+<link href="__MOBILE_CSS__/detail.css"  rel="stylesheet" />
+<script type="text/javascript" src="__MOBILE_JS__/login.js"></script>
+<style>
+    img{
+        width: 100%;
+    }
+</style>
+{/block}
+
+
+
+
+
+{block name="main"}
+		<div class="g-body">
+			<div class="m-intro">
+
+                {empty name="origin"}
+                    <div class="m-simpleHeader" id="dvHeader">
+                        <a href="javascript:history.go(-1);" data-pro="back" data-back="true" class="m-simpleHeader-back"><i class="ico-back"></i></a>
+                        <h1>商品详情</h1>
+                    </div>
+                {/empty}
+
+
+
+				<div class="g-wrap m-intro-picWrap">
+
+                        {$details}
+
+				</div>
+			</div>
+		</div>
+{/block}

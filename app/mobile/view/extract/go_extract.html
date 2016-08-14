@@ -1,0 +1,214 @@
+{extend name="base/base"}
+{block name="head"}
+    <link rel="stylesheet" href="__MOBILE_FONTS__/iconfont.css">
+    <link href="__MOBILE_CSS__/common1.css" rel="stylesheet">
+    <link href="__MOBILE_CSS__/withdrawal.css" rel="stylesheet">
+    <script type="text/javascript"  src="__MOBILE_JS__/jquery.min.js"></script>
+    <script type="text/javascript"  src="__MOBILE_JS__/indexho.js"></script>
+<script>
+    $(function () {
+        $('#money').blur(function () {
+            var money=$('#money').val();
+            var cash=$('#cash').val();
+            var need=Math.ceil(money/100);
+            $('#need').html(need);
+            if(Number(money)+Number(need)>cash){
+                layer.msg('提取金额和手续费超出余额');$('#money').val(null);$('#money').focus();return false;
+            }
+
+        })
+        $('.with-su').click(function () {
+           var account=$('form').serialize();
+            if(!account){
+                layer.msg('请选择提现账号');return false;
+            }
+            var aid=account.split('=');
+            var cash=parseFloat($('#cash').val());
+            var money=parseFloat($('#money').val());
+            if(!money){
+                layer.msg('请输入提现金额');return false;
+            }
+            if(money<100){
+                layer.msg('提取金额不能低于100');$('#money').val(null);$('#money').focus();return false;
+            }
+            if(parseInt(money)!=money){
+                layer.msg('提取金额不是整数');$('#money').val(null);$('#money').focus();return false;
+            }
+          //  var last=(cash-money-$('#need').html()).toFixed(2);
+            var password=$('#password').val();
+            if(!password){
+                layer.msg('输入提现密码');return false;
+            }
+            $.post($('#check_url').val(),{password:password},function(data){
+                var index=layer.load(1);
+                if(data.code==1){
+                    var url=$('#apply_url').val();
+                    $.post(url,{money:money,account_id:aid[1]},function(data){
+                        layer.close(index)
+                        if(data.code==1){
+                            layer.msg('申请成功');
+                           location.href=$('#root_url').val();
+                        }else{
+                            layer.msg('申请失败');return false;
+                        }
+                    },'json')
+                }else{
+                    layer.close(index);
+                    layer.msg('密码错误');return false;
+                }
+            },'json')
+        })
+    })
+</script>
+{/block}
+{block name="main"}
+<div class="home">
+    <!-- 头部 -->
+
+    <header>
+        <a href="javascript:history.back(-1)" class="heads"><i class="icon iconfont cio1">&#xe600;</i></a>
+        <span class="heads-p">立即提现</span>
+    </header>
+
+
+    <section>
+        <!-- 激活时加类选择器  .act  -->
+        <section class="tixian">
+            <section class="tixian-left act">
+                <i class="icon iconfont ico01 act">&#xe607;</i>
+                <section>提交申请</section>
+            </section>
+            <div class="heng act"></div>
+
+            <section class="tixian-left tixian-left1">
+                <i class="icon iconfont ico01">&#xe609;</i>
+                <section>等待转账</section>
+            </section>
+            <div class="heng"></div>
+
+            <section class="tixian-left tixian-left1">
+                <i class="icon iconfont ico01">&#xe609;</i>
+                <section>提现成功</section>
+            </section>
+        </section>
+        <section class="yue">
+            <span>账户余额</span>
+            <span>{$cash|default=0.00}元</span>
+            <input type="hidden" id="cash" value="{$cash|default=0}">
+        </section>
+        <section class="zhanghao zhanghao1">
+            <span>提现账号</span>
+            <span><i class="icon iconfont ico16">&#xe611;</i></span>
+        </section>
+
+        <div class="clr"></div>
+        <div class="haha">
+            <form action="" method="">
+           {volist name="accounts" id="vo"}
+                <section class="cirdet">
+                    <span><i class="icon iconfont ico17"></i></span>
+                    <div class="jss">
+                        {if condition="$vo['account_type'] eq 2"}
+                        <section>支付宝</section>
+                        {else }
+                        <section>{$vo.bank_name}</section>
+                        {/if}
+                        <section>
+                            <span class="spn2">{$vo.name}</span>
+                            <span class="spn1">＊＊＊＊＊＊＊＊＊＊{:substr($vo['bank_no'],-4)}</span></section>
+                    </div>
+                    <input type="radio" name="account" id="males{$vo.id}"   {if condition="$vo['is_default'] eq 1 AND $vo['account_type'] eq 1"}checked{/if} value="{$vo.id}" class="ras"/>
+                    <label for="males{$vo.id}" class="ras1"></label>
+                </section>
+                <div class="clr"></div>
+                {/volist}
+                </form>
+        </div>
+
+        <!--<section class="zhanghao zhanghao2">-->
+            <!--<span>提现账号</span>-->
+            <!--<span>支付宝</span>-->
+            <!--<span><i class="icon iconfont ico16">&#xe611;</i></span>-->
+        <!--</section>-->
+
+        <!--<div class="clr"></div>-->
+        <!--<div class="haha1">-->
+
+
+            <!--<section class="cirdet">-->
+                <!--<span><i class="icon iconfont ico17">&#xe603;</i></span>-->
+                <!--<div class="jss">-->
+                    <!--<section>中国建设银行</section>-->
+                    <!--<section>-->
+                        <!--<span class="spn2">王小贱</span>-->
+                        <!--<span class="spn1">＊＊＊＊＊＊＊＊＊＊ 997</span></section>-->
+                <!--</div>-->
+                <!--<input type="radio" name="sex1" id="malesc" checked="checked"  class="ras"/>-->
+                <!--<label for="malesc" class="ras1"></label>-->
+            <!--</section>-->
+
+
+            <!--<div class="clr"></div>-->
+
+            <!--<section class="cirdet">-->
+                <!--<span><i class="icon iconfont ico17">&#xe603;</i></span>-->
+                <!--<div class="jss">-->
+                    <!--<section>中国建设银行</section>-->
+                    <!--<section>-->
+                        <!--<span class="spn2">王小贱</span>-->
+                        <!--<span class="spn1">＊＊＊＊＊＊＊＊＊＊ 997</span></section>-->
+                <!--</div>-->
+                <!--<input type="radio" name="sex1" id="malesb"   class="ras"/>-->
+                <!--<label for="malesb" class="ras1"></label>-->
+            <!--</section>-->
+        <!--</div>-->
+        <div class="clr"></div>
+        <div class="with-zh">
+            <span class="with-zh-sp1">提现金额</span>
+            <input type="text" id="money" name="money" class="with-inp1" />
+            <span class="with-zh-sp2">* 手续费(<b id="need">1</b>元) 1%收取</span>
+        </div>
+        <div class="with-zh">
+            <span class="with-zh-sp1">取款密码</span>
+            <input type="password" id="password" name="password" class="with-inp1" />
+            <span class="with-zh-sp2">* 密码为您的账户登录密码</span>
+        </div>
+
+        <input type="button" value="提现申请"  class="with-su"/>
+
+
+        <section class="with-zhuyi">
+            <section class="with-zhuyi1">
+                <i class="icon iconfont ico18">&#xe605;</i>
+                <span class="with-zhuyi2">注意事项</span>
+            </section>
+            <section class="with-zhuyi3">
+                1、为了保证您的账户安全性，提现需要进行审核操作，收到提现申请后，后台会在三个工作日内对您的提现申请进行审核同时告知审核结果，请耐心等待；
+            </section>
+            <section class="with-zhuyi3">
+                2、提现金额须大于100且为整数，支付宝提现，银行提现收取1%的手续费；
+            </section>
+            <section class="with-zhuyi3">
+                3、正常情情况下我们将在三个工作日内将相应的款项汇入您提供的账号。
+            </section>
+
+        </section>
+    </section>
+
+
+<input type="hidden" id="extract_sub" value="{:U('extract_sub')}">
+    <input type="hidden" id="root_url" value="{:U('extracts')}">
+    <input type="hidden" id="check_url" value="{:U('extract_check')}">
+    <input type="hidden" id="apply_url" value="{:U('extract_apply')}">
+    <!-- 底部 -->
+    <div class="foots"></div>
+    <footer>
+        <a href="{:U('Index/index')}" class="foots1">夺宝</a>
+        <a href="{:U('Index/all_goods', array('cate'=> '0-1'))}" class="foots2">全部商品</a>
+        <a href="{:U('Index/all_share_order')}" class="foots3">晒单</a>
+        <a href="{:U('Cart/cart_list')}" class="foots4">购物车</a>
+        <a href="{:U('Users/personal_center')}" class="foots5 act">我的</a>
+    </footer>
+
+</div>
+{/block}

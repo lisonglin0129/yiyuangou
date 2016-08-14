@@ -1,0 +1,11 @@
+{volist name="share_list" id="vo"}
+
+<div class="zx2-1" location-url = "{:U('OtherUsers/share_detail',array('share_id'=>$vo['share_id']))}">
+    <section>{$vo.title}</section>
+    <section><a href="" style="float:left;color:#0079fe">{$vo.username}</a></section><section style="float:right;margin-top:5px;color:#999;">{$vo.create_time}</section>
+    <div class="xz2-2"><img src="{$vo.img_path}">
+        {$vo.content}
+    </div>
+</div>
+
+{/volist}

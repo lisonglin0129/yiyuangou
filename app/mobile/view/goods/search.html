@@ -1,0 +1,68 @@
+{extend name="base/common"}
+{block name="title"}搜索商品 - {:C('WEBSITE_NAME')}{/block}
+{block name="head"}
+<link rel="shortcut icon" type="image/x-icon" href="__MOBILE_CSS__/Public/public/font/favicon.ico.css" />
+<link rel="icon" type="image/x-icon" href="__MOBILE_CSS__/Public/public/font/favicon.ico.css" />
+<meta content="telephone=no" name="format-detection" />
+<link href="__MOBILE_CSS__/common.css" rel="stylesheet" />
+<link href="__MOBILE_CSS__/query.css" rel="stylesheet" />
+<script type="text/javascript" src="__MOBILE_JS__/jquery.min.js"></script>
+{/block}
+{block name="main"}
+		<div class="g-header">
+			<div class="m-simpleHeader" id="dvHeader">
+				<a href="javascript:history.go(-1);" data-pro="back" data-back="true" class="m-simpleHeader-back"><i class="ico-back"></i></a>
+				<h1>搜索商品</h1>
+			</div>
+		</div>
+
+		<div class="g-body">
+			<div class="g-wrap">
+				<div class="m-query">
+                     <form action="{:U('Goods/search_result')}" method="post">
+					<div class="w-query">
+                        <div class="w-query-form">
+							<div class="w-input">
+								<input class="w-input-input" type="text"  maxlength="50"  name="search" placeholder="请输入要搜索的商品" />
+								<i class="ico ico-query w-input-ico"></i>
+							</div>
+							<span class="w-button w-query-button" style="background-color:#ccc;height:30px;padding-left: 0px;"><input type="submit" value="搜索" style="border:none;background:none"></span>
+						</div>
+					</div>
+                     </form>
+					<h2>热门搜索</h2>
+					<ul class="popular-list">
+                        {volist name="hot" id="vo"}
+						<li><a href="{:U('Goods/search_result',array('search'=>$vo.url_name))}" data-keyword="苹果">{$vo.name}</a></li>
+                        {/volist}
+					</ul>
+				</div>
+			</div>
+		</div>
+	<!--底部-->
+		 <div class="g-footer">
+			<div class="g-wrap">
+				<p style="margin-bottom: 7px;text-align: left;border-bottom: #DCDCDC 1px dotted;padding: 2px 6px;">特别说明：苹果公司不是{:C('WEBSITE_NAME')}赞助商，并且苹果公司也不会以任何形式参与其中！</p>
+				<p class="m-link">
+					<a href="../article/help.do.htm" tppabs="http://m.1.xiangchang.com/help.do">什么是{:C('WEBSITE_NAME')}？</a><var>|</var>
+					<a href="javascript" target="_blank" style="color:#0079fe" class="footer_dl">下载APP</a>
+				</p>
+				<p class="m-copyright">Powered by LingJiang tech.  2016 | 苏ICP备16018502号-4</p>
+			</div>
+		</div>
+
+<script type="javascript">
+	$(".footer_dl").click(function(){
+		var ua = navigator.userAgent.toLowerCase();
+		if(ua.match(/MicroMessenger/i)=="micromessenger") {
+			layer.open({
+				content: '微信浏览器暂不支持下载，请用其他浏览器下载',
+				time: 1 //1秒后自动关闭
+			});
+		} else {
+			window.location.href="http://7xtewd.com2.z0.glb.clouddn.com/xiangchang.apk";
+		}
+	});
+</script>
+
+{/block}

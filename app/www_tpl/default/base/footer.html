@@ -1,0 +1,120 @@
+<div class="g-footer">
+    <div class="m-instruction">
+        <div class="g-wrap f-clear">
+            <div class="g-main">
+                <ul class="m-instruction-list">
+                    <li class="m-instruction-list-item">
+                        <h5><i class="ico ico-instruction ico-instruction-1"></i>新手指南
+                        </h5>
+                        <ul class="list">
+                            {volist name="novice_directory" id="each_help_article"}
+                            {if condition='$each_help_article["is_hide"] neq 1'}
+                            {empty name="$each_help_article.outlink"}
+                            {empty name="$each_help_article.name"}
+                            <li><a href="{:dwz_filter('help/read',['id'=>$each_help_article['id']])}" target="_blank">{$each_help_article.title|htmlspecialchars}</a>
+                            </li>
+                            {else/}
+                            <li><a href="{:dwz_filter('help/read',['name'=>$each_help_article['name']])}" target="_blank">{$each_help_article.title|htmlspecialchars}</a>
+                            </li>
+                            {/empty}
+                            {else/}
+                            <li><a href="{$each_help_article.outlink}" target="_blank">{$each_help_article.title|htmlspecialchars}</a>
+                            </li>
+                            {/empty}
+                            {/if}
+                            {/volist}
+                        </ul>
+                    </li>
+                    <li class="m-instruction-list-item">
+                        <h5><i class="ico ico-instruction ico-instruction-2"></i>夺宝保障
+                        </h5>
+                        <ul class="list">
+                            {volist name="indiana_security" id="each_help_article"}
+                            {if condition='$each_help_article["is_hide"] neq 1'}
+                            {empty name="$each_help_article.outlink"}
+                            {empty name="$each_help_article.name"}
+                            <li><a href="{:dwz_filter('help/read',['id'=>$each_help_article['id']])}" target="_blank">{$each_help_article.title|htmlspecialchars}</a>
+                            </li>
+                            {else/}
+                            <li><a href="{:dwz_filter('help/read',['name'=>$each_help_article['name']])}" target="_blank">{$each_help_article.title|htmlspecialchars}</a>
+                            </li>
+                            {/empty}
+                            {else/}
+                            <li><a href="{$each_help_article.outlink}" target="_blank">{$each_help_article.title|htmlspecialchars}</a>
+                            </li>
+                            {/empty}
+                            {/if}
+                            {/volist}
+                        </ul>
+                    </li>
+                    <li class="m-instruction-list-item">
+                        <h5><i class="ico ico-instruction ico-instruction-3"></i>商品配送
+                        </h5>
+                        <ul class="list">
+                            {volist name="goods_send" id="each_help_article"}
+                            {if condition='$each_help_article["is_hide"] neq 1'}
+                            {empty name="$each_help_article.outlink"}
+                            {empty name="$each_help_article.name"}
+                            <li><a href="{:dwz_filter('help/read',['id'=>$each_help_article['id']])}" target="_blank">{$each_help_article.title|htmlspecialchars}</a>
+                            </li>
+                            {else/}
+                            <li><a href="{:dwz_filter('help/read',['name'=>$each_help_article['name']])}" target="_blank">{$each_help_article.title|htmlspecialchars}</a>
+                            </li>
+                            {/empty}
+                            {else/}
+                            <li><a href="{$each_help_article.outlink}" target="_blank">{$each_help_article.title|htmlspecialchars}</a>
+                            </li>
+                            {/empty}
+                            {/if}
+                            {/volist}
+                        </ul>
+                    </li>
+                    <li class="m-instruction-list-item">
+                        <h5><i class="ico ico-instruction ico-instruction-5"></i>友情链接
+                        </h5>
+                        <ul class="list">
+                            {volist name="$youqinglianjie" id="each_help_article"}
+                            <li>
+                                <a href="{$each_help_article.url|default='--'}" target="_blank">{$each_help_article.name|htmlspecialchars}</a>
+                            </li>
+                            {/volist}
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="g-side">
+                <div class="g-side-l">
+                    <ul class="m-instruction-state f-clear">
+                        <li><i class="ico ico-state-l ico-state-l-1"></i>100%公平公正公开</li>
+                        <li><i class="ico ico-state-l ico-state-l-2"></i>100%正品保证</li>
+                        <li><i class="ico ico-state-l ico-state-l-3"></i>100%权益保障</li>
+                    </ul>
+                </div>
+                <div class="g-side-r">
+                    <div class="m-instruction-yxCode">
+                        <a href="{$down_url}" ><img width="100%" src="{:C('WEBSITE_QRCODE')}"></a>
+                        <!--<p >下载客户端</p>-->
+                    </div>
+                    <div class="m-instruction-service">
+                        <p>{:C('WEB_SERVICE_TIME')}</p>
+                        <p>{:C('WEB_SERVICE_TEL')}</p>
+                        {/*
+                        <p>意见反馈请 <a href="#" target="_blank">点击这里</a></p>
+                        */}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="m-copyright">
+        <div class="g-wrap">
+            <div class="m-copyright-logo">
+
+            </div>
+            <div class="m-copyright-txt">
+                <p>&nbsp;</p>
+                <p> {:C('WEB_INC_INFO')} | {:C('WEBSITE_BEIAN')}</p>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,75 @@
+{extend name="base/common"}
+
+
+
+{block name="head"}
+    <title>晒单详情</title>
+    <link rel="shortcut icon" type="image/x-icon" href="__MOBILE_CSS__/favicon.ico.css" >
+    <link rel="icon" type="image/x-icon" href="__MOBILE_CSS__/favicon.ico.css" >
+    <meta content="telephone=no" name="format-detection" />
+        <link href="__MOBILE_CSS__/user.css"  rel="stylesheet" />
+		<script src="__MOBILE_JS__/jquery.min.js"></script>
+		<script src="__MOBILE_JS__/js.js"></script>
+
+
+{/block}
+
+
+
+{block name="main"}
+
+
+
+
+
+<div class="m-user" id="dvWrapper">
+        <div class="m-simpleHeader" id="dvHeader">
+            <a href="javascript:history.go(-1);" data-pro="back" data-back="true" class="m-simpleHeader-back"><i class="ico ico-back"></i></a>
+
+            <h1>晒单详情</h1>
+        </div>
+ 
+
+	<div class="spqx2-top1">
+			<div class="spqx2-top2">
+				<section>{$my_share_detail.title}</section>
+				<section>
+					<span style="color:blue"><a href="{:U('OtherUsers/other_person_center',array('uid'=>$my_share_detail['uid']))}">{$my_share_detail.nick_name}</a></span>
+					<span style="float:right;margin-right:30px;color:#867d79;">
+						{$my_share_detail.create_time}
+					</span>
+				</section>
+			</div>
+		
+			<div class="spqx2-top3 spqx2-top4 ">
+				<section style="margin-bottom:-5px;">商品信息：<span style="color:blue"><a href="{:U('Goods/goods_detail',array('nper_id'=>$my_share_detail['nper_id']))}">{$my_share_detail.name}</a></span></section>
+				<section>商品期号：<span>{$my_share_detail.nper_id|num_base_mask=0}</span></section>
+				<section>本期参与：<span>{$my_share_detail.participant_num}</span></section>
+				<section>幸运号码：<span>{$my_share_detail.luck_num}</span></section>
+				<section>揭晓时间：<span>{$my_share_detail.open_time}</span></section>
+			</div>
+	
+			<section style="padding:10px;height:auto;width:90%;text-indent:10px;word-break:break-all;">
+				{$my_share_detail.content}
+			</section>
+			
+	<!--晒单图片-->
+        {foreach $imgList as $vo}
+			<div class="dlzc-img1">
+				<img src="{$vo}"/>
+			</div>
+       {/foreach}
+		</div>
+ 
+</div>
+
+
+{/block}
+   
+   
+   
+   
+
+   
+
+

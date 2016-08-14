@@ -1,0 +1,355 @@
+{extend name="base/common"}
+
+{block name="title"}
+个人中心 - 修改收货地址
+{/block}
+
+{block name="head"}
+<link rel="shortcut icon" type="image/x-icon" href="favicon.ico.css">
+<link rel="icon" type="image/x-icon" href="favicon.ico.css">
+<meta content="telephone=no" name="format-detection"/>
+<link rel="stylesheet" href="__MOBILE_CSS__/style1.css" media="screen" type="text/css"/>
+<link href="__MOBILE_CSS__/user.css" rel="stylesheet"/>
+<script src="__MOBILE_JS__/jquery.min.js"></script>
+<script src="__MOBILE_JS__/index.js"></script>
+<script language="javascript" src="__MOBILE_JS__/PCASClass.js" charset="utf-8"></script>
+{/block}
+
+{block name="main"}
+<div class="ds">
+	<div class="m-user mm czz" id="dvWrapper">
+		<div class="m-simpleHeader" id="dvHeader">
+			<a href="{:U('Users/personal_data')}" data-pro="back" data-back="true" class="m-simpleHeader-back"><i class="ico ico-back"></i></a>
+			<a href="" data-pro="ok" class="m-simpleHeader-ok" id="aHome">修改</a>
+			<h1>修改收货地址</h1>
+		</div>
+		<div class="clear">
+		</div>
+	</div>
+	<div class="grzl-2 l2 l3 l5 ">
+		<div class="js-1 l6 oo1">
+			收货人
+		</div>
+		<input type="css/text" value="{$address['name']}" name="" class="name"/>
+	</div>
+	<div class="grzl-2 l2 l3 l5">
+		<div class="js-1 l6 oo1">
+			身份证
+		</div>
+		<input type="css/text" value="{$address['sn_id']}" name="" class="sn_id"/>
+	</div>
+	<div class="grzl-2 l2 l3 l5">
+		<div class="js-1 l6 oo1">
+			手机号码
+		</div>
+		<input type="css/text" value="{$address['phone']}" name="" class="phone"/>
+	</div>
+	<div class="grzl-2 l2 l3 l5">
+		<div class="js-1 l6 oo1">
+			邮政号码
+		</div>
+		<input type="css/text" value="{$address['code']}" name="" class="code"/>
+	</div>
+    <div class="grzl-2 l2 l3 l5">
+		<div class="js-1 l6 oo1">
+			省份
+		</div>
+		<select name="province"  class="province">
+		</select>
+	</div>
+	<div class="grzl-2 l2 l3 l5">
+		<div class="js-1 l6 oo1">
+			城市
+		</div>
+		<select name="city" class="city">
+
+		</select>
+	</div>
+	<div class="grzl-2 l2 l3 l5">
+		<div class="js-1 l6 oo1">
+			地区
+		</div>
+		<select name="area" class="area">
+		</select>
+	</div>
+    <div class="grzl-2 l2 l3 l5 l7">
+		<div class="js-1 l6 oo1">
+			详细地址
+		</div>
+		<input type="css/text" value="{$address['address']}" name="" class="address"/>
+	</div>
+	<div class="grzl-2 l2 l3 l5">
+		<div class="o9">
+			是否设为默认地址
+		</div>
+		<div class="r3">
+			<input class='tgl tgl-flip ' id='cb5' type='checkbox'/>
+
+            {eq name="$address['type']" value="1"}
+                <label class='tgl-btn default checked' data-tg-off='Nope' data-tg-on='Yeah!' for='cb5'></label>
+            {else/}
+                <label class='tgl-btn default' data-tg-off='Nope' data-tg-on='Yeah!' for='cb5' ></label>
+            {/eq}
+
+
+
+		</div>
+	</div>
+    <div class="grzl-2 l2 l3 l5">
+        <input type="button" value="删除地址" id="delete"/>
+    </div>
+
+
+    <input type="hidden" value="{$address['id']}" id="address_id"/>
+    <input type="hidden" value="{:U('Users/modify_address')}" id="modify-address-url"/>
+    <input type="hidden" value="{:U('Users/address_list')}" id="address-url"/>
+    <input type="hidden" value="{:U('Users/delete_address')}" id="del-address-url"/>
+    <input type="hidden" value="{$address['provice']}" id="province-val"/>
+    <input type="hidden" value="{$address['city']}" id="city-val"/>
+    <input type="hidden" value="{$address['area']}" id="area-val"/>
+
+</div>
+
+<script>
+
+
+    new PCAS("province","city","area");//三级联动，有默认值，有文字提示信息
+
+    $(function(){
+        var province=$('#province-val').val();
+        var city=$('#city-val').val();
+        var area=$('#area-val').val();
+        $("select[name='province']").find("option[value="+province+"]").prop("selected",true).trigger("change");
+        $("select[name='city']").find("option[value="+city+"]").prop("selected",true).trigger("change");
+        $("select[name='area']").find("option[value="+area+"]").prop("selected",true).trigger("change");
+        $('.province').change(function(){
+            province=$(this).val();
+            city=$('.city').val();
+            area=$('.area').val();
+        });
+        $('.city').change(function(){
+            city=$(this).val();
+        });
+        $('.area').change(function(){
+            area=$(this).val();
+        });
+
+        //判断是否为默认地址
+        if($('.default').hasClass("checked")){
+            $('.default').trigger('click');
+        }
+
+        //检验地区是否为空
+        function checkAreaNOtEmpty(){
+            if(province==''||city==''||area==''){
+                return false;
+            }else{
+                return true;
+            }
+
+        }
+        //检验收货人是否为空
+        function checkNameNotEmpty() {
+            return $('.name').val() == '' ? false : true;
+        }
+
+        //检验身份证是否为空
+        function checkIdNotEmpty() {
+            return $('.sn_id').val() == '' ? false : true;
+        }
+
+        //检验手机号码是否为空
+        function checkPhoneNotEmpty() {
+            return $('.phone').val() == '' ? false : true;
+        }
+        //检验邮政号码是否为空
+        function checkCodeNotEmpty() {
+            return $('.code').val() == '' ? false : true;
+        }
+
+        //检验详细地址是否为空
+        function checkAddressNotEmpty() {
+            return $('.address').val() == '' ? false : true;
+        }
+        //检验手机号码是否符合规范
+        function checkPhone() {
+            return $('.phone').val().match(/^((1)\d{10})$/) ? true : false;
+
+        }
+        //检验身份证号码是否符合规范
+        function checkId() {
+            return $('.sn_id').val().match(/^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/) ? true : false;
+        }
+        /**
+         * 默认地址 添加标记类
+         */
+        $(".default").click(function(){
+            if($(this).hasClass("checked")){
+                $(this).removeClass("checked")
+            }else{
+                $(this).addClass("checked")
+            }
+
+        });
+        //type=1为默认地址
+        var type;
+        if($('.default').hasClass("checked")){
+            type=1
+        }else{
+            type=0
+        }
+
+        $('#aHome').click(function(ev){
+            ev.preventDefault();
+            if(!checkNameNotEmpty()) {
+                layer.open({
+                    content: '收货人不得为空',
+                    time: 1 //1秒后自动关闭
+                });
+                return false;
+            }
+            if(!checkIdNotEmpty()) {
+                layer.open({
+                    content: '身份证号码不得为空',
+                    time: 1 //1秒后自动关闭
+                });
+                return false;
+            }
+            if(!checkPhoneNotEmpty()) {
+                layer.open({
+                    content: '手机号码不得为空',
+                    time: 1 //1秒后自动关闭
+                });
+                return false;
+            }
+            if(!checkCodeNotEmpty()) {
+                layer.open({
+                    content: '邮政号码不得为空',
+                    time: 1 //1秒后自动关闭
+                });
+                return false;
+            }
+            if(!checkAreaNOtEmpty()){
+                layer.open({
+                    content: '地区不得为空',
+                    time: 1 //1秒后自动关闭
+                });
+                return false;
+            }
+            if(!checkAddressNotEmpty()) {
+                layer.open({
+                    content: '详细地址不得为空',
+                    time: 1 //1秒后自动关闭
+                });
+                return false;
+            }
+            if(!checkId()) {
+                layer.open({
+                    content: '身份证号码不合法',
+                    time: 1 //1秒后自动关闭
+                });
+                return false;
+            }
+            if(!checkPhone()) {
+                layer.open({
+                    content: '手机号码不合法',
+                    time: 1 //1秒后自动关闭
+                });
+                return false;
+            }
+            //修改地址
+            $.ajax({
+                url: $('#modify-address-url').val(),
+                type: 'POST',
+                data: {
+                    name : $('.name').val(),
+                    sn_id : $('.sn_id').val(),
+                    phone : $('.phone').val(),
+                    code : $('.code').val(),
+                    province : province,
+                    city : city,
+                    area : area,
+                    address : $('.address').val(),
+                    type : type,
+                    address_id:$('#address_id').val()
+                },
+                beforeSend: function () {
+
+                },
+                success: function (data, response, status) {
+                    var response_data = $.parseJSON(data);
+
+                    if (response_data.status == 'fail') {
+                        layer.open({
+                            content: response_data.message,
+                            time: 1 //1秒后自动关闭
+                        });
+                    }
+                    if (response_data.status == 'success') {
+                        layer.open({
+                            content: '修改成功',
+                            time: 1 //1秒后自动关闭
+                        });
+                        window.location.href = $('#address-url').val()
+                    }
+                }
+            });
+        });
+        //删除地址
+        $('#delete').click(function(){
+            var statu = confirm("确定删除吗？");
+            if(!statu){
+                return false;
+            }
+            $.ajax({
+                url: $('#del-address-url').val(),
+                type: 'POST',
+                data: {
+                    address_id:$('#address_id').val()
+                },
+                beforeSend: function () {
+
+                },
+                success: function (data, response, status) {
+                    var response_data = $.parseJSON(data);
+
+                    if (response_data.status == 'fail') {
+                        layer.open({
+                            content: response_data.message,
+                            time: 1 //1秒后自动关闭
+                        });
+                    }
+                    if (response_data.status == 'success') {
+                        window.location.href = $('#address-url').val()
+                    }
+                }
+            });
+
+
+        })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        });
+</script>
+{/block}
+
+
+
