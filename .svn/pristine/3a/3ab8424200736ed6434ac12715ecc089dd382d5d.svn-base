@@ -1,0 +1,145 @@
+{extend name="base/base" /}
+{block name="css"}
+{css href="__common__/admin/css/goods/form.css" /}
+{css href="__plugin__/umeditor/themes/default/css/umeditor.min.css"/}
+{/block}
+{block name="content"}
+
+<div class="page-content">
+    <div class="page-header">
+        <h1>
+            APP引导页面管理
+            <small>
+                <i class="icon-double-angle-right"></i>
+                {notempty name='type'}
+                {switch name='type'}
+                {case value='add'}添加{/case}
+                {case value='edit'}编辑{/case}
+                {default /}查看
+                {/switch}
+                {/notempty}
+            </small>
+        </h1>
+    </div><!-- /.page-header -->
+                <div class="row">
+                    <div class="col-xs-12">
+                        <!-- PAGE CONTENT BEGINS -->
+                        <form class="form-horizontal" role="form" id="form_content">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right"> 系统平台 </label>
+                                <div class="col-sm-6">
+                                    <select class="col-xs-10 col-sm-5" data-placeholder="请选择" name="plat">
+                                        <option value="android" {if condition=" isset($guide_data.plat) && $guide_data.plat == 'android'"}selected="selected"{/if} >安卓</option>
+                                        <option value="ios" {if condition=" isset($guide_data.plat) && $guide_data.plat == 'ios'"}selected="selected"{/if} >IOS</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="space-4"></div>
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right"> 引导类型 </label>
+                                <div class="col-sm-6">
+                                    <select class="col-xs-10 col-sm-5" data-placeholder="请选择" name="guide_type">
+                                        <option value="first" {if condition=" isset($guide_data.type) && $guide_data.type == 'first'"}selected="selected"{/if} >首次安装</option>
+                                        <option value="index" {if condition=" isset($guide_data.type) && $guide_data.type == 'index'"}selected="selected"{/if} >非首次安装</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="space-4"></div>
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right">图片URL</label>
+                                <div class="col-sm-6">
+                                    <input type="text" placeholder="请输入图片URL" class="col-xs-10 col-sm-5" name="img_path"
+                                    {switch name='type'}
+                                    {case value='add'}{/case}
+                                    {case value='edit|see'}value="{$guide_data.img_path}{/case}
+                                    {default /}
+                                    {/switch} "/>
+                                </div>
+                            </div>
+                            <div class="space-4"></div>
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right">排序号</label>
+                                <div class="col-sm-6">
+                                    <input type="text" placeholder="请输入排序号" class="col-xs-10 col-sm-5" name="order"
+                                    {switch name='type'}
+                                    {case value='add'}{/case}
+                                    {case value='edit|see'}value="{$guide_data.order}{/case}
+                                    {default /}
+                                    {/switch} "/>
+                                </div>
+                            </div>
+                            <div class="space-4"></div>
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right">跳转链接(选填)</label>
+                                <div class="col-sm-6">
+                                    <input type="text" placeholder="请输入跳转链接" class="col-xs-10 col-sm-5" name="url"
+                                    {switch name='type'}
+                                    {case value='add'}{/case}
+                                    {case value='edit|see'}value="{$guide_data.url}{/case}
+                                    {default /}
+                                    {/switch} "/>
+                                </div>
+                            </div>
+                            <div class="space-4"></div>
+
+
+
+                            <div class="space-4"></div>
+
+                            <!--操作按钮-->
+                            <div class="clearfix form-actions">
+                                <div class="col-md-offset-3 col-md-9">
+                                    {notempty name='type'}
+                                    {switch name='type'}
+                                    {case value='add'}
+                                    <button class="btn btn-info submit_btn" type="button">
+                                        <i class="icon-ok bigger-110"></i>
+                                        提交表单
+                                    </button>
+                                    &nbsp; &nbsp; &nbsp;
+                                    <button class="btn" type="reset">
+                                        <i class="icon-undo bigger-110"></i>
+                                        重置
+                                    </button>
+                                    &nbsp; &nbsp; &nbsp;
+                                    <button class="btn btn-default close_page" type="button">
+                                        <i class="fa fa-times bigger-110"></i>
+                                        关闭页面
+                                    </button>
+                                    {/case}
+                                    {case value='edit'}
+                                    <button class="btn btn-info submit_btn" type="button">
+                                        <i class="icon-ok bigger-110"></i>
+                                        保存内容
+                                    </button>
+                                    <button class="btn btn-default close_page" type="button">
+                                        <i class="fa fa-times bigger-110"></i>
+                                        关闭页面
+                                    </button>
+                                    {/case}
+                                    {default /}
+                                    {/switch}
+                                    {/notempty}
+                                </div>
+                            </div>
+                            <input type="hidden" name="id" value="{$guide_data.id|default=''}">
+                        </form>
+                    </div><!-- /.row -->
+                </div><!-- /.page-content -->
+        </div>
+
+        <input type="hidden" id="submit_url" value="{:U('guide_update')}">
+        <input type="hidden" id="root_url" value="{:U('guide')}">
+        <input type="hidden" id="type" value="{$type|default='add'}">
+        {/block}
+
+        {block name="js"}
+        {js href='__common__/admin/js/appmanage/form1.js' /}
+        {js href='__plugin__/umeditor/umeditor.config.js' /}
+        {js href='__plugin__/umeditor/umeditor.min.js' /}
+        {js href='__plugin__/umeditor/lang/zh-cn/zh-cn.js' /}
+        {/block}

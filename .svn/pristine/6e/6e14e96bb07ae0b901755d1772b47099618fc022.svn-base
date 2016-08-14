@@ -1,0 +1,51 @@
+{extend name="base/base"/}
+{block name="title"}分销奖励{/block}
+{block name="user_css"}
+{css href="__static__/css/usercenter.css" /}
+{css href="__static__/css/promote.css" /}
+{/block}
+{block name='content'}
+<div class="g-body">
+    <div class="m-user">
+        <div class="g-wrap">
+            <div class="m-user-frame-wraper">
+                <!--用户中心  菜单-->
+                {include file="ucenter/_nav" /}
+                <!--用户中心 main-->
+                <div class="m-user-frame-colMain ">
+                    <div class="m-user-frame-content" >
+                        <ul class="w-crumbs f-clear">
+                            <li class="w-crumbs-item">当前位置：</li>
+                            <li class="w-crumbs-item"><a href="promote.html">我的推广</a><span class="w-crumbs-split">&gt;</span></li>
+                            <li class="w-crumbs-item w-crumbs-active">分销奖励</li>
+                        </ul>
+                        <div class="m-user-comm-wraper">
+                            <div class=" pro-title">
+                                <h2>分销奖励</h2>
+                            </div>
+
+                            <div class=" pro-detail pro-rew">
+                                <div>
+                                    {$article.content??'<h1>文章丢失,请联系管理员后台添加文章,并设置识别码为:REGISTER(区分大小写)</h1>'}
+                                </div>
+                               <!-- <span class="pro-dw"></span>
+                                <h2>“{:C('WEBSITE_NAME')}”推行“三级推广”的奖励模式</h2>
+                                <div>
+                                    <p><span>1</span>每个用户在注册时生成一个唯一独立的推广ID</p>
+                                    <p><span>2</span>A用户在{:C('WEBSITE_NAME')}注册，邀请好友B注册并填写推荐人A的ID，A用户获得佣金为B用户消费总额的10%</p>
+                                    <p><span>3</span>B邀请好友C注册，B用户获得佣金为C用户消费总额的10%，A用户获得佣金为C用户消费总额的5%</p>
+                                </div>-->
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="m-user-frame-clear"></div>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}
+{block name="user_js"}
+{/block}

@@ -1,0 +1,98 @@
+$(function(){
+    var layer_index = 0;
+    var func ={
+        'addr_submit':function() {
+            $('#confirm_addr_frm').submit();
+        },
+    };
+    $(document).on('click','.bar-view>.address-bar',function(){
+        var $this = $(this);
+
+        $this.siblings().removeClass('bar-selected');
+        $this.addClass('bar-selected');
+        $this.find('input').prop('checked',true);
+
+    });
+    $('#confirm_addr').click(function(){
+        if($('.bar-view>.bar-selected').length==0) {
+            layer.msg('不填收获地址，我们就不知道该往哪里送哦');
+            return false;
+        }
+        $('.w-mask').show();
+        $('.w-msgbox .receiver').text($('.bar-view>.bar-selected .bar-item.receiver').text());
+        $('.w-msgbox .address').text($('.bar-view>.bar-selected .bar-item.address').text());
+        $('.w-msgbox .mobile').text($('.bar-view>.bar-selected .bar-item.mobile').text());
+        $('#addr_id').val($('.bar-view>.bar-selected input[name=addr_id_sel]').val());
+        $('.w-msgbox').show();
+    });
+    $('.w-msgbox .w-msgbox-close,.w-msgbox .confirm_cancel').click(function(){
+        $('.w-msgbox').hide();
+        $('.w-mask').hide();
+    });
+    $('.w-msgbox .confirm_ok').click(function(){
+        func.addr_submit();
+    });
+    $('#confirm_prize_frm').submit(function(){
+        return window.confirm('确认操作不可重复提交，请确认您已经收到商品；');
+    });
+    $("#chrage_z").on("click",function(){
+        $('.w-mask').show();
+        layer_index = layer.open({
+            type: 1,
+            shade: false,
+            title: false,
+            area: ['auto'],
+            content: $('#charge_modal_zfb').html(),
+            cancel:function(){
+                $('.w-mask').hide();
+                layer.close(layer_index);
+            },
+        });
+    });
+    $("#charge_c").on("click",function(){
+        $('.w-mask').show();
+        layer_index = layer.open({
+            type: 1,
+            shade: false,
+            title: false,
+            area: ['auto'],
+            content: $('#charge_modal_fee').html(),
+            cancel:function(){
+                $('.w-mask').hide();
+                layer.close(layer_index);
+            },
+        });
+    });
+    $(".min-vf-sure").on("click",function(){
+        var charge_sel=$("input[name='reward_type']:checked").val();
+        var tip ;
+        if(charge_sel=="recharge")
+        {
+            tip = "确定直接存进您的余额?(本次操作不可撤销)";
+        }else if(charge_sel=="card")
+        {
+            tip = "您将获得卡号和密码?(本次操作不可撤销)";
+        }else {
+            tip = '请选择兑换类型';
+            layer.msg(tip);
+            return false;
+        }
+        $('#charge_notice_sel h6').text(tip);
+        layer.confirm(tip, {
+                title: false,
+                area: ['auto'],
+                closeBtn: ".cnm_btn_cancel",
+                content: $('#charge_notice_sel').html(),
+            },function(index){
+                layer.close(index);
+                $('#choose_reward_form').submit();
+            },function(index){
+                layer.close(index);
+            }
+        );
+    });
+    $(document).on('click','.cm-btn-cancel,.cm-btn-sure',function(){
+        $('.w-mask').hide();
+        layer.close(layer_index);
+    });
+});

@@ -1,0 +1,454 @@
+{extend name="base/base" /}
+{block name="css"}
+{css href="__common__/admin/css/goods/form.css" /}
+{css href="__plugin__/umeditor/themes/default/css/umeditor.min.css"/}
+{/block}
+{block name="content"}
+
+<div class="page-content">
+    <div class="page-header">
+        <h1>
+            APP包配置
+            <small>
+                <i class="icon-double-angle-right"></i>
+                {notempty name='type'}
+                {switch name='type'}
+                {case value='add'}添加{/case}
+                {case value='edit'}编辑{/case}
+                {default /}查看
+                {/switch}
+                {/notempty}
+            </small>
+        </h1>
+    </div><!-- /.page-header -->
+
+    <div class="row">
+        <div class="col-xs-12">
+            <!-- PAGE CONTENT BEGINS -->
+            <form class="form-horizontal" role="form" id="form_content">
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right"> <span
+                            style="color:#438eb9;font-size: 18px;">第三方登录</span>
+                    </label>
+                    <div class="col-sm-9">
+                        <hr style="border: 1px solid rgb(231, 231, 231) ;position: relative;top:-5px;width: 600px;float: left">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right">包名字</label>
+                    <div class="col-sm-6">
+                        <input type="text" placeholder="请输入" class="col-xs-10 col-sm-5" name="name"                                {switch name='type'}
+                               {case value='add'}{/case}
+                        {case value='edit|see'}value="{$conf_data.name}{/case}
+                        {default /}
+                        {/switch} "/>
+                    </div>
+                </div>
+                <div class="space-4"></div>
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right">QQ联合登录APPID</label>
+                    <div class="col-sm-6">
+                        <input type="text" placeholder="请输入" class="col-xs-10 col-sm-5" name="union_qq_appid_app"                                {switch name='type'}
+                               {case value='add'}{/case}
+                        {case value='edit|see'}value="{$conf_data.union_qq_appid_app}{/case}
+                        {default /}
+                        {/switch} "/>
+                    </div>
+                </div>
+                <div class="space-4"></div>
+
+
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right">QQ联合登录APPKEY</label>
+                    <div class="col-sm-6">
+                        <input type="text" placeholder="请输入" class="col-xs-10 col-sm-5" name="union_qq_appkey"                                {switch name='type'}
+                               {case value='add'}{/case}
+                        {case value='edit|see'}value="{$conf_data.union_qq_appkey}{/case}
+                        {default /}
+                        {/switch} "/>
+                    </div>
+                </div>
+                <div class="space-4"></div>
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right">微信appID(应用ID)</label>
+                    <div class="col-sm-6">
+                        <input type="text" placeholder="请输入" class="col-xs-10 col-sm-5" name="wxpay_app_appid"                                {switch name='type'}
+                               {case value='add'}{/case}
+                        {case value='edit|see'}value="{$conf_data.wxpay_app_appid}{/case}
+                        {default /}
+                        {/switch} "/>
+                    </div>
+                </div>
+                <div class="space-4"></div>
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right">微信AppSecret(应用密钥)</label>
+                    <div class="col-sm-6">
+                        <input type="text" placeholder="请输入" class="col-xs-10 col-sm-5" name="wxpay_app_appsecret"                                {switch name='type'}
+                               {case value='add'}{/case}
+                        {case value='edit|see'}value="{$conf_data.wxpay_app_appsecret}{/case}
+                        {default /}
+                        {/switch} "/>
+                    </div>
+                </div>
+                <div class="space-4"></div>
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right">新浪微博联合登录ID</label>
+                    <div class="col-sm-6">
+                        <input type="text" placeholder="请输入" class="col-xs-10 col-sm-5" name="union_sina_weibo_id"                                {switch name='type'}
+                               {case value='add'}{/case}
+                        {case value='edit|see'}value="{$conf_data.union_sina_weibo_id}{/case}
+                        {default /}
+                        {/switch} "/>
+                    </div>
+                </div>
+                <div class="space-4"></div>
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right">新浪微博联合登录KEY</label>
+                    <div class="col-sm-6">
+                        <input type="text" placeholder="请输入" class="col-xs-10 col-sm-5" name="union_sina_weibo_key"                                {switch name='type'}
+                               {case value='add'}{/case}
+                        {case value='edit|see'}value="{$conf_data.union_sina_weibo_key}{/case}
+                        {default /}
+                        {/switch} "/>
+                    </div>
+                </div>
+                <div class="space-4"></div>
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right"> <span
+                            style="color:#438eb9;font-size: 18px;">支付配置</span>
+                    </label>
+                    <div class="col-sm-9">
+                        <hr style="border: 1px solid rgb(231, 231, 231) ;position: relative;top:-5px;width: 600px;float: left">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right">微信商户号</label>
+                    <div class="col-sm-6">
+                        <input type="text" placeholder="请输入" class="col-xs-10 col-sm-5" name="wxpay_app_mchid"                                {switch name='type'}
+                               {case value='add'}{/case}
+                        {case value='edit|see'}value="{$conf_data.wxpay_app_mchid}{/case}
+                        {default /}
+                        {/switch} "/>
+                    </div>
+                </div>
+                <div class="space-4"></div>
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right">微信商户支付密钥</label>
+                    <div class="col-sm-6">
+                        <input type="text" placeholder="请输入" class="col-xs-10 col-sm-5" name="wxpay_app_key"                                {switch name='type'}
+                               {case value='add'}{/case}
+                        {case value='edit|see'}value="{$conf_data.wxpay_app_key}{/case}
+                        {default /}
+                        {/switch} "/>
+                    </div>
+                </div>
+                <div class="space-4"></div>
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right">爱贝APPID</label>
+                    <div class="col-sm-6">
+                        <input type="text" placeholder="请输入" class="col-xs-10 col-sm-5" name="aipay_appid"                                {switch name='type'}
+                               {case value='add'}{/case}
+                        {case value='edit|see'}value="{$conf_data.aipay_appid}{/case}
+                        {default /}
+                        {/switch} "/>
+                    </div>
+                </div>
+                <div class="space-4"></div>
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right">爱贝应用私钥</label>
+                    <div class="col-sm-6">
+                        <input type="text" placeholder="请输入" class="col-xs-10 col-sm-5" name="aipay_private_key"                                {switch name='type'}
+                               {case value='add'}{/case}
+                        {case value='edit|see'}value="{$conf_data.aipay_private_key}{/case}
+                        {default /}
+                        {/switch} "/>
+                    </div>
+                </div>
+                <div class="space-4"></div>
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right">爱贝平台公钥</label>
+                    <div class="col-sm-6">
+                        <input type="text" placeholder="请输入" class="col-xs-10 col-sm-5" name="aipay_plat_key"                                {switch name='type'}
+                               {case value='add'}{/case}
+                        {case value='edit|see'}value="{$conf_data.aipay_plat_key}{/case}
+                        {default /}
+                        {/switch} "/>
+                    </div>
+                </div>
+                <div class="space-4"></div>
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right">爱贝登录账号</label>
+                    <div class="col-sm-6">
+                        <input type="text" placeholder="请输入" class="col-xs-10 col-sm-5" name="aipay_account"                                {switch name='type'}
+                               {case value='add'}{/case}
+                        {case value='edit|see'}value="{$conf_data.aipay_account}{/case}
+                        {default /}
+                        {/switch} "/>
+                    </div>
+                </div>
+                <div class="space-4"></div>
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right">爱贝回调地址</label>
+                    <div class="col-sm-6">
+                        <input type="text" placeholder="请输入" class="col-xs-10 col-sm-5" name="aipay_notify_url"                                {switch name='type'}
+                               {case value='add'}{/case}
+                        {case value='edit|see'}value="{$conf_data.aipay_notify_url}{/case}
+                        {default /}
+                        {/switch} "/>
+                    </div>
+                </div>
+                <div class="space-4"></div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right">支付宝APPID</label>
+                    <div class="col-sm-6">
+                        <input type="text" placeholder="请输入" class="col-xs-10 col-sm-5" name="alipay_appid"                                {switch name='type'}
+                               {case value='add'}{/case}
+                        {case value='edit|see'}value="{$conf_data.alipay_appid}{/case}
+                        {default /}
+                        {/switch} "/>
+                    </div>
+                </div>
+                <div class="space-4"></div>
+
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right">支付宝回调地址</label>
+                    <div class="col-sm-6">
+                        <input type="text" placeholder="请输入" class="col-xs-10 col-sm-5" name="alipay_notify_url"                                {switch name='type'}
+                               {case value='add'}{/case}
+                        {case value='edit|see'}value="{$conf_data.alipay_notify_url}{/case}
+                        {default /}
+                        {/switch} "/>
+                    </div>
+                </div>
+                <div class="space-4"></div>
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right">支付宝卖家email</label>
+                    <div class="col-sm-6">
+                        <input type="text" placeholder="请输入" class="col-xs-10 col-sm-5" name="alipay_seller_email"                                {switch name='type'}
+                               {case value='add'}{/case}
+                        {case value='edit|see'}value="{$conf_data.alipay_seller_email}{/case}
+                        {default /}
+                        {/switch} "/>
+                    </div>
+                </div>
+                <div class="space-4"></div>
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right"> <span
+                            style="color:#438eb9;font-size: 18px;">支付开关配置</span>
+                    </label>
+                    <div class="col-sm-9">
+                        <hr style="border: 1px solid rgb(231, 231, 231) ;position: relative;top:-5px;width: 600px;float: left">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right">支付宝开关</label>
+                    <div class="col-sm-6">
+                        <input  class="conf_text" name="ali_pay" type="radio" value="1"
+                                {neq name="type" value="add"}
+                                {eq name="conf_data.ali_pay" value="1"}checked="checked"{/eq}
+                        {/neq}>开启 &nbsp;&nbsp;&nbsp;&nbsp;
+                        <input  class="conf_text" name="ali_pay" type="radio" value="-1"
+                                {neq name="type" value="add"}
+                                {eq name="conf_data.ali_pay" value="-1"}checked="checked"{/eq}
+                        {else/}checked="checked"
+                        {/neq}>关闭 &nbsp;&nbsp;&nbsp;&nbsp;
+                    </div>
+                </div>
+                <div class="space-4"></div>
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right">微信开关</label>
+                    <div class="col-sm-6">
+                        <input  class="conf_text" name="w_pay" type="radio" value="1"
+                                {neq name="type" value="add"}
+                                {eq name="conf_data.w_pay" value="1"}checked="checked"{/eq}
+                        {/neq}>开启 &nbsp;&nbsp;&nbsp;&nbsp;
+                        <input  class="conf_text" name="w_pay" type="radio" value="-1"
+                                {neq name="type" value="add"}
+                                {eq name="conf_data.w_pay" value="-1"}checked="checked"{/eq}
+                        {else/}checked="checked"
+                        {/neq}>关闭 &nbsp;&nbsp;&nbsp;&nbsp;
+                    </div>
+                </div>
+                <div class="space-4"></div>
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right">bee支付宝开关</label>
+                    <div class="col-sm-6">
+                        <input  class="conf_text" name="bee_ali_pay" type="radio" value="1"
+                                {neq name="type" value="add"}
+                                {eq name="conf_data.bee_ali_pay" value="1"}checked="checked"{/eq}
+                        {/neq}>开启 &nbsp;&nbsp;&nbsp;&nbsp;
+                        <input  class="conf_text" name="bee_ali_pay" type="radio" value="-1"
+                                {neq name="type" value="add"}
+                                {eq name="conf_data.bee_ali_pay" value="-1"}checked="checked"{/eq}
+                        {else/}checked="checked"
+                        {/neq}>关闭 &nbsp;&nbsp;&nbsp;&nbsp;
+                    </div>
+                </div>
+                <div class="space-4"></div>
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right">bee微信开关</label>
+                    <div class="col-sm-6">
+                        <input  class="conf_text" name="bee_w_pay" type="radio" value="1"
+                                {neq name="type" value="add"}
+                                {eq name="conf_data.bee_w_pay" value="1"}checked="checked"{/eq}
+                        {/neq}>开启 &nbsp;&nbsp;&nbsp;&nbsp;
+                        <input  class="conf_text" name="bee_w_pay" type="radio" value="-1"
+                                {neq name="type" value="add"}
+                                {eq name="conf_data.bee_w_pay" value="-1"}checked="checked"{/eq}
+                        {else/}checked="checked"
+                        {/neq}>关闭 &nbsp;&nbsp;&nbsp;&nbsp;
+                    </div>
+                </div>
+                <div class="space-4"></div>
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right">爱贝支付开关</label>
+                    <div class="col-sm-6">
+                        <input  class="conf_text" name="aibei_pay" type="radio" value="1"
+                                {neq name="type" value="add"}
+                                {eq name="conf_data.aibei_pay" value="1"}checked="checked"{/eq}
+                        {/neq}>开启 &nbsp;&nbsp;&nbsp;&nbsp;
+                        <input  class="conf_text" name="aibei_pay" type="radio" value="-1"
+                                {neq name="type" value="add"}
+                                {eq name="conf_data.aibei_pay" value="-1"}checked="checked"{/eq}
+                        {else/}checked="checked"
+                        {/neq}>关闭 &nbsp;&nbsp;&nbsp;&nbsp;
+                    </div>
+                </div>
+                <div class="space-4"></div>
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right"> <span
+                            style="color:#438eb9;font-size: 18px;">第三方登录开关</span>
+                    </label>
+                    <div class="col-sm-9">
+                        <hr style="border: 1px solid rgb(231, 231, 231) ;position: relative;top:-5px;width: 600px;float: left">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right">QQ登录开关</label>
+                    <div class="col-sm-6">
+                        <input  class="conf_text" name="union_qq_swith" type="radio" value="1"
+                                {neq name="type" value="add"}
+                                {eq name="conf_data.union_qq_swith" value="1"}checked="checked"{/eq}
+                        {/neq}>开启 &nbsp;&nbsp;&nbsp;&nbsp;
+                        <input  class="conf_text" name="union_qq_swith" type="radio" value="-1"
+                                {neq name="type" value="add"}
+                                {eq name="conf_data.union_qq_swith" value="-1"}checked="checked"{/eq}
+                        {else/}checked="checked"
+                        {/neq}>关闭 &nbsp;&nbsp;&nbsp;&nbsp;
+                    </div>
+                </div>
+                <div class="space-4"></div>
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right">微信登录开关</label>
+                    <div class="col-sm-6">
+                        <input  class="conf_text" name="union_weichat_swith" type="radio" value="1"
+                                {neq name="type" value="add"}
+                                {eq name="conf_data.union_weichat_swith" value="1"}checked="checked"{/eq}
+                        {/neq}>开启 &nbsp;&nbsp;&nbsp;&nbsp;
+                        <input  class="conf_text" name="union_weichat_swith" type="radio" value="-1"
+                                {neq name="type" value="add"}
+                                {eq name="conf_data.union_weichat_swith" value="-1"}checked="checked"{/eq}
+                        {else/}checked="checked"
+                        {/neq}>关闭 &nbsp;&nbsp;&nbsp;&nbsp;
+                    </div>
+                </div>
+                <div class="space-4"></div>
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right">新浪微博登录开关</label>
+                    <div class="col-sm-6">
+                        <input  class="conf_text" name="union_sina_weibo_swith" type="radio" value="1"
+                                {neq name="type" value="add"}
+                                {eq name="conf_data.union_sina_weibo_swith" value="1"}checked="checked"{/eq}
+                        {/neq}>开启 &nbsp;&nbsp;&nbsp;&nbsp;
+                        <input  class="conf_text" name="union_sina_weibo_swith" type="radio" value="-1"
+                                {neq name="type" value="add"}
+                                {eq name="conf_data.union_sina_weibo_swith" value="-1"}checked="checked"{/eq}
+                        {else/}checked="checked"
+                        {/neq}>关闭 &nbsp;&nbsp;&nbsp;&nbsp;
+                    </div>
+                </div>
+                <div class="space-4"></div>
+
+
+
+                <div class="space-4"></div>
+
+                <!--操作按钮-->
+                <div class="clearfix form-actions">
+                    <div class="col-md-offset-3 col-md-9">
+                        {notempty name='type'}
+                        {switch name='type'}
+                        {case value='add'}
+                        <button class="btn btn-info submit_btn" type="button">
+                            <i class="icon-ok bigger-110"></i>
+                            提交表单
+                        </button>
+                        &nbsp; &nbsp; &nbsp;
+                        <button class="btn" type="reset">
+                            <i class="icon-undo bigger-110"></i>
+                            重置
+                        </button>
+                        &nbsp; &nbsp; &nbsp;
+                        <button class="btn btn-default close_page" type="button">
+                            <i class="fa fa-times bigger-110"></i>
+                            关闭页面
+                        </button>
+                        {/case}
+                        {case value='edit'}
+                        <button class="btn btn-info submit_btn" type="button">
+                            <i class="icon-ok bigger-110"></i>
+                            保存内容
+                        </button>
+                        <button class="btn btn-default close_page" type="button">
+                            <i class="fa fa-times bigger-110"></i>
+                            关闭页面
+                        </button>
+                        {/case}
+                        {default /}
+                        {/switch}
+                        {/notempty}
+                    </div>
+                </div>
+                <input type="hidden" name="id" value="{$conf_data.id|default=''}">
+            </form>
+        </div><!-- /.row -->
+    </div><!-- /.page-content -->
+</div>
+
+<input type="hidden" id="submit_url" value="{:U('update')}">
+<input type="hidden" id="root_url" value="{:U('index')}">
+<input type="hidden" id="type" value="{$type|default='add'}">
+{/block}
+
+{block name="js"}
+{js href='__common__/admin/js/activity/form.js' /}
+{js href='__plugin__/umeditor/umeditor.config.js' /}
+{js href='__plugin__/umeditor/umeditor.min.js' /}
+{js href='__plugin__/umeditor/lang/zh-cn/zh-cn.js' /}
+{/block}

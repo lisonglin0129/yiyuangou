@@ -1,0 +1,115 @@
+{extend name="base/base"}
+{block name="head"}
+<link rel="stylesheet" href="__MOBILE_FONTS__/iconfont.css">
+<link href="__MOBILE_CSS__/common1.css" rel="stylesheet">
+<link href="__MOBILE_CSS__/promote.css" rel="stylesheet">
+<link href="__MOBILE_CSS__/patt.css" rel="stylesheet">
+<script type="text/javascript"  src="__MOBILE_JS__/jquery.min.js"></script>
+<script>
+    $(function () {
+        $(document).on('click','.charge', function () {
+           $('.layers').show();
+        })
+        $(document).on('click','.patt_cards_gray', function () {
+            $('.layers').hide();
+        })
+
+
+        $(document).on('click','.go_charge', function () {
+            var url=$(this).data('val');
+            $(this).html('正在获取');$(this).addClass('patt_cards_gray');
+            $(this).attr('disabled','disabled');
+
+            $.ajax({
+                type: 'POST',
+                url: url,
+                success: function(rt){
+                    if(JSON.parse(rt).code==-1){
+                        layer.msg("不能重复兑换或者联系管理员添加卡密");
+                        $(".go_charge").removeClass('patt_cards_gray').attr('disabled','false').html('立即获得');
+
+                        $('.layers').hide();
+                        return;
+                    }else{
+                        location.href=url;
+                    }
+                },
+                error: function(){
+                    layer.msg("网络异常,请稍后重试");
+                    $('.layers').hide();
+                }
+            });
+
+
+        })
+    })
+</script>
+<style>
+
+</style>
+{/block}
+{block name="main"}
+<!-- 弹层 -->
+<div class="layers">
+    <section class="patt_layer"></section>
+    <section class="patt_layer_main">
+        <p class="patt_layer_circle"></p>
+        <section class="patt_cards">
+            <h1 class="patt_cards_h1">您将获得卡号和密码</h1>
+            <p>（本次操作不可撤销哦）</p>
+            <section class="patt_cards_sect">
+                <a href="javascript:;" class="patt_cards_a go_charge" data-val="{:U('charge',['id'=>$win_record_id])}">立即获得</a>
+                <div href="" class="patt_cards_a patt_cards_gray">冷漠地无视</div>
+            </section>
+        </section>
+    </section>
+</div>
+<!-- 弹层结束 -->
+<div class="home home_ht">
+
+    <header>
+        <a href="javascript:history.back(-1)" class="heads headss"><i class="icon iconfont cio1">&#xe600;</i></a>
+        <span class="heads-p">选择使用方式</span>
+    </header>
+
+
+    <section class="patt">
+        <a href="{:U('trans_xc',['id'=>$win_record_id])}" class="patt_1">
+            <section class="patt_left">
+                <i class="icon iconfont patt_cio">&#xe616;</i>
+            </section>
+            <section class="patt_left2">
+                <p class="patt_p1">我要兑换{$money_name|default=''}</p>
+                <p class="patt_p2">兑换的香肠币直接进入平台账号，用于夺宝结算</p>
+            </section>
+            <i class="icon iconfont patt_cio1">&#xe60d;</i>
+        </a>
+
+        <a href="javascript:;" class="patt_1 charge" >
+            <section class="patt_left patt_left1s">
+                <i class="icon iconfont patt_cio">&#xe613;</i>
+            </section>
+            <section class="patt_left2">
+                <p class="patt_p1">话费充值或支付宝充值</p>
+                <p class="patt_p2">话费直接用于日常手机通讯，支付宝可提现</p>
+            </section>
+            <div class="patt_hot">Hot</div>
+            <i class="icon iconfont patt_cio1">&#xe60d;</i>
+        </a>
+
+
+    </section>
+
+    <!-- 底部 -->
+    <div class="foots"></div>
+    <footer>
+        <a href="{:U('Index/index')}" class="foots1">夺宝</a>
+        <a href="{:U('Index/all_goods', array('cate'=> '0-1'))}" class="foots2">全部商品</a>
+        <a href="{:U('Index/all_share_order')}" class="foots3">晒单</a>
+        <a href="{:U('Cart/cart_list')}" class="foots4">购物车</a>
+        <a href="{:U('Users/personal_center')}" class="foots5 act">我的</a>
+    </footer>
+
+</div>
+{/block}
+

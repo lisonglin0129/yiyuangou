@@ -1,0 +1,88 @@
+{empty name="orderList"}
+{else /}
+{volist name="orderList" id="vo"}
+<div class="per_win">
+    <a href="{:wap_dwz_filter('Buy/prize_info_confirm',array('win_record_id'=>$vo['win_record_id']))}">
+        <div class="xyjl-nav">
+
+            {if condition="!empty($vo['reward_type']) AND !empty($vo['reward_data']) AND $vo['reward_type'] eq 1 AND ($vo['prize_status'] lt 4 OR empty($vo['prize_status']))"}
+            <a href="javascript:;" class="win_exchanges" data-url="{:wap_dwz_filter('card/trans',['id'=>$vo['win_record_id']])}">兑换  <i class="icon iconfont cio1s">&#xe60d;</i></a>
+            {/if}
+            <a data-status="{$vo.prize_status|default=''}" data-val="{$vo.win_record_id|default=''}" data-reward="{$vo.reward_data|default=''}" {if condition="!empty($vo['reward_type']) AND $vo['reward_type'] eq 1"}href="javascript:;" class="card_prize" {else/}href="{:U('Buy/prize_info_confirm',array('win_record_id'=>$vo['win_record_id']))}"{/if}>
+            <div class="xyjl-nav">
+
+                <div class="xyjl-nav1">
+                    <img src="{$vo.img_path}" class="xyjl-img" />
+                    <div class="xyjl-nav2">
+                        <section>{$vo.name}</section>
+                        <section style="color:#a19695;">总需：{$vo.sum_times|default='--'}人次</section>
+                        <section style="color:#a19695;">期号：{$vo.nper_id|num_base_mask=0|default='--'}</section>
+                        <section>幸运号码：{$vo.luck_num|default='--'}</section>
+                        <section>揭晓时间：{$vo.open_time|default='--'}</section>
+
+                        {if condition="$vo['luck_type'] eq 1"}
+                        {switch name="vo.prize_status"}
+
+                        {case value="0"}
+                        {if condition="!empty($vo['reward_type']) AND $vo['reward_type'] eq 1"}
+                        <section>商品状态：<span style="color:red">等待确认兑换方式</span></section>
+                        {else/}
+                        <section>商品状态：<span style="color:red">等待确认收货信息</span></section>
+                        {/if}
+                        {/case}
+
+                        {case value="1"}
+                        {if condition="!empty($vo['reward_type']) AND $vo['reward_type'] eq 1"}
+                        <section>商品状态：<span style="color:red">等待确认兑换方式</span></section>
+                        {else/}
+                        <section>商品状态：<span style="color:red">确认收货地址</span></section>
+                        {/if}
+                        {/case}
+
+                        {case value="2"}
+                        <section>商品状态：<span style="color:red">商品派发...</span></section>
+                        {/case}
+
+                        {case value="3"}
+                        <section>商品状态：<span style="color:red">确认收货</span></section>
+                        {/case}
+
+                        {case value="4"}
+                        {if condition="!empty($vo['reward_type']) AND $vo['reward_type'] eq 1"}
+                        <section>商品状态：<span style="color:red">已兑换</span></section>
+                        {else/}
+                        <section>商品状态：<span style="color:red">已签收</span></section>
+                        {/if}
+                        {/case}
+                        {case value="5"}
+                        {if condition="!empty($vo['reward_type']) AND $vo['reward_type'] eq 1"}
+                        <section>商品状态：<span style="color:red">已兑换</span></section>
+                        {else/}
+                        <section>商品状态：<span style="color:red">已签收</span></section>
+                        {/if}
+                        {/case}
+                        {default /}
+                        <section>商品状态：<span style="color:red">商品状态错误</span></section>
+                        {/switch}
+                        {else /}
+                        <section>商品状态：<span style="color:red">已完成</span></section>
+
+                        {/if}
+
+                    </div>
+
+                    <!--<a href=""><div class="xyjl-right"></div></a>-->
+                </div>
+
+            </div>
+        </div>
+    </a>
+    </a>
+</div>
+
+
+
+
+{/volist}
+
+{/empty}

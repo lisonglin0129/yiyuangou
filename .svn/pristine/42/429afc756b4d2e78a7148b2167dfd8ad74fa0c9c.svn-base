@@ -1,0 +1,34 @@
+/**
+ * Created by phil on 2016/5/6.
+ */
+$(function(){
+    var func = {
+        init:function(){
+            table.init();
+        },
+        send_msg:function(id){
+            layer.confirm('确认群发此消息吗?',{title:false,closeBtn:false},function(){
+                var url = $("#send_msg_url").val();
+                if(url=='undefined'){
+                    layer.msg('请求地址错误');
+                    return;
+                }
+                common.ajax_post(url,{id:id},true,function(rt){
+                    common.post_tips(rt,function(obj){
+                        if(obj.code==1){
+                            layer.msg('群发成功');return false;
+                        }else{
+                            layer.msg('群发失败');return false;
+                        }
+                    });
+
+                });
+            });
+        }
+    };
+
+    func.init();
+    $(document).on("click", ".send_btn", function () {
+        func.send_msg($(this).data('val'));
+    });
+});

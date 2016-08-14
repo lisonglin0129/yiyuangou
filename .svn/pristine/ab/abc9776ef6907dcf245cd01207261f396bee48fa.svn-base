@@ -1,0 +1,295 @@
+/**
+ * Created by deloo on 2016/6/14.
+ */
+
+
+window.app = (function () {
+    var wh = $(window).height(),
+        ww = $(window).width(),
+    /*最小屏高度*/
+        min_height = 800,
+        bot_fix = 0,
+        tlp = $(".tooltop"),
+        fot = $(".t_footer"),
+        main = $(".main");
+    var /*页面初始化*/
+        init_page = function () {
+            tlp = $(".tooltop");
+            fot = $(".t_footer");
+            main = $(".main");
+            bind_mScroll();
+            set_main_height();
+            main.css("padding-bottom", bot_fix);
+        },
+    /*设置改变屏幕事件*/
+        set_resize = function () {
+            $(window).on("resize", function () {
+                wh = $(window).height();
+                ww = $(window).width();
+                menu_fresh();
+            });
+        },
+    /*设置主高度*/
+        set_main_height = function () {
+            var bh = main.height();
+            if ((bh + fot.outerHeight()) <= wh && wh >= min_height) {
+                main.height(wh - fot.outerHeight());
+            }
+            else {
+                main.height(min_height - fot.outerHeight());
+            }
+        },
+    /*设置自定义滚动条*/
+        bind_mScroll = function () {
+            if ($.mCustomScrollbar) {
+                $(".m_scrollbar").mCustomScrollbar(
+                    {
+                        theme: "dark",
+                        scrollButtons: {
+                            enable: true
+                        }
+                    }
+                );
+                $(".m_scrollbar_l").mCustomScrollbar(
+                    {
+                        scrollButtons: {
+                            enable: true
+                        }
+                    }
+                );
+            }
+        },
+    /*设置主初始化*/
+        app_main = function () {
+            main_init();
+        },
+    /*main初始化*/
+        main_init = function () {
+            var bh = $(".main").outerHeight(),
+                th = tlp.height(),
+                app_main = $(".am");
+            var mh = bh - th - bot_fix;
+            app_main.height(mh);
+            menu_init();
+
+        },
+    /*菜单初始化*/
+        menu_init = function () {
+            var menu = $(".am-menu");
+            /*分配frameID*/
+            $("a[data-link]").each(function (i) {
+                $(this).data("tab", i);
+            });
+            $(".am-m-top>i").on("click", function () {
+                if ($(".am").hasClass("wide")) {
+                    menu.mCustomScrollbar(
+                        {
+                            theme: "minimal",
+                            scrollbarPosition: "outside",
+                            snapOffset: [100, 100]
+                        }
+                    );
+                } else {
+                    menu.mCustomScrollbar("destroy");
+                }
+                $(".am").toggleClass("wide");
+                $(".am-m-fm>li").removeClass("active");
+                menu_fresh();
+            });
+            /*顶级菜单激活*/
+            $(document).on("click", ".am-m-fm>li", function () {
+                if (!$(".am").hasClass("wide")) {
+                    $(this).toggleClass("active");
+                    $(this).siblings().removeClass("active");
+                    menu_fresh();
+                }
+            });
+
+            /*次级菜单激活*/
+            $(document).on("click", ".am-m-cm>li", function (e) {
+                if (!$(".am").hasClass("wide")) {
+                    $(this).addClass("active");
+                    $(this).siblings().removeClass("active");
+                    e.stopPropagation();
+                }
+            });
+            /*关联frame页打开*/
+            $(document).on("click", "a[data-link]", function () {
+                var link = $(this).data("link"),
+                    id_num = $(this).data("tab"),
+                    text = $(this).find("label").text();
+                if (is_tab_exist(id_num)) {
+                    act_tab(id_num);
+                } else {
+                    new_tab(id_num, link, text);
+                    frame_fresh();
+                }
+            });
+            menu.mCustomScrollbar(
+                {
+                    theme: "minimal",
+                    scrollbarPosition: "outside",
+                    snapOffset: [100, 100]
+                }
+            );
+            /*菜单绑定滚动效果*/
+            menu_fresh();
+        },
+    /*刷新菜单高度*/
+        menu_fresh = function () {
+            var menu_list = $(".am-m-fm"),
+                menu = $(".am-menu"),
+                app_main = $(".am"),
+                act_cm = $(".am-m-fm>li");
+            if (!app_main.hasClass("wide")) {
+                act_cm.each(function () {
+                    if (!$(this).hasClass("active")) {
+                        $(this).find(".am-m-cm").attr("style", "");
+                    } else {
+                        if ($(this).find(".am-m-cm>li").length > 0) {
+                            $(this).find(".am-m-cm").height($(this).find(".am-m-cm>li").length * $(this).find(".am-m-cm>li").eq(0).height())
+                        }
+                    }
+                });
+
+            } else {
+                act_cm.each(function () {
+                    $(this).find(".am-m-cm").attr("style", "");
+                });
+            }
+        },
+    /*刷新frame样式*/
+        frame_fresh = function () {
+            if ($(".tabs .tab_content").length > 0) {
+                $(".am-welcome").hide();
+            } else {
+                $(".am-welcome").show();
+            }
+        },
+    /*添加新的tab*/
+        new_tab = function (id, src, text, isact, callback) {
+            var tabs = $(window.top.document).find(".tabs"),
+                mheight = $(window.top.document).find(".am-con").height() - $(window.top.document).find(".am-tabs-top").height(),
+                tab_id = "tab_" + id,
+                frame_id = "frame_" + id;
+            var tab_dom = $("<li id='" + tab_id + "'  data-tabid='" + id + "' data-ref='" + frame_id + "'><a  href='#" + frame_id + "'>"
+                    + text + "</a><span class='tab-close iconfont' title='关闭'>&#xe616;</span></li>"),
+                frame = $("<div class=\"tab_content\" data-tabid='" + id + "'  id=\"" + frame_id + "\" style='height:" + mheight + "px'>" +
+                    "<iframe id='iframe" + id + "' frameborder=0 width=100% height=100% marginheight=0 marginwidth=0 scrolling=auto " +
+                    "style='width:100%;height:" + mheight + "px'  src='" + src + "'></iframe></div>");
+            tabs.find(".am-tabs-top").append(tab_dom);
+            tab_dom.on("click", ".tab-close", function (e) {
+                close_tab(id);
+                e.stopPropagation();
+            });
+            tabs.append(frame);
+            tabs.tabslet();
+            var frm = window.top.frames["iframe" + id];
+            if (frm.attachEvent) {
+                frm.attachEvent("onload", function () {
+                    /*                    $(frm).height($(frm.contentWindow.document).find("html").height());*/
+                    $(frm).show();
+                    fresh_tab(id);
+                });
+            } else {
+                frm.onload = function () {
+                    /*$(frm).height($(frm.contentWindow.document).find("html").height());*/
+                    $(frm).show();
+                    fresh_tab(id);
+                };
+            }
+            if (!isact) {
+                tab_dom.trigger("click");
+            }
+            if (typeof(callback) === "function") {
+                callback(id);
+            }
+        },
+    /*判断tab是否存在*/
+        is_tab_exist = function (id) {
+            return $(window.top.document).find("#tab_" + id).length > 0
+        },
+    /*激活指定tab*/
+        act_tab = function (id, callback) {
+            $(window.top.document).find("#tab_" + id).trigger("click");
+            if (typeof(callback) === "function") {
+                callback(id);
+            }
+            fresh_tab(id);
+        },
+    /*关闭tab*/
+        close_tab = function (id, callback) {
+            var frame = window.top.frames["#frame_" + id],
+                tab = $(window.top.document).find("#tab_" + id),
+                ischange = false;
+            if (tab.hasClass("active") && $(window.top.document).find(".am-tabs-top").find("li").length >= 2) {
+                ischange = true;
+            }
+            if (frame && frame.window.frame_close_callback && typeof(frame.window.frame_close_callback) === "function") {
+                if (frame.window.frame_close_callback()) {
+                    $("#frame_" + id).remove();
+                    tab.remove();
+                }
+                else {
+                }
+            } else {
+                $(window.top.document).find("#frame_" + id).remove();
+                tab.remove();
+            }
+            if (ischange) {
+                $(window.top.document).find(".am-tabs-top").find("li").eq(0).trigger("click");
+            }
+            fresh_tab(id);
+            if (typeof(callback) === "function") {
+                callback(id);
+            }
+        },
+    /*刷新frame*/
+        fresh_tab = function (id, name, callback) {
+            if (is_tab_exist(id)) {
+                if (name && name.length > 0) {
+                    $(window.top.document).find("#tab_" + id).find("a").html(name);
+                }
+            }
+            frame_fresh();
+        },
+    /*设置tab高度*/
+        set_frame_height = function () {
+            /*$(window.top.document).find*/
+        };
+
+
+    return {
+        /*页面初始化*/
+        init: function () {
+            init_page();
+        },
+        /*主页面初始化*/
+        main: function () {
+            app_main();
+        },
+        /*刷新菜单*/
+        fresh_menu: function () {
+            menu_fresh();
+        },
+        /*设置自定义滚动条*/
+        set_mScroller: function () {
+
+        },
+        /*tab操作*/
+        tabs: {
+            is_exist: is_tab_exist,
+            add: new_tab,
+            set: act_tab,
+            close: close_tab,
+            fresh: fresh_tab
+        }
+    }
+})();
+
+/*初始化执行 - dom结构完毕*/
+$(function () {
+    app.init();
+});
+
+

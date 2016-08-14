@@ -1,0 +1,71 @@
+{extend name="base/base" /}
+{block name="css"}
+{css href="__common__/admin/css/goods/form.css" /}
+{css href="__plugin__/umeditor/themes/default/css/umeditor.min.css"/}
+{/block}
+{block name="content"}
+
+<div class="page-content">
+    <div class="page-header">
+        <h1>
+            分销管理
+            <small>
+                <i class="icon-double-angle-right"></i>
+               注册推广设置
+            </small>
+        </h1>
+    </div><!-- /.page-header -->
+
+    <div class="row">
+        <div class="col-xs-12">
+            <!-- PAGE CONTENT BEGINS -->
+            <form class="form-horizontal" role="form" id="form_content">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right"> 是否开启注册推广 </label>
+                    <div class="col-sm-6">
+                        <select class="col-xs-10 col-sm-5" data-placeholder="请选择" name="status" id="status">
+                            <option value= "2" {if condition="!empty($spread.status) AND $spread.status eq '2'"}selected="selected"{/if} >关闭</option>
+                            <option value= "1" {if condition="!empty($spread.status) AND $spread.status eq '1'"}selected="selected"{/if} >开启</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="space-4"></div>
+
+
+
+                <div class="form-group" {if condition="empty($spread['status']) OR $spread['status'] eq '2'"}style="display: none"{/if} id="money">
+                    <label class="col-sm-3 control-label no-padding-right">注册赠送金额</label>
+                    <div class="col-sm-6">
+                        <input type="text" placeholder="请输入金额" class="col-xs-10 col-sm-5" name="money"  value="{$spread.money}"/>
+                    </div>
+                </div>
+                <div class="space-4"></div>
+
+
+                <!--操作按钮-->
+                <div class="clearfix form-actions">
+                    <div class="col-md-offset-3 col-md-9">
+
+                        <button class="btn btn-info submit_btn" type="button">
+                            <i class="icon-ok bigger-110"></i>
+                            保存设置
+                        </button>
+                        &nbsp; &nbsp; &nbsp;
+
+                        <button class="btn btn-default close_page" type="button">
+                            <i class="fa fa-times bigger-110"></i>
+                            关闭页面
+                        </button>
+                     </div>
+                </div>
+                <input type="hidden" name="id" value="{$spread.id|default=''}">
+            </form>
+        </div><!-- /.row -->
+    </div><!-- /.page-content -->
+</div>
+
+<input type="hidden" id="submit_url" value="{:U('reg_update')}">
+{/block}
+{block name="js"}
+{js href='__common__/admin/js/spread/form.js' /}
+{/block}

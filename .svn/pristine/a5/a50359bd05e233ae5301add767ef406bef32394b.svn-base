@@ -1,0 +1,7 @@
+<div style="margin-top:20px;margin-left: 20px;">
+    <select>
+        {volist name="list" id="vo"}
+        <option value="{$vo.id|default=''}" data-action="{$vo.action|default=''}">{$vo.title|default='--'}</option>
+        {/volist}
+    </select>
+</div>

@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>支付完成,请稍候....</title>
+</head>
+<body>
+请稍候...
+<script>
+    location.href='PGYYG://';
+</script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+{empty name='list'}
+<div class="empty">
+    <p class="status-empty">
+        <i class="littleU littleU-cry">
+        </i>
+        暂时还没有夺宝记录
+    </p>
+</div>
+{else /}
+{if condition="$type eq 2"}
+<div class="evenNumber-top1">
+    <div class="arrow-right1s"></div>
+    偶数夺宝记录
+</div>
+{volist name="list" id="vo"}
+<div class="detailLeft1s clr">
+
+    <div class="asdff">
+        <section class="detailLeft1s-se3 clr">
+            <span class="detailLeft1s-span1">{$vo.uname}</span>
+            <span class="detailLeft1s-span2">参与了{$vo.num}次</span>
+        </section>
+        <section class="detailLeft1s-se">
+            {$vo.ip_area} IP：{$vo.reg_ip}
+        </section>
+    </div>
+    <div class="detailLeft1s-se1">
+        <img src="{$vo.img_path}" class="detal-img"/>
+        {:date('H:i:s',$vo['pay_time'])}
+    </div>
+</div>
+{/volist}
+<div class="xc_pages" data-flag="deposer_even">
+    {$pages}
+</div>
+{else /}
+<div class="evenNumber-top1 evenNumber-top1s">
+    <div class="arrow-left1s"></div>
+    奇数夺宝记录
+</div>
+{volist name="list" id="vo"}
+<div class="detailLeft1s detailLeft1s1 clr">
+    <div class="detailLeft1s-se1 detailLeft1s-se1s">
+        <img src="{$vo.img_path}" class="detal-img detal-imgs"/>
+        {:date('H:i:s',$vo['pay_time'])}
+    </div>
+    <div class="asdff">
+        <section class="detailLeft1s-se3 clr">
+            <span class="detailLeft1s-span1">{$vo.uname}</span>
+            <span class="detailLeft1s-span2">参与了{$vo.num}次</span>
+        </section>
+        <section class="detailLeft1s-se">
+            {$vo.ip_area} IP：{$vo.reg_ip}
+        </section>
+    </div>
+
+</div>
+{/volist}
+<div class="xc_pages" data-flag="deposer_odd">
+    {$pages}
+</div>
+{/if}
+{/empty}

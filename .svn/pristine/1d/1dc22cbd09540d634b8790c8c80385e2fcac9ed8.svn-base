@@ -1,0 +1,36 @@
+
+    {notempty name="indiana_array_ing"}
+    {volist name="indiana_array_ing" id="vo"}
+    {eq name="vo.status" value="1"}
+    <div class="zx-1 zx-0">
+        {if condition="$vo.code eq 'shiyuanduobao'"}
+        <img class="ico ico-label ico-label-goods w-cbn" src="__MOBILE_STATIC__/img/icon_ten.png">
+        {/if}
+        <img src="{$vo.img_path}" class="img123"/>
+        <div class="xz-3">
+            <section><a href="{if condition="$vo['nper_type'] eq 1"}{:U('Goods/goods_detail',array('nper_id'=>$vo['nper_id']))}{else /}{:U('Goods/zero_detail',array('nper_id'=>$vo['nper_id']))}{/if}">{$vo.name}</a></section>
+            <section style="color:#999;">期号：{$vo.nper_id|num_base_mask=0|default='--'}</section>
+
+            {eq name="vo.status" value="1"}
+            <div class="gdt">
+                <div class="gdt1" style="width: {$vo.progress}%">
+                </div>
+            </div>
+            {/eq}
+
+
+            <div class="canyu">
+                <section style="float:left">总需<span>{$vo.sum_times|default=''}</span></section><section style="float:right;margin-top:-2px;">剩余<span style="color:#3997FE">{$vo.sum_times-$vo.participant_num}</span></section>
+            </div>
+            <div class="canyu">
+                <section style="float:left">参与人次：<span class="cs1">{$vo.join_num|default='--'}</span>人次</section>
+                <!--<section style="float:right" class="se">-->
+                <!--<a href="../../app/mobile/view/cart/qd.html">追加</a>-->
+                <!--</section>-->
+            </div>
+
+        </div>
+    </div>
+    {/eq}
+    {/volist}
+    {/notempty}

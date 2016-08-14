@@ -1,0 +1,143 @@
+{extend name="base/common"}
+
+{block name="title"}
+个人中心 - 上传头像
+{/block}
+
+
+{block name="head"}
+<!-- <meta name="viewport" content="width=640, user-scalable=no,target-densitydpi=device-dpi"> -->
+<link rel="shortcut icon" type="image/x-icon" href="__MOBILE_CSS__/favicon.ico.css">
+<link rel="icon" type="image/x-icon" href="__MOBILE_CSS__/favicon.ico.css">
+<meta content="telephone=no" name="format-detection"/>
+<link href="__MOBILE_CSS__/user.css" rel="stylesheet"/>
+<script src="__MOBILE_JS__/jquery.min.js"></script>
+<script src="__MOBILE_JS__/index.js"></script>
+{js href="__plugin__/webuploader/webuploader.min.js" /}
+{css href="__plugin__/webuploader/webuploader.css" /}
+{/block}
+
+
+{block name="main"}
+<div class="m-user mm czz" id="dvWrapper">
+    <div class="m-simpleHeader" id="dvHeader">
+        <a href="javascript:history.go(-1);" data-pro="ok" class="m-simpleHeader-ok" id="aHome">返回</a>
+        <h1>修改头像</h1>
+    </div>
+    <div class="clear">
+    </div>
+</div>
+<div id="imgList">
+    <img id="show_img" src="{$headshot|default='/'}" class="up_img"/>
+</div>
+
+    <!--<div>-->
+        <!--<a href="javascript:;" class="up_file">上传头像-->
+        <!--</a>-->
+    <!--</div>-->
+    <div id="uploader" class="wu-example">
+        <!--用来存放文件信息-->
+        <div id="thelist" class="uploader-list"></div>
+        <div class="btns">
+            <div class="up_file" id="test" style="">选择文件</div>
+        </div>
+    </div>
+
+
+
+
+    <input id="upload_url" type="hidden" value="{:U('core/upload/upload_img')}">
+    <input type="hidden" id="swf_path" value="__plugin__/webuploader/uploader.swf"><!--swf-->
+    <input type="hidden" id="save_url" value="{:U('yyg/ucenter/save_login_user_img')}">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+    $(document).ready(function(){
+        var url = $("#upload_url").val();
+        var uploader = WebUploader.create({
+            // 自动上传。
+            auto: true,
+
+            // swf文件路径
+            swf: $("#swf_path").val(),
+
+            // 文件接收服务端。
+            server: url,
+
+            // 选择文件的按钮。可选。
+            // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+            pick: '#test',
+
+            // 只允许选择文件，可选。
+            accept: {
+                title: 'Images',
+                extensions: 'gif,jpg,jpeg,bmp,png',
+                mimeTypes: 'image/*'
+            },
+            fileSizeLimit: 5 * 1024 * 1024 ,
+            fileNumLimit:12
+        });
+
+        var index;
+        // 文件上传过程中创建进度条实时显示。
+        uploader.on( 'uploadProgress', function( file, percentage ) {
+            index = layer.open({
+                type:2,
+
+            })
+        });
+
+
+        // 文件上传成功.
+        uploader.on( 'uploadSuccess', function( file,data ) {
+            var $li = $( '#'+file.id );
+            $li.find('.progress>.inner').remove();
+            var url = $("#save_url").val();
+            $("#show_img").attr('src',data.img_path);
+            $.ajax({
+                url:url,
+                data:{id:data   .id},
+                dataType:'json',
+                type:'post',
+                success:function(data) {
+                    if ( data.code == 1 ) {
+                        layer.close(index);
+                        layer.open({
+                            content: '上传成功',
+                            time: 1
+                        });
+                    } else {
+                        layer.open({
+                            content: '上传失败',
+                            time: 1
+                        });
+
+                    }
+
+                }
+
+            })
+        });
+
+    });
+</script>
+
+{/block}

@@ -1,0 +1,56 @@
+$(function() {
+	// body...
+	$("button").click(function(){
+		   $(".det-dates").slideToggle(300);
+		  	$(".det-das").hide(0);
+		});
+
+		$(".li2").on("click",function(){
+		    $(".det-dates").hide(0);
+		$(".det-das1").slideToggle(300).siblings(".det-das").hide(0);
+		});
+		$(".li3").on("click",function(){
+			$(".det-das2").slideToggle(300).siblings(".det-das").hide(0);
+		});
+		$(".li4").on("click",function(){
+			$(".det-das3").slideToggle(300).siblings(".det-das").hide(0);
+		});
+		$(".li5").on("click",function(){
+			$(".det-das5").slideToggle(300).siblings(".det-das").hide(0);
+		});
+
+		//立即提现
+		$(".zhanghao1").click(function(){
+			 $(".haha1").slideUp(300) ;
+		   $(".haha").slideToggle(300);
+		});
+
+		$(".zhanghao2").click(function(){
+			 $(".haha").slideUp(300) ;
+		   $(".haha1").slideToggle(300);
+		});
+
+		$(document).on("click",".lyers-n",function() {
+			$(".y-lyers").hide();
+			$(".x-lyers").hide();
+		});
+	$(".aa12").on("click",function(){
+		var notice=$(".spr_modal");
+		if(notice.length>0)
+		{
+			notice.addClass("active");
+		}
+		return false;
+	});
+	$(document).on("click",".spr_modal",function(e){
+		if($(e.toElement).parents(".y-lyers").length<=0)
+		{
+			window.location.href=$(".aa12").data("href");
+		}
+	});
+	$(".spr_m_close").on("click",function(){
+        var href=$('.aa12').data("href");
+		$(".spr_modal").removeClass("active");
+        location.href=href;
+	});
+});

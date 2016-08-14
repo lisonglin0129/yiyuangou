@@ -1,0 +1,42 @@
+{extend name="base/base"}
+{block name="head"}
+<link rel="stylesheet" href="__MOBILE_FONTS__/iconfont.css">
+<link href="__MOBILE_CSS__/common1.css" rel="stylesheet">
+<link href="__MOBILE_CSS__/usercenter.css" rel="stylesheet">
+<script type="text/javascript"  src="__MOBILE_JS__/jquery.min.js"></script>
+<script src="__common__/plugin/copy/jquery.zclip.min.js"></script>
+{/block}
+{block name="main"}
+<div class="home">
+    <!-- 头部 -->
+        <header style="" class="w-header w-headers-red">
+            <a href="" class="heads w-swweep">关闭</a>
+            <span class="heads-p w-heads-p">领取香肠一元购红包</span>
+        </header>
+        <section class="w-wechat-m">
+                <section class="w-wechat-open"></section>
+                <p class="w-wechat-p1">小魔女的红包</p>
+                <p class="w-wechat-p2">恭喜发财，大吉大利！</p>
+                <p class="w-wechat-p3">100元</p>
+        </section>
+        <section class="w-wechat-sect1">
+            <span>已领5/10个，共70.34/100元</span>
+        </section>
+
+        <section class="w-wechat-user">
+               <img src="" class="w-u-img">
+               <section class="w-u-sect">
+                    <p>渣渣</p>
+                    <p>12:21</p>
+               </section>
+               <section class="w-u-sect2">150.40元</section>
+        </section>
+        
+       
+       
+       
+        
+
+
+</div>
+{/block}

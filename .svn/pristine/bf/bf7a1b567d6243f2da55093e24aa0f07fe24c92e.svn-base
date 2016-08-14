@@ -1,0 +1,98 @@
+/**
+ * Created by deloo on 2016/5/21.
+ */
+$(function(){
+    var account={
+        init:function() {
+            /*时间选择*/
+            $(".pf-l-accounts").on("click", function (e) {
+                if($(this).hasClass("active"))
+                {
+                    $(this).removeClass("active");
+                }
+                else{
+                    $(".pf-l-accounts").removeClass("active");
+                    $(this).addClass("active");
+                }
+                e.stopPropagation();
+            });
+
+            $(".type li").on("click", function () {
+                $('#type').val($(this).data('val'));
+                $('#bank_name').val($(this).html());
+                $(".type span").text($(this).text());
+
+            });
+            $(".account_type li").on("click", function () {
+                var account_type=$(this).data('val');
+                $('#account_type').val(account_type);
+                $(".account_type span").text($(this).text());
+                if(account_type==1){
+                    $('#banks').show();
+                    $('#is_default').show();
+                }else{
+                    $('#banks').hide();
+                    $('#is_default').hide();
+                }
+            });
+            $(document).on("click",function(e){
+                if(!($(e.toElement).parents(".pf-l-accounts").length>0||$(e.toElement).hasClass("pf-l-accounts")))
+                {
+                    $(".pf-l-accounts").removeClass("active");
+                }
+            });
+
+        },
+        account_submit : function() {
+            var url = $("#submit_url").val();
+            var param = $("form").serialize();
+            if(!$('#name').val()){
+                layer.msg('姓名不能为空');return false;
+            }else{
+                if(!/^[\u4e00-\u9fa5]+$/.test($('#name').val())){
+                    layer.msg('请填写中文姓名');return false;
+                }
+            }
+            if(!$('#identify').val()){
+                layer.msg('身份证号码不能为空');return false;
+            }else{
+               if(!account.isCardNo($('#identify').val())){
+                   layer.msg('身份证号码各式不对');return false;
+               }
+            }
+            if(!$('#account_type').val()){
+                layer.msg('请选择账号类型');return false;
+            }
+            if(!$('#bank_no').val()){
+                layer.msg('账号不能为空');return false;
+            }else{
+/*                if(!/^\d+$/.test($('#bank_no').val())){
+                    layer.msg('账号含有非法字符');return false;
+                }*/
+            }
+            common.ajax_post(url,param, true, function (rt) {
+                common.post_tips(rt, function () {
+                    layer.msg('添加成功',{time:2000})
+                    common.delay(function(){
+                        location.href = $("#root_url").val();
+                    },2000,1)
+                });
+            }, true);
+        },
+        isCardNo: function(card)
+        {
+            // 身份证号码为15位或者18位，15位时全为数字，18位前17位为数字，最后一位是校验位，可能为数字或字符X
+            var reg = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
+            if(reg.test(card) === false)
+            {
+                return  false;
+            }else{
+                return true;
+            }
+        }
+    }
+    account.init();
+    $('.pf-l-submit').on("click",function(){
+       account.account_submit();
+    })
+});

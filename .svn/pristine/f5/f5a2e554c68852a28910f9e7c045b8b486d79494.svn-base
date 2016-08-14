@@ -1,0 +1,147 @@
+
+{extend name="base/common"}
+{block name="head"}
+<link href="__MOBILE_CSS__/user.css"  rel="stylesheet" />
+<script src="__MOBILE_JS__/jquery.min.js"></script>
+<script src="__MOBILE_JS__/js.js"></script>
+{/block}
+{block name="main"}
+<div class="m-user" id="dvWrapper">
+    <div class="m-simpleHeader" id="dvHeader">
+        <a href="javascript:history.go(-1);" data-pro="back" data-back="true" class="m-simpleHeader-back"><i class="ico ico-back"></i></a>
+        <a href="{:U('Index/index')}" data-pro="ok" class="m-simpleHeader-ok" id="aHome"><i class="ico ico-home"></i></a>
+        <h1>个人中心</h1>
+    </div>
+    <div class="m-user-index">
+
+        <div class="m-user-summary m-user-summary-simple is">
+
+            <div class="info">
+                <div class="m-user-avatar">  <img width="50" height="50" onerror="this.src='http://mimg.127.net/p/yymobile/lib/img/avatar/90.jpeg'" src="{$user_info.user_face|default=''}"/>
+                </div>
+                <div class="txt">
+                    <div class="name">{$user_info.nick_name|default=''}</div>
+                    <div class="id">ID：{$user_info.user_id|default=''}</div>
+                </div>
+            </div>
+        </div>
+        <div class="w-nav w-nav-hasSplt w-nav-hasBorder" id="dvTab">
+            <div class="w-nav-item haha" data-name="db" data-pro="item"><span class="w-nav-txt">夺宝记录<span class="num"></span></span></div>
+            <div class="w-nav-item haha" data-name="win" data-pro="item"><span class="w-nav-txt">幸运记录</span></div>
+            <div class="w-nav-item haha" data-name="share" data-pro="item"><span class="w-nav-txt">晒单</span></div>
+            <!--<div class="w-nav-item haha" data-name="wishlist" data-pro="item"><span class="w-nav-txt">心愿单</span></div>-->
+        </div>
+    </div>
+
+</div>
+<!--jq事件-->
+<div class="zx1 att att11">
+    {empty name="indiana_record"}
+    夺宝纪录为空
+    {else /}
+
+    {volist name="indiana_record" id="value"}
+
+    <!--状态为3-->
+    {if condition="($value['status'] == 3)"}
+
+    <div class="grzx-zx-11">
+        <a href=""><img src="{$value.img_path|default=''}" class="img123" style="display:block;float:left;"></a>
+        <div class="xz-31">
+            <section><a href="{:U('Goods/goods_detail',array('nper_id'=>$value['nper_id']))}">{$value.name|default=''}</a></section>
+            <section>期号:{$value.nper_id|num_base_mask=0|default=''}</section>
+            <section>获得者:<span style="color:blue">{$value.nick_name|default=''}</span>
+                (本期共参与{$num[$value.nper_id]??'暂无数据'}次)
+            </section>
+            <section style="color:red;">幸运号码：{$value.luck_num|default=''}</section>
+            <section>揭晓时间：{$value.open_time|default=''}</section>
+            <section>本期参与人次：<span style="color:red">{$value.join_num|default=''}</span>人次</section>
+        </div>
+    </div>
+
+    {else /}
+
+    <div class="zx-1">
+        <a href="spqx1.html"><img src="{$value.img_path|default=''}" class="img123"/></a>
+        <div class="xz-3">
+            <a href="{:U('Goods/goods_detail',array('nper_id'=>$value['nper_id']))}">{$value.name|default=''}</a>
+            <section style="color:#999;">期号：{$value.nper_id|num_base_mask=0|default=''}</section>
+            <div class="gdt">
+                <div class="gdt1" style="width: {$value.progress|default=''}% "></div>
+            </div>
+            <div class="canyu">
+                <section style="float:left">总需<span>{$value.sum_times|default=''}</span></section><section style="float:right;margin-top:-2px;">剩余<span style="color:#3997FE">{$value.remain_num|default=''}</span></section>
+            </div>
+            <div class="canyu">
+                <section style="float:left">参与人次：<span class="cs1">{$value.join_num|default=''}</span>人次</section>
+                {if condition="($value['status'] == 1)"}
+                <section style="float:right" class="se">
+                    <a href="{:U('Goods/goods_detail',array('nper_id'=>$value['nper_id']))}">跟买</a>
+                </section>
+                {/if}
+            </div>
+        </div>
+    </div>
+    {/if}
+
+    {/volist}
+    {/empty}
+</div>
+<div class="zx1 ">
+
+    {empty name="win_record"}
+    中奖纪录为空
+    {else /}
+    {if condition='empty($win_record[0])'}
+    <div class="zx1-1">
+        暂无中奖数据
+    </div>
+    {else /}
+    {volist name="win_record" id="vo"}
+    <div class="zx1-1">
+        <a href="{:U('Goods/goods_detail',array('nper_id'=>$vo['nper_id']))}"><img src="{$vo.img_path|default=''}"/></a>
+        <div class="zx1-2">
+            <a href="{:U('Goods/goods_detail',array('nper_id'=>$vo['nper_id']))}"><section>{$vo.name|default=''}</section></a>
+            <section style="color:#666">总需求：{$vo.sum_times|default=''}人次</section>
+            <section>期号：{$vo.nper_id|num_base_mask=0|default=''}</section>
+            <section>幸运号码：<span>{$vo.luck_num|default=''}</span></section>
+            <section>本次参与：{$vo.join_num|default=''}人次</section>
+            <section>揭晓时间：{$vo.open_time|default=''}</section>
+        </div>
+    </div>
+    {/volist}
+    {/if}
+
+    {/empty}
+</div>
+<div class="zx1">
+
+    {empty name="share_order_record"}
+    晒单记录为空
+    {else /}
+    {volist name="share_order_record" id="data"}
+    <a href="{:U('OtherUsers/share_detail',array('share_id'=>$data['share_id']))}">
+        <div class="zx2-1">
+            <section>{$data.title}</section>
+            <section style="float:left;color:#0079fe">{$data.nick_name}</section><section style="float:right;margin-top:5px;color:#999;">{$data.create_time}</section>
+            <div class="xz2-2"><img src="{$data.img_path}">
+                {$data.content}
+            </div>
+        </div>
+    </a>
+    {/volist}
+    {/empty}
+</div>
+<script type="text/javascript">
+    $(function(){
+
+        $(".haha").click(function(){
+            var a=$(this).index();
+            $(".haha").eq(a).css("border-bottom","2px solid red").siblings(".haha").css("border-bottom","#fff");
+            $(".zx1").eq(a).show().siblings(".zx1").hide();
+        })
+
+
+    })
+</script>
+{/block}

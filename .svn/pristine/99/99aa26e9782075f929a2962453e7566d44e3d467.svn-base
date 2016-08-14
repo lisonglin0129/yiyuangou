@@ -1,0 +1,328 @@
+$(function() {
+    var time=0
+    var content_location;
+    var url = $("#ajax_person_indiana").val(),
+        loading_flag = false,
+        end_flag = [false, false, false],
+        page = [0, 0, 0],
+        type=0;
+
+    if( $("#win_record").val()  == 1 ) {
+        page = [1,1,1];
+    }
+
+    $(".jjxq-2-1").click(function () {
+        $(".jjxq-2-2").slideToggle(300);
+        $(".jjxq-2-11").toggle();
+    })
+
+    $(".sect00,.quanp-01").click(function () {
+        $(".quanp-1,.quanp").hide();
+        $("").hide();
+    });
+
+    $(".moreBtn1").click(function () {
+        $(".quanp,.quanp-1").show();
+    });
+
+    $(window).scroll(function () {
+        var a = $(window).scrollTop();
+
+        if (a > 300) {
+            $(".fhdb").fadeIn(1000);
+        } else {
+            $(".fhdb").fadeOut(1000);
+        }
+        ;
+    });
+
+
+    $(".fhdb").on("click", function () {
+        $("body,html").animate({scrollTop: 0}, 300);
+        return false;
+    });
+
+
+
+
+    $(".m-list-nav-catlog").on("click", function () {
+
+        $(".m-list-catlog").slideToggle();
+    });
+    var _count_down = function (dom, callback) {
+
+        var timer,//定时器
+            step = 40,//步距
+            tdata = parseInt(dom.attr("time")),//时间  毫秒
+            end = new Date().getTime() + tdata,
+            timstr = [];//数值
+
+        var set_time = function () {
+            if (!tdata || tdata < 0)
+                return;
+            tdata = end - new Date().getTime();
+            timstr = [];
+            if (tdata > 0) {
+                var hh = parseInt(tdata / 3600000);
+                if (hh > 0) {
+                    timstr.push(parseInt(tdata / 36000000) % 10);
+                    timstr.push(parseInt(tdata / 3600000) % 10)
+                }
+                timstr.push(parseInt(tdata / 600000) % 10);
+                timstr.push(parseInt(tdata / 60000) % 10);
+                timstr.push(parseInt((tdata % 60000) / 10000));
+                timstr.push(parseInt((tdata % 60000) / 1000) % 10);
+                timstr.push(parseInt((tdata % 1000) / 100));
+                timstr.push(parseInt((tdata % 100) / 10));
+            } else if (callback) {
+                clearInterval(timer);
+                callback(dom);
+            }
+            var dom_str = "<span class='w-countdown-nums'>";
+            $.each(timstr, function (index) {
+
+                if (index < 6) {
+                    dom_str += "<b>" + this + "</b>";
+                    if (index % 2 == 1 && index < 5)
+                        dom_str += "<b>:</b>";
+                }
+            });
+            dom_str += '<span>';
+
+            dom.html(dom_str);
+        };
+        timer = setInterval(set_time, step);
+    };
+    $(".w-countdown").each(function(){
+        _count_down($(this),function(dom){});
+    });
+
+    $(document).on("click", ".m-tip", function () {
+        var img_path = $(this).parent().find('.w-goods-pic a img').attr('src');
+        var img_src = '<img  style="z-index: 9999;" class="u-flyer"  src="' + img_path + '"/>';
+        var offset = $('.end').offset(), flyer = $(img_src);
+        starts = $(event.toElement).offset();
+        flyer.fly({
+            start: {
+                left: starts.left,
+                top: starts.top - $("body").scrollTop()
+            },
+            end: {
+                left: offset.left,
+                top: offset.top - $("body").scrollTop(),
+                width: 10,
+                height: 10
+            }
+        });
+    });
+
+    $(".dbjl-trop02-left,.dbjl-trop02-02").on("click", function () {
+        $(".mm").hide();
+    });
+
+
+    $(".mm1").on("click", function () {
+        $(".mm").show();
+    });
+
+    $(".k2").click(function () {
+        loading_flag=false;
+        type=0;
+        $("#pi_type").val("ing");
+    });
+    $(".k3").click(function () {
+        loading_flag=false;
+        type=2;
+        $("#pi_type").val("done");
+    });
+    $(".k4").click(function () {
+        loading_flag=false;
+        type=1;
+        $("#pi_type").val("doing");
+    });
+
+    $(".haha").click(function () {
+        var a = $(this).index();
+        $(".zx-11").eq(a).addClass("active").show().siblings(".zx-11").hide().removeClass("active");
+        if ($(this).index() == 0) {
+            $(".ing").show();
+            $(".done").hide();
+            $(".doing").hide();
+        } else if($(this).index() == 1) {
+            $(".ing").hide();
+            $(".done").hide();
+            $(".doing").show();
+
+        } else {
+            $(".ing").hide();
+            $(".done").show();
+            $(".doing").hide();
+
+        }
+        init_page_date($(this).index());
+    });
+
+
+    /*初始化頁面數據*/
+    function init_page_date(index){
+        //console.log($(document).height()<=$(window).height());
+        var condition = document.documentElement.clientWidth < document.documentElement.offsetWidth-4;
+        if(!index)
+            index=type;
+        set_loading();
+        //该判断条件在没有滚动条的页面会无限加载
+        //if($(document).height()<=$(window).height()&&!end_flag[index])
+        if($(document).height()<=$(window).height()&&!end_flag[index] && $("#pi_type").length > 0  ){
+            if ( time == 1 ) {
+                return;
+            }
+            time=1;
+            get_date(function(){
+                init_page_date(index);
+            });
+        }
+        if( condition&&!end_flag[index] )
+        {
+            get_date(function(){
+                init_page_date(index);
+            });
+        }
+    }
+    /*获取数据*/
+    function get_date(callback) {
+        loading_flag=true;
+        time = 1;
+        set_loading();
+        var cate=$('#pi_type').val();
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: {
+                page: page[type],
+                cate_type: cate
+            },
+            success: function (data) {
+                loading_flag=false;
+                $(".zx-11.active").find(".zh-1").remove();
+                set_html(data,cate);
+                if(typeof(callback)=="function")
+                {
+                    callback(data);
+                    time=0;
+                }
+            }
+        });
+    }
+
+    /*数据添加html*/
+    function set_html(html,location) {
+        if (html && $.trim(html)) {
+            //$(".zx-11.active").append(html);
+            $("."+location).append(html);
+            //$(".get-ajax-content").append(html);
+            if( type == 1 && $(".doing").children().length == 0 ) {
+                page[type] = 0;
+            } else {
+                page[type]++;
+            }
+
+        } else {
+            set_end(type);
+        }
+    }
+
+    /*加载效果*/
+    function set_loading(){
+        var loading_dom=$("<p class='zh-1'>加载中...</p>").clone();
+        if($(".zx-11").eq(type).find(".zh-1").length<=0){
+            $(".zx-11").eq(type).append(loading_dom);
+        }
+    }
+
+    /*设置数据结束*/
+    function set_end() {
+        end_flag[type] = true;
+        var end_dom=$("<p class='zh-1'>已经没有更多数据...</p>").clone();
+        $(".zx-11.active").append(end_dom);
+
+    }
+
+    /*判断是否进行加载*/
+    function is_load_date() {
+        var flag = ($(document).height() - $(document).scrollTop() - $(window).height()) <= 100;
+        return flag && !end_flag[type] && !loading_flag;
+    }
+
+    /*初始化*/
+    init_page_date(0);
+
+    /*滚动触发*/
+    $(window).scroll(function () {
+        if(is_load_date()){
+            get_date();
+        }
+    });
+
+
+ 
+	 /*来自文件zero_detail.html*/
+	 
+	 var a = parseInt($(".p2s").text()) - parseInt($(".p1s").html());
+	 var b = parseInt($(".p4s").text()) - parseInt($(".p3s").html());
+
+	 if (a==b){
+	 	 $(".ws-p2s").addClass("ws-top");
+		$(".ws-p1s").removeClass("ws-top");
+	 } else if(a<b){
+	 	$(".ws-p1s").addClass("ws-top");
+		$(".ws-p2s").removeClass("ws-top");
+	 } else if(a>b){
+		$(".ws-p2s").addClass("ws-top");
+		$(".ws-p1s").removeClass("ws-top");
+	 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // 来自文件personal_win_record.html
+
+
+
+
+        
+         $(document).on("touchend",".per_close",function(){
+
+           
+            $(".per_layers_exchange").fadeOut(500,function() {
+                 $(".per_layers").fadeOut(500);
+            });
+            
+             $("body").removeClass("n-clear");
+
+        });
+
+        $(document).on("click",".per_close",function(){
+
+           
+            $(".per_layers_exchange").fadeOut(500,function() {
+                 $(".per_layers").fadeOut(500);
+            });
+            
+             $("body").removeClass("n-clear");
+
+        });
+
+
+});

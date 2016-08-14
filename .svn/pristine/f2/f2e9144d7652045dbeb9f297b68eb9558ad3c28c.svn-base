@@ -1,0 +1,59 @@
+$(function(){
+
+
+    $('.conf_text').change(function(){
+
+        var conf = $(this);
+        var url = $('#update_conf').val();
+        //询问框
+        layer.confirm('您确定要改变配置么？', {
+            btn: ['确定','取消'] //按钮
+        }, function(){
+
+
+            common.ajax_post(url,{id : conf.data('id'), value : conf.val()},true,function(rt){
+                common.post_tips(rt);
+            });
+        });
+    });
+
+    $(document).on('click','.conf_upload_btn',function(e){
+        var upload_url = $('#upload_url').val();
+        var type = $(this).data('type');
+        var $input = $(this).prevAll('input');
+        layer.open({
+            id:'up_img_iframe',
+            type: 2,
+            area: ['700px', '530px'],
+            fix: false, //不固定
+            content: upload_url,
+            cancel : function () {
+                var name=$("#up_img_iframe").find('iframe').attr('name');
+                var content = window.frames[name].document.getElementById('return_list').value;
+                if(typeof(content)!='undefined' && content.length>0){
+                    content = $.parseJSON(content);
+                    if(type=='img_id'){
+                        $input.val(content[0]['id']);
+                    }else{
+                        $input.val(content[0]['path']);
+                    }
+                    $input.trigger('change');
+                }
+            }
+        });
+    });
+
+    $(document).on('click','.conf_preview_addr_btn',function(e) {
+        var url = $(this).prevAll('input').val();
+        if(url.length>0){
+            if(url.indexOf('/')==0 && url.indexOf('//')!=0 ){
+                url = document.location.protocol + '//' + document.location.hostname + url;
+            }
+            window.open(url);
+        }
+    });
+    $(document).on('click','.conf_preview_id_btn',function(e) {
+        window.open($('#preview_img_by_id').val() + $(this).prevAll('input').val());
+    });
+})
+

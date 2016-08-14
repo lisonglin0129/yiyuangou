@@ -1,0 +1,27 @@
+{volist name="all_goods" id="vo"}
+<div class="w-goods w-goods-l w-goods-ing akl" data-gid="1401" data-period="303164300" data-priceType="1" data-price="15999" data-existingTimes="6494" data-buyUnit="1">
+    {if condition="$vo.code eq 'shiyuanduobao'"}
+    <img class="ico ico-label ico-label-goods w-cbn" src="__MOBILE_STATIC__/img/icon_ten.png">
+    {/if}
+    <div class="w-goods-pic">
+        <a href="{:U('Goods/goods_detail',array('nper_id'=>$vo['nper_id']))}" >
+            <img src="{$vo.image_src}"/>
+        </a>
+    </div>
+    <div class="w-goods-info">
+        <p class="w-goods-title f-txtabb"><a href="{:U('Goods/goods_detail',array('nper_id'=>$vo['nper_id']))}" data-invoke="detail?gid=1401&period=303164300">{$vo.name}</a></p>
+        <div class="w-progressBar">
+            <p class="wrap">
+                <span class="bar" style="width:{$vo.progress}%;"><i class="color"></i></span>
+            </p>
+            <ul class="txt">
+                <li class="txt-l"><p>总需：{$vo.sum_times} 人次</p></li>
+                <li class="txt-r"><p>剩余<b class="txt-blue">{$vo.remain_num}</b></p></li>
+            </ul>
+        </div>
+    </div>
+    <div class="w-goods-shortFunc m-tip">
+        <button class="w-button w-button-round w-button-addToCart"  nper-id = "{$vo.nper_id}" data-invoke="addToCart?gid=1401&num=10"></button>
+    </div>
+</div>
+{/volist}

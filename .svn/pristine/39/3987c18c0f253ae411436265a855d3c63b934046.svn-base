@@ -1,0 +1,74 @@
+
+{extend name="base/common"}
+
+{block name="head"}
+<link href="__MOBILE_CSS__/user.css"  rel="stylesheet" />
+<script src="__MOBILE_JS__/jquery.min.js"></script>
+<script src="__MOBILE_JS__/index.js"></script>
+<script src="http://apps.bdimg.com/libs/layer/2.1/layer.js"></script>
+
+{/block}
+
+{block name="main"}
+
+<!---html--->
+
+{empty name="cart_info"}
+
+    购物车均已过期，请重新购买
+
+{else /}
+
+    <body class="isss">
+    <div class="m-user" id="dvWrapper">
+        <div class="m-simpleHeader" id="dvHeader">
+            <a href="javascript:history.go(-1);" data-pro="back" data-back="true" class="m-simpleHeader-back"><i class="ico ico-back"></i></a>
+            <h1>支付订单</h1>
+        </div>
+        <form action="{:U('Order/submit_order')}" method="post" onsubmit="return checksubmit()" name="submit_order">
+
+            {volist name="cart_info" id="data"}
+            <div class="zf-1">
+                <span class="buy-p">{$data.name}</span>
+                <section style="float:right"><span style="color:red;" class="buy_num">{$data.num}人次</section>
+                <input type="hidden" name="cart_id[]" value="{$data.cart_id}"/>
+            </div>
+            {/volist}
+
+            <div class="zf-1">
+                <section style="float:right">商品合计<span style="color:red;">{$total_price}{:C('MONEY_UNIT')}{:C('MONEY_NAME')}</span></section>
+            </div>
+            <button type="submit" id="brt20">提交</button>
+        </form>
+    </div>
+
+
+
+</body>
+
+{/empty}
+<script language="javascript">
+    //--->
+    function checksubmit()
+    {
+        $(".buy_num").each(function(){
+            if($(this).text()>500){
+                layer.open({
+                    content: "购买数量不能大于500",
+                    time: 1 //1秒后自动关闭
+                });
+                return false;
+            }
+        });
+    }
+
+    //提交按钮按一次之后灰化不准再按
+    $("form").submit(function(){
+        $("#brt20").attr("disabled","disabled")
+        $("#brt20").css("background-color","rgb(204,202,203)");
+    });
+    //--->
+</script>
+
+
+{/block}

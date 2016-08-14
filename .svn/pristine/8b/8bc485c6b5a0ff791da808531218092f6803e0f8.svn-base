@@ -1,0 +1,99 @@
+
+{extend name="base/common"}
+
+
+{block name="head"}
+<link href="__MOBILE_CSS__/user.css"  rel="stylesheet" />
+<script type="text/javascript" src="__MOBILE_JS__/jquery.min.js"></script>
+<script>
+    $(function(){
+        $('.zx2-1').click(function(){
+            window.location.href = $(this).attr('location-url');
+        });
+
+
+        //得到总页码
+        $.ajax({
+            url : "{:U('Index/all_share_count')}",
+            type : 'POST',
+            data : {
+
+            },
+            success: function(data, response, status){
+                window.count = parseInt(data);
+            }
+        });
+
+
+        //滚动条拖动
+        window.scrollFlag = true;
+        window.first = 10;
+        window.page = 1;
+        $(window).scroll(function () {
+            if (window.page < window.count) {
+                if (window.scrollFlag) {
+                    if ($(document).scrollTop() >= ($('#load-more').offset().top + $('#load-more').outerHeight() - $(window).height() - 20)) {
+                        setTimeout(function(){
+                            $.ajax({
+                                url: "{:U('Index/ajax_share_goods')}",
+                                type: 'POST',
+                                data: {
+                                    offset: window.first
+                                },
+                                success: function(data, response, status){
+                                    $('#load-more').before(data);
+                                }
+                            });
+                            window.scrollFlag = true;
+                            window.first += 10;
+                            window.page += 1;
+                        }, 500);
+                        window.scrollFlag = false;
+                    }
+                }
+            } else {
+                $('#load-more').html('没有更多数据');
+            }
+        });
+
+    })
+
+
+</script>
+{/block}
+
+{block name="main"}
+
+
+
+
+
+{include file="public/header" /}
+
+
+
+
+
+	<div class="zx1" style="display:block">
+
+        {volist name="share_list" id="vo"}
+
+                <div class="zx2-1" location-url = "{:U('OtherUsers/share_detail',array('share_id'=>$vo['share_id']))}">
+                    <section style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;width:95%">{$vo.title}</section>
+                    <section><a href="{:U('OtherUsers/other_person_center',array('uid'=>$vo.uid))}" style="float:left;color:#0079fe">{$vo.nick_name}</a></section><section style="float:right;margin-top:5px;color:#999;">{$vo.create_time}</section>
+                    <div class="xz2-2"><img src="{$vo.img_path}">
+                       <div style="float:left;height:100px;width:65%;overflow-y:scroll;text-indent:5px;word-break:break-all;">
+                       {$vo.content}</div>
+                        
+                    </div>
+                </div>
+
+        {/volist}
+
+        <p id="load-more" style="width: 100%;text-align: center;height: 40px;line-height: 40px;"></p>
+
+	</div>
+
+    
+    
+{/block}

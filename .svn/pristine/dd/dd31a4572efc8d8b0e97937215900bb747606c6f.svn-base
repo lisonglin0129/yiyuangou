@@ -1,0 +1,14 @@
+{notempty name="data['list']"}
+{volist name="data['list']" id="vo"}
+<div class="clr"></div>
+<div class="shouyi">
+    <div class="shouyi-le">
+        <section>{$vo.reward}元</section>
+        <section class="shouyi-2">推广收益</section>
+    </div>
+    <span class="yiji">{$vo.level}级用户 {$vo.username} {:date('Y年m月',$vo['month_time'])}</span>
+</div>
+{/volist}
+<input type="hidden" id="total_m" value="{$data.total_fee}">
+<input type="hidden" id="total_r" value="{$data.total_reward}">
+{/notempty}

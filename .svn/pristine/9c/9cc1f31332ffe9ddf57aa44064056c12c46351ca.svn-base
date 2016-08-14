@@ -1,0 +1,336 @@
+@charset "utf-8";
+//首页样式
+@import "core/setting";
+@import "core/css3";
+@import "core/_mixin";
+
+$img-path:"../images/";
+
+//获取主题文件地址 方法
+@function path-map($val){
+  @return #{$img-path}#{$val}
+}
+.main{
+  background: #f2f2f2 !important;
+  width:1200px !important;
+  .tooltop{
+    background: #1a2b40 !important;
+    .t_userInfo .t_new_mes{
+      &:hover{
+        background: lighten(#1a2b40,10%);
+      }
+    }
+    .log_out{
+      background: #1a2b40;
+      &:hover{
+        background: lighten(#1a2b40,10%);
+      }
+    }
+  }
+}
+
+.t_menu{
+  width:100%;
+  height: 64px;
+  line-height: 64px;
+  color:#333;
+  font-size: 16px;
+  box-sizing: border-box;
+  text-align: center;
+  overflow: hidden;
+  background: #fff;
+  ul{
+    display: block;
+    margin:0 0 0 25px;
+    @extend %clearfix;
+    list-style: none;
+    li{
+      float: left;
+      margin:0 8px;
+      height: 64px;
+      line-height: 70px;
+      border-bottom: 3px solid #fff;
+      cursor: pointer;
+      padding:0 15px;
+      &.active{
+        border-bottom: 3px solid #5067c9;
+        a {
+          color: #5067c9;
+        }
+      }
+      a{
+        color:#333;
+        &:hover{
+          text-decoration: none;
+          color:#5067c9;
+        }
+      }
+    }
+  }
+}
+.t_banner{
+  width:1200px;
+  height: 220px;
+  display: block;
+  margin:auto;
+  background: url(path-map("admin_banner.png")) center no-repeat;
+  background-size:cover;
+  color:#fff;
+  .ba-main{
+    width:900px;
+    margin:auto;
+    text-align: left;
+    img{
+      float: left;
+      width:120px;
+      height: 120px;
+      border-radius: 100%;
+      margin:50px auto;
+      overflow: hidden;
+    }
+    .bam-text{
+      float: left;
+      line-height: 28px;
+      font-weight: normal;
+      color:#fff;
+      font-size: 16px;
+      margin:50px 0 0 25px;
+      h4{
+        line-height: 50px;
+        margin:0;
+        font-size: 20px;
+        font-family: $baseFontFamily;
+        border-bottom: 1px solid #2d5272;
+        letter-spacing: 1px;
+        span{
+          color:#f0c113;
+        }
+      }
+      h6{
+        font-size: 16px;
+        font-family: $baseFontFamily;
+        font-weight: normal;
+        letter-spacing: 1px;
+        span{
+          margin:0 8px;
+        }
+      }
+      p{
+        span{
+          margin:0 8px;
+        }
+      }
+    }
+  }
+}
+.index_main{
+  padding-top:1px;
+  position: relative;
+  width:900px;
+  margin:0 auto;
+  background: #fff;
+  @extend %clearfix;
+  .im-quickmenu{
+    width:600px;
+    float: left;
+    font-size: 16px;
+    font-weight: normal;
+    .im-title{
+      width:100%;
+      padding-left:54px;
+      line-height: 52px;
+      height: 52px;
+      color:#555;
+      border-bottom:2px solid #f1f1f1;
+      border-right:2px solid #f1f1f1;
+      text-align: left;
+      background: url(path-map("admin_addinfo.png")) no-repeat 20px center;
+    }
+    .im-qm{
+      width:50%;
+      box-sizing: border-box;
+      float: left;
+      height: 160px;
+      border-right:2px solid #f1f1f1;
+      border-bottom:2px solid #f1f1f1;
+      text-align: left;
+      &.iqm-neworder{
+        .iqm-logo{
+          border:3px solid #ff5d59;
+          i{
+            color:#ff5d59;
+          }
+        }
+        .iqm-text{
+          >h4>label {
+            color: #ff5d59;
+          }
+        }
+      }
+      &.iqm-newgoods{
+        .iqm-logo{
+          border:3px solid #ff9800;
+          i{
+            color:#ff9800;
+          }
+        }
+        .iqm-text{
+          >h4>label {
+            color: #ff9800;
+          }
+        }
+      }
+      &.iqm-newusers{
+        .iqm-logo{
+          border:3px solid #00caf7;
+          i{
+            color:#00caf7;
+          }
+        }
+        .iqm-text{
+          >h4>label{
+            color: #00caf7;
+          }
+        }
+      }
+      .iqm-logo{
+        width:86px;
+        height: 86px;
+        display: block;
+        float: left;
+        border-radius: 100%;
+        border:3px solid #44cbc9;
+        margin:30px 0 0 30px;
+        text-align: center;
+        line-height: 86px;
+        i{
+          color:#44cbc9;
+          font-size: 40px;
+        }
+      }
+      .iqm-text{
+        float: left;
+        margin:45px 0 0 15px;
+        h4{
+          font-size: 18px;
+          font-family: $baseFontFamily;
+          line-height: 30px;
+          margin:0;
+          color:#999;
+          >label{
+            color:#44cbc9;
+            font-size: 30px;
+            margin-right:5px;
+          }
+          >span{
+            position: relative;
+            top:2px;
+          }
+        }
+        >label{
+          font-size: 20px;
+          color:#999;
+          font-weight: 300;
+          letter-spacing: 1px;
+        }
+      }
+    }
+  }
+  .im-notice{
+    width:300px;
+    float: left;
+    height: 370px;
+    position:relative;
+    .imo-top{
+      position: absolute;
+      width:100%;
+      display: block;
+      left: 0;
+      height: 45px;
+      line-height: 45px;
+      top:-45px;
+      background: #f0c233;
+      color:#fff;
+      text-align: left;
+      box-sizing: border-box;
+      padding-left:45px;
+      .imo-logo{
+        i{
+          position: absolute;
+          height: 45px;
+          width:45px;
+          left:0 ;
+          display: block;
+          text-align: center;
+          color: #ffffff;
+          font-size: 26px;
+          line-height: 45px;
+        }
+      }
+      .imo-num{
+        display: block;
+        padding: 0 10px;
+        line-height: 25px;
+        background: #cca52c;
+        border-radius: 5px;
+        color:#fff;
+        font-size: 14px;
+        position: absolute;
+        letter-spacing: 1px;
+        right:15px;
+        top:10px;
+        margin:0;
+      }
+    }
+    .imo-list{
+      width:100%;
+      height: 370px;
+      ul{
+        list-style: none;
+        @extend %clearfix;
+        text-align: left;
+        padding-left:15px;
+        margin:0;
+        li{
+          width:255px;
+          float: left;
+          border-bottom:1px dashed #eee;
+          padding:10px 0 10px 20px;
+          position: relative;
+          >span{
+            position: absolute;
+            left:2px;
+            top:20px;
+            width:10px;
+            height: 10px;
+            background: #ff5d59;
+            border-radius: 100%;
+          }
+          .imo-text{
+            >*{
+              margin:0;
+            }
+            h4{
+              line-height: 30px;
+              font-size: 14px;
+              color:#666;
+              font-family: $baseFontFamily;
+              letter-spacing: 1px;
+            }
+            p{
+              line-height: 20px;
+              color:#999;
+              font-size: 12px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+.tab_content iframe{
+  width:100%;
+  height: 100%;
+  position: relative;
+  display: block;
+}

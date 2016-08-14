@@ -1,0 +1,151 @@
+{extend name="base/base"}
+{block name="head"}
+<link rel="stylesheet" href="__MOBILE_FONTS__/iconfont.css">
+<link href="__MOBILE_CSS__/common1.css" rel="stylesheet">
+<link href="__MOBILE_CSS__/usercenter.css" rel="stylesheet">
+<link href="__MOBILE_CSS__/express.css" rel="stylesheet">
+<script type="text/javascript" src="__MOBILE_JS__/jquery.min.js"></script>
+
+
+{/block}
+
+{block name="main"}
+<!-- 弹层 -->
+<section class="express_t">
+    <div class="express_fixed"></div>
+    <div class="express_site">
+        <section class="express_pai"><i class="icon iconfont express_cio2s">&#xe61e;</i></section>
+        <h1 class="express_h1s">请选择收货地址</h1>
+
+        <section class="express_p_se exddas-close">
+            <section>
+                <span class="express_p_sp">王小丫</span>
+                <span class="express_p_sp express_p_sp_l">15200000000</span>
+            </section>
+            <div style="clear: both;"></div>
+            <section>
+                <span class="express_p_sp express_p_sp2">江苏省徐州市泉山区科技大厦735</span>
+            </section>
+        </section>
+
+    </div>
+</section>
+
+
+<div class="home homes_new">
+
+    <!-- 头部 -->
+
+
+    <header class="header_news">
+        <a href="{:U('users/personal_center')}" class="heads heads_new"><i class="icon iconfont cio1">&#xe600;</i></a>
+        <span class="heads-p heads-p-news">信息确认</span>
+    </header>
+    <div class="express_left"></div>
+
+
+    <section class="main_express">
+
+        <!--express_act 是激活状态，改变的是背景颜色 express_color是激活状态，改变的是字体颜色 -->
+        <!-- 第一个express_sect express_commod不要循环，样式不一样;express_act 是激活状态，改变的是背景颜色 express_color是激活状态，改变的是字体颜色 -->
+        <!-- 第一个express_sect express_commod不要循环，样式不一样;express_act 是激活状态，改变的是背景颜色 express_color是激活状态，改变的是字体颜色 -->
+
+        <section class="express_sect">
+            <section class="express_commodity">
+                <section class="express_p"><i class="icon iconfont express_ico">&#xe61c;</i></section>
+                <span class="express_span">获得商品</span>
+                <span class="express_span">{:date('Y-m-d H:i:s',$win_record['create_time'])}</span>
+            </section>
+        </section>
+
+        <section class="express_commod">
+            <section class="express_commodity">
+                <section class="express_p express_act"><i class="icon iconfont express_ico">&#xe61d;</i></section>
+                <span class="express_span express_color">确认收货方式</span>
+                <!--<span class="express_span express_color">2016-06-07</span>-->
+                <!--<span class="express_span express_color">16:34:43</span>-->
+            </section>
+        </section>
+
+
+        {if condition="empty($vo['prize_status']) OR $vo['prize_status'] lt 4"}
+        <!-- 确认收货地址 -->
+        <section class="express_address">
+            <!--<section class="express_add_1">-->
+            <!--<span class="express_p_sp">充值虚拟币可用于平台夺宝</span>-->
+            <!--<span class="express_p_sp express_p_sp_l">充值话费或者支付宝余额</span>-->
+            <!--</section>-->
+            <!--<div style="clear: both;"></div>-->
+            <section>
+                <span class="express_p_sp express_p_sp2 express_p_sp3">可用于虚拟币或话费或支付宝余额或充值</span>
+            </section>
+            <div style="clear: both;"></div>
+            <section class="express_add_se">
+                <!--<div href="" class="express_add_a exddas-open">选择兑换方式</div>-->
+                <a href="{:U('trans',['id'=>$win_record['id']])}">
+                    <div class="express_add_a express_add_a1">选择兑换方式</div>
+                </a>
+            </section>
+        </section>
+        {/if}
+
+
+        <section class="express_commod">
+            <section class="express_commodity">
+                <section class="express_p"><i class="icon iconfont express_ico">&#xe619;</i></section>
+                {if condition="empty($vo['prize_status']) OR $vo['prize_status'] lt 4"}
+                <span class="express_span">商品派发</span>
+                <span class="express_span">等待中......</span>
+                {else /}
+                <span class="express_span">商品已派发</span>
+                {/if}
+            </section>
+        </section>
+
+
+        <!-- 商品派发 -->
+        <!-- <section class="express_address express_address2">
+                <section class="express_address_sec1">物流公司：申请快递</section>
+                <section class="express_address_sec1 express_address_sec2">运单号码：123456123456</section>
+        </section> -->
+
+
+        <section class="express_commod">
+            <section class="express_commodity">
+                <section class="express_p"><i class="icon iconfont express_ico">&#xe61c;</i></section>
+                <span class="express_span">确认收货</span>
+            </section>
+        </section>
+
+        <!-- 确认收货 -->
+        <!--  <section class="express_address express_address3">
+                 <a href="" class="express_add_a express_address3_a">使用其他</a>
+         </section> -->
+
+        <section class="express_commod">
+            <section class="express_commodity">
+                <section class="express_p"><i class="icon iconfont express_ico">&#xe61c;</i></section>
+                {if condition="empty($vo['prize_status']) OR $vo['prize_status'] lt 4"}
+                <span class="express_span">未完成</span>
+                {else /}
+                <span class="express_span">已完成</span>
+                {/if}
+            </section>
+        </section>
+    </section>
+
+
+    <!-- 底部 -->
+
+
+    <footer>
+        <a href="{:U('Index/index')}" class="foots1">夺宝</a>
+        <a href="{:U('Index/all_goods', array('cate'=> '0-1'))}" class="foots2">全部商品</a>
+        <a href="{:U('Index/all_share_order')}" class="foots3">晒单</a>
+        <a href="{:U('Cart/cart_list')}" class="foots4">购物车</a>
+        <a href="{:U('Users/personal_center')}" class="foots5 act">我的</a>
+    </footer>
+
+</div>
+<script type="text/javascript" src="__MOBILE_JS__/login.js"></script>
+{/block}

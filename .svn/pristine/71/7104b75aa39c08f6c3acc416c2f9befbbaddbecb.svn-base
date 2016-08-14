@@ -1,0 +1,20 @@
+{volist name="announce_info" id="vo"}
+{if condition='$vo["n_status"] eq 2'}
+<div class="wq-0" >期号：{$vo|num_base_mask=0}　即将揭晓，正在倒计时</div>
+{elseif condition='$vo["n_status"] eq 3'}
+<div class="wq-1" >
+    <div class="wq-2 wq-3">
+        <div class="wq-4">=<img src="{$vo.user_face|default=''}" alt="" style="width: 45px;height: 45px;margin-top: -19px;"/></div>
+        <div class="wq-5">
+            获奖者：{$vo.nick_name|default=''}</br>
+            期号:{$vo.nper_id|default=""}</br>
+            <span style="color:green">(  IP：{$vo.reg_ip|default=''} )</span></br>
+            用户ID：{$vo.luck_uid|default=''} (唯一不变标识)</br>
+            揭晓时间：{$vo.luck_time|microtime_format='1','Y-m-d H:i:s'|default=''}</br>
+            幸运号码：<span style="color:#db3652">{$vo.luck_num|default=''}</span></br>
+            本期参与：<span style="color:#db3652">{$vo.num|default=''}</span>次</br>
+        </div>
+    </div>
+</div>
+{/if}
+{/volist}

@@ -1,0 +1,27 @@
+
+<div class="g-header">
+    <div class="m-header">
+        <div class="g-wrap">
+            <h1 class="m-header-logo">
+                <a class="m-header-logo-link m-header-logo-links" href="{:U('Index/index')}">
+                     <img class="ico-logo" src="{$wap_config_info.logo|default=''}"/>                    
+                </a>
+            </h1>
+            <div class="m-header-toolbar">
+                <a class="m-header-toolbar-btn searchBtn" href="{:U('Goods/search')}"  target="_self" title="搜索"><i class="ico ico-search"></i></a>
+               <!--  <a class="m-header-toolbar-btn userpageBtn" href="" title="我的夺宝"><i class="ico ico-userpage"></i></a> -->
+            </div>
+        </div>
+    </div>
+    <!-- 导航栏 -->
+    <div class="m-nav">
+        <div class="g-wrap">
+            <ul class="m-nav-list">
+
+                <li {php}if(!empty($index)){echo 'class="selected"';}{/php}><a href=""><span>首页</span></a></li>
+                <li {php}if(!empty($all_goods_cate)){echo 'class="selected"';}{/php}><a href=""><span>全部商品</span></a></li>
+                <li {php}if(!empty($shareOrder)){echo 'class="selected"';}{/php}><a href="" ><span>晒单</span></a></li>
+            </ul>
+        </div>
+    </div>
+</div>

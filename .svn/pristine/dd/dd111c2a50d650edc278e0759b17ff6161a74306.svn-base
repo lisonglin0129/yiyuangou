@@ -1,0 +1,83 @@
+/**
+ * Created by deloo on 2016/5/21.
+ */
+$(function(){
+    var promote={
+        init:function(){
+           // trans_success();
+            $('#link_copy').zclip({
+                path: "/common/plugin/copy/ZeroClipboard.swf",
+                copy: function(){
+                    return $('#link').val();
+                }
+            });
+            $('#down_qr').click(function(){
+                var down_url=$('#down_url').val();
+                location.href=down_url+'?url='+$(this).attr('url');
+            });
+            $(".pi-transcash").on("click",function(){
+                trans_open();
+                return false;
+            });
+            //$(".cancel").on("click",function(){
+            //    $('.open').hide();
+            //    return false;
+            //});
+            /*打开转为香肠币弹出层*/
+            function trans_open(){
+                layer.open({
+                    type: 1,
+                    area: ['720px', '540px'], //宽高
+                    title: '转为香肠币',
+                    content: $(".m-trans-hd").eq(0).html()
+                });
+            }
+            /*转为香肠币完成*/
+
+        }
+    };
+    promote.init();
+});
+
+function buy_all(){
+    $('.money').val($('#leave_money').html());
+}
+function sub_buy(obj){
+    var money=$(obj).parent().siblings('.alert_z1_content').find('.money').val();
+    var cash=$('#leave_money').html();
+    if(!parseInt(money)){
+        layer.msg('请输入输出金额');return false;
+    }
+    if(parseInt(money)!=money){
+        layer.msg('输出金额不是整数');return false;
+    }
+    if(parseFloat(money)>parseFloat(cash)){
+        layer.msg('输出金额超过余额');return false;
+    }
+    var password=$(obj).parent().siblings('.alert_z1_content').find('.password').val();
+    if(!password){
+        layer.msg('请输入密码');return false;
+    }
+    $.post($('#check_url').val(),{password:password},function(data){
+        if(data.code==1){
+            var url=$('#apply_url').val();
+            $.post(url,{money:money},function(data){
+                if(data.code==1){
+                   trans_success();
+                }else{
+                    layer.msg('转化失败');return false;
+                }
+            },'json')
+        }else{
+            layer.msg('密码错误');return false;
+        }
+    },'json')
+}
+function trans_success(){
+    layer.open({
+        type: 1,
+        area: ['720px', '540px'], //宽高
+        title: '转为香肠币',
+        content: $(".m-trans-hd").eq(1).html()
+    });
+}

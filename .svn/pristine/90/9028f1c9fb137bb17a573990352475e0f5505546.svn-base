@@ -1,0 +1,25 @@
+{extend name="base/base"}
+{block name="head"}
+<link rel="stylesheet" href="__MOBILE_FONTS__/iconfont.css">
+<link href="__MOBILE_CSS__/common1.css" rel="stylesheet">
+<link href="__MOBILE_CSS__/usercenter.css" rel="stylesheet">
+<script type="text/javascript"  src="__MOBILE_JS__/jquery.min.js"></script>
+<script src="__common__/plugin/copy/jquery.zclip.min.js"></script>
+{/block}
+{block name="main"}
+<div class="home">
+    <!-- 头部 -->
+        <header style="" class="w-header w-headers-redss">
+            <a href="" class="heads w-swweep">关闭</a>
+            <span class="heads-p w-heads-p">领取香肠一元购红包</span>
+        </header>
+        <section class="w-sect">
+            <p>长按下面二维码，识别梦蝶时代</p>
+            <p>微信公众号，领取红包。</p>
+            <img src="{$spread_url}" class="w-img1s">
+            <div class="w-img2s"></div>
+            <div class="w-img3s"></div>
+        </section>
+
+</div>
+{/block}

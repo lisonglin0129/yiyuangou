@@ -1,0 +1,109 @@
+{extend name="base/base"/}
+{block name="title"}我的推广{/block}
+{block name="user_css"}
+{css href="__static__/css/usercenter.css" /}
+{css href="__static__/css/promote.css" /}
+{/block}
+{block name='content'}
+<div class="g-body">
+    <div class="m-user">
+        <div class="g-wrap">
+            <div class="m-user-frame-wraper">
+                <!--用户中心  菜单-->
+                {include file="ucenter/_nav" /}
+                <!--用户中心 main-->
+                <div class="m-user-frame-colMain ">
+                    <div class="m-user-frame-content" >
+                        <ul class="w-crumbs f-clear">
+                            <li class="w-crumbs-item">当前位置：</li>
+                            <li class="w-crumbs-item"><a href="promote.html">我的推广</a><span class="w-crumbs-split">&gt;</span></li>
+                            <li class="w-crumbs-item w-crumbs-active">推广明细</li>
+                        </ul>
+                        <div class="m-user-comm-wraper">
+                            <div class="pd_title pro-title">
+                                <h2>推广详情</h2>
+                                <div class="pd-search">
+                                    <label>年份:</label>
+                                    <div class="pd-s-year">
+                                       <span id="year" year="">全部</span>
+                                        <i class="iconfont">&#xe647;</i>
+                                        <ul class="pd-s-y">
+                                            <li data-val="">全部</li>
+                                            <li data-val="2016">2016年</li>
+                                            <li data-val="2017">2017年</li>
+                                            <li data-val="2018">2018年</li>
+                                            <li data-val="2018">2019年</li>
+                                        </ul>
+                                    </div>
+                                    <label>月份:</label>
+                                    <div class="pd-s-month">
+                                        <span id="month" month="">全部</span>
+                                        <i class="iconfont">&#xe647;</i>
+                                        <ul class="pd-s-m">
+                                            <li data-val="">全部</li>
+                                            <li data-val="1">1月</li>
+                                            <li data-val="2">2月</li>
+                                            <li data-val="3">3月</li>
+                                            <li data-val="4">4月</li>
+                                            <li data-val="5">5月</li>
+                                            <li data-val="6">6月</li>
+                                            <li data-val="7">7月</li>
+                                            <li data-val="8">8月</li>
+                                            <li data-val="9">9月</li>
+                                            <li data-val="10">10月</li>
+                                            <li data-val="11">11月</li>
+                                            <li data-val="12">12月</li>
+                                        </ul>
+                                    </div>
+                                    <a class="pd-s-btn">搜索</a>
+                                </div>
+                            </div>
+                            <div class="pd-detail pro-detail">
+                                <div class="pd-cash-info">
+                                    <div class="pd-c-i1">
+                                        <i class="iconfont">&#xe646;</i>
+                                        <div class="pad-c-fee">
+                                            <h2 id="total">0.00</h2>
+                                            <h4>下级消费总金额（元）</h4>
+                                        </div>
+                                    </div>
+                                    <div  class="pd-c-i2">
+                                        <i class="iconfont">&#xe645;</i>
+                                        <div class="pad-c-fee">
+                                            <h2 id="total_reward">0.00</h2>
+                                            <h4>推广总收益（元）</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="pro-t-con pd-t pd-t-list">
+                                    <div pro="userCommLoading" class="w-loading"><b
+                                            class="w-loading-ico"></b><span class="w-loading-txt">正在努力加载……</span>
+                                    </div>
+                                </div>
+                                <div class="pro-t-con pd-t pd-t-detail">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="m-user-frame-clear"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--弹出层-->
+<div class="pro-modal pd-m-info">
+
+</div>
+<input type="hidden" id="level" value="">
+<input type="hidden" id="uid" value="">
+<input type="hidden" id="reward_info" value="{:U('reward_info')}">
+<input type="hidden" id="reward_level_url" value="{:U('rewards_level')}">
+<input type="hidden" id="promote_detail_url" value="{:U('promote_detail_list')}">
+<input type="hidden" id="detail_url" value="{:U('promote_detail')}">
+{/block}
+{block name="user_js"}
+{js href="__static__/js/ucenter/promote_detail.js" /}
+{/block}

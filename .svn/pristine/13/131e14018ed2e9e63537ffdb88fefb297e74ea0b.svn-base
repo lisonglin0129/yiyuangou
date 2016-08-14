@@ -1,0 +1,212 @@
+<IfModule mod_rewrite.c>
+	Options +FollowSymlinks
+	RewriteEngine On
+	
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteCond %{REQUEST_FILENAME} !-f
+
+	#admin
+    RewriteRule ^admin(?:\.html)?$ index.php?s=/admin/index/index [QSA]
+
+	#跳转
+	RewriteRule ^jump\/(\d+)(?:\.html)?$ index.php?s=/yyg/goods/jump_to_goods_buying/gid/$1.html [QSA]
+	#跳转2
+	RewriteRule ^detail\/(\d+)(?:\.html)?$ index.php?s=/yyg/goods/jump_to_goods_buying/gid/$1.html [QSA]
+	#商品期数详情
+	RewriteRule ^detail\/(\d+\-\d+)(?:\.html)?$ index.php?s=/yyg/goods/detail/id/$1.html [QSA]
+
+
+    #帮助
+    RewriteRule ^help\-(\d+)(?:\.html)$ index.php?s=/yyg/help/read/id/$1.html [QSA]
+    #帮助2
+    RewriteRule ^help\/(.*)(?:\.html)$ index.php?s=/yyg/help/read/name/$1.html [QSA]
+
+	#搜索
+	RewriteRule ^search\/(.*)(?:\.html)?$ index.php?s=/yyg/lists/search?keyword=$1 [QSA]
+	#搜索
+	RewriteRule ^search\/?$ index.php?s=/yyg/lists/search [QSA]
+
+	#分类列表
+	RewriteRule ^category\/(index\.html)?$ index.php?s=/yyg/lists/index [QSA]
+	#分类列表
+	RewriteRule ^category\/(\d+)\-(\d+)\-(\d+)?(?:\.html)?$ index.php?s=/yyg/lists/index/category/$1/sort/$2/page/$3.html [QSA]
+
+	#晒单分享
+	RewriteRule ^share(?:\.html)?$ index.php?s=/yyg/share/index [QSA,PT,L]
+	#晒单详情
+	RewriteRule ^share\/(\d+)(?:\.html)?$ index.php?s=/yyg/share/detail/id/$1.html [QSA]
+    #ta的详情首页
+	RewriteRule ^ta\/(\d+)(?:\.html)?$ index.php?s=/yyg/ta/index/uid/$1.html [QSA]
+    #夺宝记录
+	RewriteRule ^history\/(\d+)(?:\.html)$ index.php?s=/yyg/ta/history/uid/$1.html [QSA]
+    #ta的晒单
+	RewriteRule ^ta\/share\-(\d+)(?:\.html)?$ index.php?s=/yyg/ta/share/uid/$1.html [QSA]
+    #幸运记录
+	RewriteRule ^luck\/(\d+)(?:\.html)?$ index.php?s=/yyg/ta/luck/uid/$1.html [QSA]
+
+    #admin
+	RewriteRule ^1119la(?:\.html)?$ index.php?s=/admin/index/index [QSA]
+    #十元专区
+	RewriteRule ^ten(?:\.html)?$ index.php?s=/yyg/lists/ten [QSA]
+    #最新揭晓
+	RewriteRule ^results(?:\.html)?$ index.php?s=/yyg/lists/results [QSA]
+    #登录
+	RewriteRule ^login(?:\.html)?$ index.php?s=/yyg/user/login [QSA]
+    #注册
+	RewriteRule ^reg(?:\.html)?$ index.php?s=/yyg/user/reg [QSA]
+    #找回密码
+	RewriteRule ^forgot(?:\.html)?$ index.php?s=/yyg/user/forgot [QSA]
+
+    #用户中心-首页
+    RewriteRule ^ucenter(?:\.html)?$ index.php?s=/yyg/ucenter/index [QSA]
+    #用户中心-夺宝记录
+    RewriteRule ^deposer(?:\.html)?$ index.php?s=/yyg/ucenter/deposer [QSA]
+    #用户中心-幸运记录
+    RewriteRule ^luck(?:\.html)?$ index.php?s=/yyg/ucenter/luck [QSA]
+    #用户中心-晒单记录
+    RewriteRule ^order(?:\.html)?$ index.php?s=/yyg/ucenter/order [QSA]
+    #用户中心-个人资料
+    RewriteRule ^person(?:\.html)?$ index.php?s=/yyg/ucenter/person [QSA]
+    #用户中心-基本设置
+    RewriteRule ^base(?:\.html)?$ index.php?s=/yyg/ucenter/base [QSA]
+    #用户中心-收货地址
+    RewriteRule ^addr(?:\.html)?$ index.php?s=/yyg/ucenter/addr [QSA]
+    #用户中心-充值记录
+    RewriteRule ^charge(?:\.html)?$ index.php?s=/yyg/ucenter/charge [QSA]
+    #用户中心-充值
+    RewriteRule ^recharge(?:\.html)?$ index.php?s=/yyg/pay/recharge [QSA]
+    #推广链接
+    RewriteRule ^s/(\d+)(?:\.html)?$ index.php?s=/yyg/user/reg/spread_userid/$1.html [QSA]
+
+
+
+
+
+    #首页
+        	RewriteRule ^mobile\/index(?:\.html)?$ index.php?s=/mobile/index/index.html [QSA]
+        	#上方搜索
+            RewriteRule ^mobile\/search(?:\.html)?$ index.php?s=/mobile/Goods/search.html [QSA]
+            #搜索结果
+            RewriteRule ^mobile\/search_result(?:\.html)?$ index.php?s=/mobile/Goods/search_result.html [QSA]
+            #全部商品
+        	RewriteRule ^mobile\/all_goods(?:\.html)?$ index.php?s=/mobile/index/all_goods.html [QSA]
+        	#全部商品分类
+        	RewriteRule ^mobile\/all_goods\/(\d+\-\d+)(?:\.html)?$ index.php?s=/mobile/index/all_goods/cate/$1.html [QSA]
+        	#晒单分享
+        	RewriteRule ^mobile\/all_share_order(?:\.html)?$ index.php?s=/mobile/index/all_share_order.html [QSA]
+        	#购物车
+        	RewriteRule ^mobile\/car_list(?:\.html)?$ index.php?s=/mobile/cart/cart_list.html [QSA]
+        	#个人中心
+        	RewriteRule ^mobile\/personal_center(?:\.html)?$ index.php?s=/mobile/users/personal_center.html [QSA]
+        	#轮播图跳转
+        	RewriteRule ^mobile\/jump_to_goods_buying\/(\d+)(?:\.html)$ index.php?s=/mobile/goods/jump_to_goods_buying/gid/$1.html [QSA]
+        	#推广中心
+        	RewriteRule ^mobile\/Spread(?:\.html)?$ index.php?s=/mobile/Spread/index.html [QSA]
+        	#商品详情
+        	RewriteRule ^mobile\/detail\/(\d+)(?:\.html)$ index.php?s=/mobile/goods/goods_detail/nper_id/$1.html [QSA]
+        	#0元商品详情
+        	RewriteRule ^mobile\/zero_detail\/(\d+)(?:\.html)$ index.php?s=/mobile/goods_detail/zero_detail/nper_id/$1.html [QSA]
+        	#什么是香肠一元购
+        	RewriteRule ^mobile\/help(?:\.html)?$ index.php?s=/mobile/article/help.html [QSA]
+        	#他人用户中心
+        	RewriteRule ^mobile\/other_person_center\/(\d+)(?:\.html)?$ index.php?s=/mobile/otherUsers/other_person_center/uid/$1.html [QSA]
+        	#晒单详情
+        	RewriteRule ^mobile\/share_detail\/(\d+)(?:\.html)?$ index.php?s=/mobile/otherUsers/share_detail/share_id/$1.html [QSA]
+        	#确认订单
+        	RewriteRule ^mobile\/confirm_order(?:\.html)?$ index.php?s=/mobile/order/confirm_order.html [QSA]
+        	#充值页面
+        	RewriteRule ^mobile\/charge(?:\.html)?$ index.php?s=/mobile/order/charge.html [QSA]
+        	#个人资料
+        	RewriteRule ^mobile\/personal_data(?:\.html)?$ index.php?s=/mobile/users/personal_data.html [QSA]
+        	#夺宝记录
+        	RewriteRule ^mobile\/person_indiana(?:\.html)?$ index.php?s=/mobile/buy/person_indiana.html [QSA]
+        	#幸运记录
+        	RewriteRule ^mobile\/personal_win_record(?:\.html)?$ index.php?s=/mobile/buy/personal_win_record.html [QSA]
+        	#我的晒单
+        	RewriteRule ^mobile\/my_share_list(?:\.html)?$ index.php?s=/mobile/buy/my_share_list.html [QSA]
+        	#充值记录
+        	RewriteRule ^mobile\/recharge_record(?:\.html)?$ index.php?s=/mobile/order/recharge_record.html [QSA]
+        	#夺宝客服
+            RewriteRule ^mobile\/service(?:\.html)?$ index.php?s=/mobile/article/home_page.html [QSA]
+            #退出登录
+            RewriteRule ^mobile\/logout(?:\.html)?$ index.php?s=/mobile/users/logout.html [QSA]
+            #支付宝充值
+            RewriteRule ^mobile\/ali_recharge(?:\.html)?$ index.php?s=/mobile/alipay/personal_charge.html [QSA]
+            #微信充值
+            RewriteRule ^mobile\/wx_recharge(?:\.html)?$ index.php?s=/mobile/weixin/recharge.html [QSA]
+            #爱贝充值
+            RewriteRule ^mobile\/ai_rechage(?:\.html)?$ index.php?s=/mobile/aipay/recharge.html [QSA]
+            #修改上传头像
+            RewriteRule ^mobile\/modify_head_image(?:\.html)?$ index.php?s=/mobile/users/upload_portrait.html [QSA]
+            #修改昵称
+            RewriteRule ^mobile\/modify_nickname(?:\.html)?$ index.php?s=/mobile/users/modify_nickname.html [QSA]
+            #修改手机号
+            RewriteRule ^mobile\/modify_phone(?:\.html)?$ index.php?s=/mobile/users/modify_phone.html [QSA]
+            #收货地址列表
+            RewriteRule ^mobile\/address_list(?:\.html)?$ index.php?s=/mobile/users/address_list.html [QSA]
+            #收货地址详情
+            RewriteRule ^mobile\/address_details\/(\d+)(?:\.html)?$ index.php?s=/mobile/users/address_details/address_id/$1.html [QSA]
+            #新增收货地址
+            RewriteRule ^mobile\/add_address(?:\.html)?$ index.php?s=/mobile/users/add_address.html [QSA]
+            #修改收货地址
+            RewriteRule ^mobile\/modify_address(?:\.html)?$ index.php?s=/mobile/users/modify_address.html [QSA]
+            #查看中奖记录详情
+            RewriteRule ^mobile\/win_detail\/(\d+)(?:\.html)?$ index.php?s=/mobile/buy/win_detail/win_record_id/$1.html [QSA]
+            #立即晒单
+            RewriteRule ^mobile\/submit_share_order\/(\d+)(?:\.html)?$ index.php?s=/mobile/buy/submit_share_order.html [QSA]
+            #客服中心
+            RewriteRule ^mobile\/article\/(\d+)(?:\.html)?$ index.php?s=/mobile/article/article/id/$1.html [QSA]
+            #转为夺宝币
+            RewriteRule ^mobile\/trans_xc(?:\.html)?$ index.php?s=/mobile/spread/trans_xc.html [QSA]
+            #提现
+            RewriteRule ^mobile\/extract(?:\.html)?$ index.php?s=/mobile/extract/index.html [QSA]
+            #查看二维码
+            RewriteRule ^mobile\/me_codes(?:\.html)?$ index.php?s=/mobile/spread/me_codes.html [QSA]
+            #推广明细
+            RewriteRule ^mobile\/promote_detail(?:\.html)?$ index.php?s=/mobile/spread/promote_detail.html [QSA]
+            #推广奖励模式
+            RewriteRule ^mobile\/promote_reward(?:\.html)?$ index.php?s=/mobile/spread/promote_reward.html [QSA]
+            #注册明细
+            RewriteRule ^mobile\/register_detail(?:\.html)?$ index.php?s=/mobile/spread/register_detail.html [QSA]
+            #注册奖励模式
+            RewriteRule ^mobile\/register_reward(?:\.html)?$ index.php?s=/mobile/spread/register_reward.html [QSA]
+            #添加银行卡账号
+            RewriteRule ^mobile\/add_account(?:\.html)?$ index.php?s=/mobile/extract/add_account.html [QSA]
+            #立即提现
+            RewriteRule ^mobile\/go_extract(?:\.html)?$ index.php?s=/mobile/extract/go_extract.html [QSA]
+            #提现记录
+            RewriteRule ^mobile\/extracts(?:\.html)?$ index.php?s=/mobile/extract/extracts.html [QSA]
+            #添加提现账号
+            RewriteRule ^mobile\/account_sub(?:\.html)?$ index.php?s=/mobile/extract/account_sub.html [QSA]
+            #余额转夺宝币
+            RewriteRule ^mobile\/trans_2xc(?:\.html)?$ index.php?s=/mobile/spread/trans_2xc.html [QSA]
+            #转夺宝币成功页面
+            RewriteRule ^mobile\/trans_success(?:\.html)?$ index.php?s=/mobile/spread/trans_success.html [QSA]
+            #分级别的分销列表页
+            RewriteRule ^mobile\/promote_detail_list\/(\d+)(?:\.html)?$ index.php?s=/mobile/spread/promote_detail_list/level/$1.html [QSA]
+            #第三方登录
+            RewriteRule ^mobile\/union_login\/(\w+)(?:\.html)?$ index.php?s=/mobile/login/login/type/$1.html [QSA]
+            #注册
+            RewriteRule ^mobile\/register(?:\.html)?$ index.php?s=/mobile/otherUsers/register.html [QSA]
+            #忘记密码
+            RewriteRule ^mobile\/forget_password(?:\.html)?$ index.php?s=/mobile/otherUsers/forget_password.html [QSA]
+            #全部商品
+            RewriteRule ^mobile\/index(?:\.html)?$ index.php?s=/mobile/index/index.html [QSA]
+            #全部商品
+            RewriteRule ^mobile\/index(?:\.html)?$ index.php?s=/mobile/index/index.html [QSA]
+            #全部商品
+            RewriteRule ^mobile\/index(?:\.html)?$ index.php?s=/mobile/index/index.html [QSA]
+            #全部商品
+            RewriteRule ^mobile\/index(?:\.html)?$ index.php?s=/mobile/index/index.html [QSA]
+            #全部商品
+            RewriteRule ^mobile\/index(?:\.html)?$ index.php?s=/mobile/index/index.html [QSA]
+            #全部商品
+            RewriteRule ^mobile\/index(?:\.html)?$ index.php?s=/mobile/index/index.html [QSA]
+
+
+
+
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteRule ^(.*)$ index.php?/$1 [QSA,PT,L]
+</IfModule>

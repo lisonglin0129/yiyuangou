@@ -1,0 +1,34 @@
+$(function() {
+	// body...
+	$("button").click(function(){
+		   $(".det-dates").slideToggle(300);
+		  	$(".det-das").hide(0);
+		});
+
+		$(".li2").on("click",function(){
+		    $(".det-dates").hide(0);
+		$(".det-das1").slideToggle(300).siblings(".det-das").hide(0);
+		})
+		$(".li3").on("click",function(){
+			$(".det-das2").slideToggle(300).siblings(".det-das").hide(0);
+		})
+		$(".li4").on("click",function(){
+			$(".det-das3").slideToggle(300).siblings(".det-das").hide(0);
+		})
+		$(".li5").on("click",function(){
+			$(".det-das5").slideToggle(300).siblings(".det-das").hide(0);
+		});
+
+		//立即提现
+		$(".zhanghao1").click(function(){
+			 $(".haha1").slideUp(300) ;
+		   $(".haha").slideToggle(300);
+		});
+
+		$(".zhanghao2").click(function(){
+			 $(".haha").slideUp(300) ;
+		   $(".haha1").slideToggle(300);
+		});
+
+
+})

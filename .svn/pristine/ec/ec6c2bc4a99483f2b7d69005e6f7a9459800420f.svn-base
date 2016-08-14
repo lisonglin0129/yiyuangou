@@ -1,0 +1,76 @@
+{extend name="base/base"}
+{block name="head"}
+    <link rel="stylesheet" href="__MOBILE_FONTS__/iconfont.css">
+    <link href="__MOBILE_CSS__/common1.css" rel="stylesheet">
+    <link href="__MOBILE_CSS__/empty.css" rel="stylesheet">
+    <script type="text/javascript"  src="__MOBILE_JS__/jquery.min.js"></script>
+    <script type="text/javascript"  src="__MOBILE_JS__/records.js"></script>
+    <style type="text/css">
+        body{background-color: #fff}
+    </style>
+{/block}
+{block name="main"}
+<div class="home">
+    <!-- 头部 -->
+    <header>
+        <a href="javascript:history.back(-1)" class="heads"><i class="icon iconfont cio1">&#xe600;</i></a>
+        <span class="heads-p">账户列表</span>
+    </header>
+
+    <section>
+        <section style="height: 80px;"></section>
+        {volist name="accounts" id='vo'}
+        {if condition="$vo['account_type'] eq 1"}
+        <section class="iwto-top1 iwto-top2">
+            <section class="itop1-left itop1-left1">
+                <i class="icon iconfont ico22 ico25">&#xe608;</i>
+            </section>
+            <section class="itop1-lef2">
+                <section>{$vo.bank_name}</section>
+                <section>储蓄卡</section>
+                <section>＊＊＊＊＊＊＊＊＊＊＊＊{:substr($vo['bank_no'],-4)}</section>
+            </section>
+            <section class="itop1-lef3">
+                <i class="icon iconfont ico23 ico27">&#xe608;</i>
+            </section>
+        </section>
+        {else /}
+        <section class="iwto-top1 iwto-top3">
+            <section class="itop1-left itop1-left2 ">
+                <i class="icon iconfont ico22 ico25">&#xe613;</i>
+            </section>
+            <section class="itop1-lef2">
+                <section>支付宝</section>
+                <section>电子银行</section>
+                <section>＊＊＊＊＊＊＊＊＊＊{:substr($vo['bank_no'],-4)}</section>
+            </section>
+            <section class="itop1-lef3">
+                <i class="icon iconfont ico23 ico26">&#xe613;</i>
+            </section>
+        </section>
+        {/if}
+        {/volist}
+        {if condition="count($accounts) lt 8"}
+        <a href="{:U('add_account')}" class="iwto-top4">
+            <i class="icon iconfont ico123">&#xe601;</i>
+            添加账号
+        </a>
+        {/if}
+        <section class="iwto-top5">
+            <a href="{:U('go_extract')}" class="iwto-top5-le">立即提现</a>
+            <a href="{:U('extracts')}" class="iwto-top5-le">提现记录</a>
+        </section>
+
+    </section>
+    <!-- 底部 -->
+    <div class="foots"></div>
+    <footer>
+        <a href="{:U('Index/index')}" class="foots1">夺宝</a>
+        <a href="{:U('Index/all_goods', array('cate'=> '0-1'))}" class="foots2">全部商品</a>
+        <a href="{:U('Index/all_share_order')}" class="foots3">晒单</a>
+        <a href="{:U('Cart/cart_list')}" class="foots4">购物车</a>
+        <a href="{:U('Users/personal_center')}" class="foots5 act">我的</a>
+    </footer>
+
+</div>
+{/block}

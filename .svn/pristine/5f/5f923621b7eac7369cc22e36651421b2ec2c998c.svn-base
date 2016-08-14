@@ -1,0 +1,144 @@
+{extend name="base/base"/}
+{block name="title"}我的夺宝记录{/block}
+{block name="user_css"}
+{css href="__static__/css/usercenter.css" /}
+{/block}
+
+{block name='content'}
+<div class="packet-t">
+	<div class="packet-op"></div>
+	<div class="packet-wx">
+		<div class="packet-wx-1">
+			<h1 class="packet-wx-h1">扫一扫</h1>
+			<p>千元红包等你来拿</p>
+			<div class="wx-so"></div>
+			<p>灵匠科技 2016</p>
+		</div>
+		<div class="packet-wx-x"></div>
+	</div>
+</div>
+<div class="g-body">
+
+    <div class="m-user">
+        <div class="g-wrap">
+            <div class="m-user-frame-wraper">
+                <!--用户中心  菜单-->
+                {include file="ucenter/_nav" /}
+                <!--用户中心 main-->
+                <div class="m-user-frame-colMain ">
+                    <div class="m-user-frame-content" pro="userFrameWraper">
+
+                        <ul class="w-crumbs f-clear red-header">
+                            <li class="w-crumbs-item">当前位置：</li>
+                            <li class="w-crumbs-item"><a href="#">我的夺宝</a><span class="w-crumbs-split">&gt;</span></li>
+
+                            <li class="w-crumbs-item w-crumbs-active">夺宝记录</li>
+
+                        </ul>
+                        <h1>抵用卷即将过期时通知我：短信通知：1385218888 <a href="" class="packet-sp1">修改</a></h1>
+                        <section class="red-sect">
+ 							<section class="red-header">
+ 								<span class="packet-w packets">未使用　　2</span>
+ 								<span class="packet-y packets">已使用/已过期　　2</span>
+ 							</section>
+ 							<!-- 未使用 -->
+ 							<section class="packets-1" style="display:block">
+ 								<section class="w-packet-1">
+ 									<div class="w-packet-img w-vouchers-img">
+ 										<h1 class="w-vouchers-h1">满20元减10元抵用券</h1>
+ 										<h1 class="w-vouchers-h1s">10 <span class="w-vouchers-sp1">元</span></h1>			
+ 										<ul class="w-vouchers-ul">
+ 											<li>使用说明</li>
+ 											<li>1、此券不兑现，不找零。2、此券不可与其他优惠一同使用。  3、请在商品结算时点击使用抵用券。4、有效期至2016月6日</li>									
+ 										</ul> 																
+ 									</div>
+
+ 									<div class="w-packet-img w-vouchers-img">
+ 										<h1 class="w-vouchers-h1">满20元减10元抵用券</h1>
+ 										<h1 class="w-vouchers-h1s">10 <span class="w-vouchers-sp1">元</span></h1>			
+ 										<ul class="w-vouchers-ul">
+ 											<li>使用说明</li>
+ 											<li>1、此券不兑现，不找零。2、此券不可与其他优惠一同使用。  3、请在商品结算时点击使用抵用券。4、有效期至2016月6日</li>									
+ 										</ul> 																
+ 									</div>
+
+ 									<div class="w-packet-img w-vouchers-img">
+ 										<h1 class="w-vouchers-h1">满20元减10元抵用券</h1>
+ 										<h1 class="w-vouchers-h1s">10 <span class="w-vouchers-sp1">元</span></h1>			
+ 										<ul class="w-vouchers-ul">
+ 											<li>使用说明</li>
+ 											<li>1、此券不兑现，不找零。2、此券不可与其他优惠一同使用。  3、请在商品结算时点击使用抵用券。4、有效期至2016月6日</li>									
+ 										</ul> 																
+ 									</div>
+
+ 									
+ 								
+ 								</section>
+ 							</section>
+
+ 							<!-- 已使用 -->
+ 							<section class="packets-1">
+ 								<section class="w-packet-1">
+ 									<div class="w-packet-img w-vouchers-img w-vouchers-imgs">
+ 										<h1 class="w-vouchers-h1 w-vouchers-h2s">满20元减10元抵用券</h1>
+ 										<h1 class="w-vouchers-h1s w-vouchers-h2s">10 <span class="w-vouchers-sp1">元</span></h1>			
+ 										<ul class="w-vouchers-ul">
+ 											<li>使用说明</li>
+ 											<li>1、此券不兑现，不找零。2、此券不可与其他优惠一同使用。  3、请在商品结算时点击使用抵用券。4、有效期至2016月6日</li>									
+ 										</ul> 													
+ 									</div>
+
+ 									<div class="w-packet-img w-vouchers-img w-vouchers-imgs">
+ 										<h1 class="w-vouchers-h1 w-vouchers-h2s">满20元减10元抵用券</h1>
+ 										<h1 class="w-vouchers-h1s w-vouchers-h2s">10 <span class="w-vouchers-sp1">元</span></h1>			
+ 										<ul class="w-vouchers-ul">
+ 											<li>使用说明</li>
+ 											<li>1、此券不兑现，不找零。2、此券不可与其他优惠一同使用。  3、请在商品结算时点击使用抵用券。4、有效期至2016月6日</li>									
+ 										</ul> 													
+ 									</div>
+
+ 									<div class="w-packet-img w-vouchers-img w-vouchers-imgs">
+ 										<h1 class="w-vouchers-h1 w-vouchers-h2s">满20元减10元抵用券</h1>
+ 										<h1 class="w-vouchers-h1s w-vouchers-h2s">10 <span class="w-vouchers-sp1">元</span></h1>			
+ 										<ul class="w-vouchers-ul">
+ 											<li>使用说明</li>
+ 											<li>1、此券不兑现，不找零。2、此券不可与其他优惠一同使用。  3、请在商品结算时点击使用抵用券。4、有效期至2016月6日</li>									
+ 										</ul> 													
+ 									</div>
+ 								
+ 								</section>
+
+
+ 								
+ 							</section>
+                        </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        <div class="m-user-frame-clear"></div>
+                    </div>
+                </div>
+
+                <div class="m-user-frame-clear"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<input type="hidden" id="see_luck_num" value="{:U('goods/see_luck_num')}"><!--获取用户购买幸运数字-->
+{/block}
+
+{block name="user_js"}
+{js href="__static__/js/ucenter/deposer.js" /}
+{js href="__static__/js/ucenter/view_num.js" /}
+{/block}

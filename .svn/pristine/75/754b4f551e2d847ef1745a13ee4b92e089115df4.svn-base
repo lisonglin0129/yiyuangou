@@ -1,0 +1,11 @@
+/**
+ * Created by lingjiang on 2016/5/25.
+ */
+$(function(){
+    $('#link_copy').zclip({
+        path: "/common/plugin/copy/ZeroClipboard.swf",
+        copy: function(){
+            return $('#spread_url').val();
+        }
+    });
+})

@@ -1,0 +1,59 @@
+.rewards{
+	margin-top: 83px;
+	width: 750px;
+	height: 520px;
+	background:url(../img/rewards.png) no-repeat 0px 50px;
+}
+.rew-sct{
+	margin-bottom: 40px;
+	height: 90px;
+	line-height: 90px;
+	text-align: center;
+	font-size: 27px;
+	color: #666;
+	font-weight: 700;
+}
+.rew-sct2{margin: 20px auto;width: 710px;height: auto;height: 50px;}
+.rew-sct2-left{
+
+	height: 50px;
+	float: left;
+	width: 50px;
+	border-radius: 50%;
+	color: #fff;
+	line-height: 50px;
+	text-align: center;
+	font-size: 25px;
+	background-color: #fe5154;
+	margin-right: 20px;
+}
+.rew-sct2-right{
+	line-height: 50px;
+	float: left;
+	height: 50px;
+	font-size: 25px;
+	color: #666;
+}
+.rew-sct3{
+	height: 90px;	
+}
+
+.rew-sct2-left1{
+	margin-top: 20px;
+	float: left;
+}
+.rew-sct2-right2{
+	font-size: 25px;
+	color: #666;
+	line-height: 45px;
+}
+
+.rewards1{
+	background-image: url(../img/gift.png);
+}
+.rew-sct1{
+	height:50px;
+	line-height: 50px;
+	margin: 0px;
+	/*text-align: center;*/
+}

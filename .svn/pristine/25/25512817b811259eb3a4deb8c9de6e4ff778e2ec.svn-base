@@ -1,0 +1,116 @@
+
+{extend name="base/common"}
+
+{block name="head"}
+<link href="__MOBILE_CSS__/detail.css"  rel="stylesheet" />
+<script src="__MOBILE_JS__/jquery.min.js"></script>
+<script src="__MOBILE_JS__/js.js"></script>
+{/block}
+
+{block name="main"}
+
+<!--当点击".moreBtn1"的时候显示一下遮罩层-->
+	<div class="quanp"></div>
+	<div class="quanp-1">
+		<div class="quanp-01">
+			<div data-pro="close" class="w-msgbox-close">×</div>
+		</div>
+		<div class="quanp-11">
+			<section>幸运号码的计算方式</section>
+			<section>1.商品的最后一个号码分配完毕后，将公示该商品最后50条参与时间（如不足50条时则取该商品全部参与时间）；
+			</section>
+			<section>2系统将这50个时间的数值相加，得出数值A，时间显示顺序依次为：时、分、秒、毫秒，例如23:12:25.342，其数值为231225342；
+			</section>
+			<section>3本着公平公开的原则，系统还会等待一小段时间，取离当前时间点最近的下一期中国福利彩票“老时时彩”的揭晓结果（5位数），作为数值B；
+			</section>
+			<section>4将数值A和数值B相加求和，再除以当期商品的总需人次取得余数（例如：19÷3，商为6，余数为1） ，用余数+原始数 10000001得出的号码即为“幸运夺宝码”，持有幸运夺宝码的用户获得该商品；
+			</section>
+			<section>注：如遇福彩中心通讯故障，无法正常获取与当期商品揭晓时间点对应的中国福利彩票“老时时彩”揭晓结果，且24小时内仍无法获取，则默认“老时时彩”揭晓结果为00000。
+			</section>
+		</div>
+		<section class="sect00">确定</section>
+	</div>
+<!--当点击".moreBtn1"的时候显示一下遮罩层/结束-->	
+
+
+
+    <div class="m-detail">
+    {empty name="origin"}
+        <div class="m-simpleHeader" id="dvHeader">
+            <a href="javascript:history.go(-1);" data-pro="back" data-back="true" class="m-simpleHeader-back"><i class="ico-back"></i></a>
+            <h1>计算结果</h1>
+        </div>
+    {/empty}
+
+            <div class="m-detail-menu">
+              <a id="moreBtn" class="moreBtn1 moreBtn1s" style="">计算方式</a>
+            </div><div class="clr"></div>
+	</div>
+	<div class="jjqx1">
+		
+		<div class="jjxq">
+			<section style="font-weight:700">计算公式</section>
+			<section>[(数值A+数值B)/商品所需人数]取余数+10000001</section><div class="clr"></div>
+		</div>
+		<div class="jjxq-2">
+			<section>数值A</section>
+			<section>=<span style="font-weight:700;color:#db3652;;">{$total_num}</span>&nbsp(截止该商品最后夺宝时间最后50条参与记录,如不足50条时则取该商品全部参与时间)</section>
+		<!--点击事件-->
+			<div class="jjxq-2-1">展开↓</div>
+			<div class="jjxq-2-1 jjxq-2-11">收起↑</div>
+			
+		</div>
+		
+		<!--点击事件-->
+		<div class="jjxq-2-2">
+			<div class="jjxq-2-21" style="height:25px;">
+				<section class="jjxq-2-211">夺宝时间</section>
+				<section  class="jjxq-2-212">用户账号</section>
+			</div>
+
+            {notempty name="record"}
+
+
+                {volist name="record" id="vo"}
+
+                    <div class="jjxq-2-21">
+                        <section class="jjxq-2-211">{$vo.join_time}   <i class="ico ico-arrow-transfer"></i>    <b class="txt-red">{$vo.join_num}</b></section>
+                        <section  class="jjxq-2-212">{$vo.username|mb_substr=0,10,'utf8'}</section>
+                    </div>
+
+                {/volist}
+
+
+
+
+            {/notempty}
+
+
+
+
+
+		</div>
+		
+		<div class="jjxq-2" style="margin-top:0px;border-top:none;">
+			<section>数值B</section>
+			<section>=<span style="font-weight:700;color:#db3652;;">
+                {eq name="nper_info['status']" value="3"}
+                    {$nper_info.open_num}
+                {else/}
+                    正在等待揭晓...
+                {/eq}
+
+            </span>&nbsp;&nbsp;(第{$nper_info.lottery_issue}期)<a href="{$query_url}" style="blue;margin-left:10px;" target="_blank">揭晓答案</a> &nbsp(最近一期中国福利彩票“老时时彩”的揭晓结果)</section>
+		</div>
+		
+		<div class="jjxq-2"">
+			<section style="margin-top:10px;">计算结果</section>
+
+            {eq name="nper_info['status']" value="3"}
+                <section class="jjxq-2-6">幸运号码<span style="color:red;margin-left:5px;">{$nper_info.luck_num}</span></section>
+            {else/}
+            正在等待揭晓...
+            {/eq}
+	</div>
+
+{/block}

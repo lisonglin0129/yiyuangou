@@ -1,0 +1,29 @@
+$(function () {
+    var index_chk_pay_result;
+    var func = {
+        //检测订单支付状态
+        chk_pay_result:function(){
+            var url = $("#check_pay_status").val();
+            var param = {
+                "order": $('#order_id').val()
+            };
+            index_chk_pay_result = window.setInterval(function(){
+                common.ajax_post(url, param, true, function (rt) {
+                    common.check_ajax_post(rt,
+                        //已付款
+                        function (obj) {
+                            location.href=$('#url_pay_result').val();
+                            console.log('已经付款');
+                            window.clearInterval(index_chk_pay_result);
+                        },
+                        //没付款
+                        function (obj) {
+                            console.log('还没付款')
+                        });
+                });
+            },3000);
+        }
+    };
+    func.chk_pay_result();
+});
+

@@ -1,0 +1,10 @@
+{volist name="participant_record" id="data"}
+<div class="m-detail-record-wrap">
+    <div class="tq">
+        <div class="tq-1"><img src="{$data.user_face}"/></div>
+        <div class="add"><a href="ml"><span style="color:#0079FE;">{$data.nick_name|default=''}</span></a><span>({$data.ip_area|default=''}IP：{$data.reg_ip})</span>
+            <section>参与了<span  style="color:red;">{$data.count}</span>人次<span> {$data.pay_time}</span></section>
+        </div>
+    </div>
+</div>
+{/volist}

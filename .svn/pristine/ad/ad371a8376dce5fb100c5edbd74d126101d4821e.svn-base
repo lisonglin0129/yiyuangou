@@ -1,0 +1,257 @@
+{extend name="base/base"}
+{block name="head"}
+<link rel="stylesheet" href="__MOBILE_FONTS__/iconfont.css">
+<link href="__MOBILE_CSS__/common1.css" rel="stylesheet">
+<link href="__MOBILE_CSS__/usercenter.css" rel="stylesheet">
+<script type="text/javascript"  src="__MOBILE_JS__/jquery.min.js"></script>
+<script>
+    $(function(){
+
+        //检验手机号码是否为空
+        function checkPhoneNotEmpty() {
+            return $('.phone').val() == '' ? false : true;
+        }
+
+        //检验手机号码是否符合规范
+        function checkPhone() {
+            return $(".phone").val().match(/^((1)\d{10})$/) ? true : false;
+
+        }
+
+        //检验验证码是否为空
+        function checkCodeNotEmpty() {
+            return $('.code').val() == '' ? false : true;
+        }
+
+        //检测密码是否为空
+        function checkPassNotEmpty() {
+            return $('.password').val() == '' ? false : true;
+        }
+
+        //检测密码与确认密码是否相等
+        function checkRepasswordEqual() {
+            return $('.password').val() == $('.re-password').val() ? true : false;
+        }
+
+        var timer = 60;
+
+        //点击获取验证码之后，倒计时
+        function countDown() {
+            var code_button = $('.get-code');
+            code_button.attr("disabled", true);
+
+            var time = setInterval(function(){
+                if(timer == 0) {
+                    clearInterval(time);
+                    code_button.removeAttr("disabled");
+                    code_button.html('获取验证码');
+                    return false;
+                }
+                timer -= 1;
+                code_button.html(timer+' 秒');
+            },1000);
+
+        }
+
+        //发送验证码按钮变亮或者变暗
+        $(".zc33").focus(function(){
+            $(".zc-left1").addClass("focus");
+        }).blur(function(){
+            $(".zc-left1").removeClass("focus");
+        });
+
+        //点击获取验证码
+        $(".get-code").click(function(ev){
+            ev.preventDefault();
+            if(!checkPhoneNotEmpty()) {
+                layer.open({
+                    content: '手机号码不得为空',
+                    time: 1
+                });
+                return false;
+            }
+
+            if(!checkPhone()) {
+                layer.open({
+                    content: '手机号码不符合规范，请重新填写',
+                    time: 1
+                });
+                return false;
+            }
+
+            //请求发送验证码
+            $.ajax({
+                url : $('#get-code-url').val(),
+                type : 'POST',
+                data : {
+                    phone : $('.phone').val(),
+                    type : 'reg'
+                },
+                beforeSend : function () {
+
+                },
+                success : function (data, response, status) {
+                    var response_data = $.parseJSON(data);
+                    if (response_data.status == 'fail') {
+                        layer.open({
+                            content: response_data.message,
+                            time: 1
+                        });
+                    }else{
+                        layer.open({
+                            content: '发送成功',
+                            time: 1
+                        });
+                        countDown();
+                    }
+
+
+                }
+            });
+
+
+        });
+
+
+
+
+        //点击注册按钮
+        $('.register').click(function() {
+
+            if(!checkPhoneNotEmpty()) {
+                layer.open({
+                    content: '手机号码不得为空',
+                    time: 1
+                });
+                return false;
+            }
+
+            if(!checkPhone()) {
+                layer.open({
+                    content: '手机号码不符合规范，请重新填写',
+                    time: 1
+                });
+                return false;
+            }
+
+            if(!checkCodeNotEmpty()) {
+                layer.open({
+                    content: '验证码不得为空',
+                    time: 1
+                });
+                return false;
+            }
+
+            if(!checkPassNotEmpty()) {
+                layer.open({
+                    content: '密码不得为空',
+                    time: 1
+                });
+                return false;
+            }
+
+
+
+            if(!checkRepasswordEqual()) {
+                layer.open({
+                    content: '确认密码与密码不相等',
+                    time: 1
+                });
+                return false;
+            }
+
+
+
+            //请求注册
+            $.ajax({
+                url : $('#register-url').val(),
+                type : 'POST',
+                data : {
+                    phone : $('.phone').val(),
+                    password : $('.password').val(),
+                    rePassword : $('.re-password').val(),
+                    code : $('.code').val(),
+                    origin : 'mobile',
+                    spread_userid:$('#spread_userid').val(),
+                    agree:1
+                },
+                beforeSend : function () {
+
+                },
+                success : function (data, response, status) {
+                    var response_data = $.parseJSON(data);
+                    console.log(response_data);
+                    if (response_data.status == 'fail') {
+                        layer.open({
+                            content: response_data.message,
+                            time: 1
+                        });
+                    }
+                    if(response_data.status == 'success') {
+                        layer.open({
+                            content: '注册成功',
+                            time: 1
+                        });
+                        location.href='{:U("qr_code")}';
+                    }
+                }
+            });
+
+        })
+
+
+
+
+    })
+</script>
+{/block}
+{block name="main"}
+<div class="home">
+    <!-- 头部 -->
+    <header style="text-align: center" class="w-header w-headers-red" >
+        <!--<a href="javascript:;" class="heads w-swweep">关闭</a>-->
+        <span class="heads-p w-heads-p">领取{$wap_title|default=''}红包</span>
+    </header>
+
+    <section class="red-user-se red-user-se1s">
+        <img src="{:session('share_head')}" class="red_user red_users"/>
+        <p class="red-user-p1">{:session('share_nick_name')}的红包</p>
+        <p class="red-user-p2">{:session('money')} <span class="red-user-p2-s">元</span></p>
+        <p class="red-user-p3">领取金额：{:session('money')}元，注册{$wap_title|default=''}，</p>
+        <p class="red-user-p3"> 关注微信公众号，把现金带回家。</p>
+    </section>
+    <div style="width: 750px;height: 20px;background-color: #ededed"></div>
+    <form method ="" action ="">
+
+        <section class="red-user-se2">
+            <input type="phone" class="red-user-inp1s red-user-se3 phone"  placeholder="请输入您的手机号码"/>
+            <span class="red-user-span1s">手机号：</span>
+        </section>
+
+        <section class="red-user-se2 red-user-se3">
+            <button class="red-user-bt get-code">获取验证码</button>
+            <input type="password" class="red-user-inp1s red-user-inp3s code"  placeholder="输入验证码" />
+            <span class="red-user-span1s">验证码：</span>
+        </section>
+
+        <section class="red-user-se2 red-user-se3">
+            <input type="password" class="red-user-inp1s password"  placeholder="请输入您密码" />
+            <span class="red-user-span1s">密码：</span>
+        </section>
+        <section class="red-user-se2 red-user-se3">
+            <input type="password" class="red-user-inp1s re-password"  placeholder="请确认密码" />
+            <span class="red-user-span1s">确认密码：</span>
+        </section>
+        <p align="right"><a style="color: #333;margin-right: 20px;font-size: larger" href="{:U('login')}">已有帐号</a></p>
+
+        <input type="button" class="red-user-inp register" value="立即领取" />
+    </form>
+    <input type="hidden" value="{:U('OtherUsers/get_code')}" id="get-code-url"/>
+    <input type="hidden" value="{:U('OtherUsers/register')}" id="register-url"/>
+    <input type="hidden" value="{:U('Index/index')}" id="index-url"/>
+    <input type="hidden" value="{:U('mobile/goods/goods_detail')}" id="detail-url">
+    <input type="hidden" value="{$spread_userid|default=''}" id="spread_userid">
+</div>
+
+
+{/block}

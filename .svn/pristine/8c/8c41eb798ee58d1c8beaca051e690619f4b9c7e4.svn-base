@@ -1,0 +1,89 @@
+
+<table id="sample-table-1" class="table table-striped table-bordered table-hover">
+    <thead>
+    <tr>
+        <th class="center">
+            <label>
+
+                <input type="checkbox" class="ace check_all"/>
+
+
+                <span class="lbl"></span>
+            </label>
+        </th>
+        <th>用户名</th>
+        <th>昵称</th>
+        <th>手机</th>
+        <th>余额</th>
+        <th>中奖ID</th>
+        <th>期数</th>
+        <th>商品名称</th>
+        <th>订单号</th>
+        <th>中奖号码</th>
+        <th>幸运数字</th>
+        <th>幸运时间</th>
+        <th>购买数量</th>
+        <th>状态</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    {notempty name="users_list"}
+    {volist name='users_list' id='vo'}
+    <tr>
+        <td class="center">
+
+            <label>
+
+                <input type="checkbox" class="ace check" data-id="{$vo['id']}"/>
+
+                <span class="lbl"></span>
+            </label>
+        </td>
+        <td>{$vo.username|default=''}</td>
+        <td>{$vo.nick_name|default='--'}</td>
+        <td>{$vo.phone|default='--'}</td>
+        <td>{$vo.money|default='--'}</td>
+        <td>{$vo.id|default='--'}</td>
+        <td>{$vo.nper_id|default='--'}</td>
+        <td>{$vo.name|default='--'}</td>
+        <td>{$vo.order_id|default='--'}</td>
+        <td>{$vo.open_num|default='--'}</td>
+        <td>{$vo.luck_num|default='--'}</td>
+        <td>{$vo.luck_time|default='--'}</td>
+        <td>{$vo.order_num|default='--'}</td>
+
+        <td>
+            {switch name='vo.logistics_status'}
+            {case value='2'}用户确认收货地址{/case}
+            {case value='3'}商品派发中{/case}
+            {case value='4'}用户签收{/case}
+            {case value='5'}用户签收{/case}
+            {default/}
+            用户获得商品
+            {/switch}
+
+        </td>
+        <td>
+            <div class="visible-md visible-lg hidden-sm hidden-xs btn-group">
+            <a target="_blank" href="{:U('win',['id'=>$vo['id']])}" class="btn btn-xs btn-success" title="查看">
+            <i class="icon-eye-open bigger-120"></i>
+            </a>
+            <a href="javascript:" data-id="{$vo['id']}" class="btn btn-xs btn-danger win_del_btn" title="删除">
+            <i class="icon-trash bigger-120"></i>
+            </a>
+            </div>
+        </td>
+    </tr>
+    {/volist}
+    {else /}
+    <tr align="center"><td colspan="15">暂无数据</td></tr>
+    {/notempty}
+    </tbody>
+</table>
+<div class="page">
+    {$pages|default=''}
+</div>
+{js href='__common__/admin/js/shop/win_users.js' /}
+
+

@@ -1,0 +1,305 @@
+
+
+{extend name="base/common"}
+
+{block name="title"}
+个人中心 - 我要晒单
+{/block}
+
+{block name="head"}
+<meta name="viewport" content="width=640px, user-scalable=0">
+<link href="__MOBILE_CSS__/style1.css"  rel="stylesheet" />
+<script src="__MOBILE_JS__/jquery.min.js"></script>
+<script src="__MOBILE_JS__/jquery.min.js" ></script>
+<link rel="stylesheet" href="__MOBILE_CSS__/webuploader.css"/>
+<script src="__MOBILE_JS__/webuploader.js"></script>
+
+<style>
+    html,body{background-color:#fff;}
+       .img166 {
+    width: 20%;
+    height: 55px;
+    display: block;
+    float: left;
+    line-height: 132px;
+    text-align: center;
+    background-size: 40px 39px;}
+.img174 {
+    background-size: 40px 37px;
+    color: #999;
+
+}
+.menu2{height: 85px;font-size: 15px;}
+</style>
+{/block}
+
+
+{block name="main"}
+
+
+
+
+
+<div class="body123">
+
+	<div class="ddjl-top1">
+		<a href="{:U('buy/my_share_list')}" style="float:left;margin-left:45px;">我的晒单</a>
+		<span style="margin-left:105px;font-weight:700;">信息确认</span>
+		<a id="publish" href="" style="margin-right:20px;float:right;">发布</a>
+	</div>
+
+    <form action="" method="">
+	<div class="wdsd-top1">
+        <input type="text" id="title" placeholder="货不错"/>
+	</div>
+
+	<div class="wdsd-top2">
+		<textarea id="content" name="W3School_text" placeholder="幸福感言，不少于个30字" maxLength="300"></textarea>
+	</div>
+	<!-- <input type="button" class="wdsd-top3"/> -->
+    <!--dom结构部分-->
+    <div id="uploader-demo"  style="margin-left: 60px;margin-top: 20px;">
+        <!--用来存放item-->
+        <div id="fileList" class="uploader-list "></div>
+        <div id="filePicker">选择图片</div>
+    </div>
+
+    </form>
+	<div class="wdsd-top5">
+		<section><span>获得商品：</span>	<span>{$share_goods.goods_name}</span></section>
+		<section><span>参与期号：</span>	<span style="color:red">{$share_goods.nper_id|num_base_mask=0}</span></section>
+		<section><span>本期参与：</span>	<span><span style="color:red">{$share_goods.join_num}</span>人次</span></section>
+		<section><span>幸运号码：</span>	<span style="color:red">{$share_goods.luck_num}</span></section>
+		<section><span>揭晓时间：</span>	<span>{$share_goods.open_time}</span></section>
+	</div>
+</div>
+
+<input type="hidden" id="share-id" value="{$share_goods.share_id}"/>
+
+<script>
+
+
+
+    // 图片上传demo
+    jQuery(function() {
+
+
+        var $ = jQuery,
+                $list = $('#fileList'),
+        // 优化retina, 在retina下这个值是2
+                ratio = window.devicePixelRatio || 1,
+                address_id = '',
+
+        // 缩略图大小
+                thumbnailWidth = 100 * ratio,
+                thumbnailHeight = 100 * ratio,
+
+        // Web Uploader实例
+                uploader;
+
+        // 初始化Web Uploader
+        uploader = WebUploader.create({
+
+            // 自动上传。
+            auto: true,
+
+            // swf文件路径
+            swf:   '__MOBILE_JS__/Uploader.swf',
+
+            // 文件接收服务端。
+            server: "{:U('Goods/upload_image')}",
+
+            // 选择文件的按钮。可选。
+            // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+            pick: '#filePicker',
+
+            // 只允许选择文件，可选。
+            accept: {
+                title: 'Images',
+                extensions: 'gif,jpg,jpeg,bmp,png',
+                mimeTypes: 'image/*'
+            }
+        });
+
+        // 当有文件添加进来的时候
+        uploader.on( 'fileQueued', function( file ) {
+            var $li = $(
+                            '<div id="' + file.id + '" class="file-item thumbnail">' +
+                            '<img>' +
+                            '</div>'
+                    ),
+                    $img = $li.find('img');
+
+            $list.append( $li );
+
+            // 创建缩略图
+            uploader.makeThumb( file, function( error, src ) {
+                if ( error ) {
+                    $img.replaceWith('<span>不能预览</span>');
+                    return;
+                }
+
+                $img.attr( 'src', src );
+            }, thumbnailWidth, thumbnailHeight );
+        });
+
+        // 文件上传过程中创建进度条实时显示。
+        uploader.on( 'uploadProgress', function( file, percentage ) {
+            var $li = $( '#'+file.id ),
+                    $percent = $li.find('.progress span');
+
+            // 避免重复创建
+            if ( !$percent.length ) {
+                $percent = $('<p class="progress"><span></span></p>')
+                        .appendTo( $li )
+                        .find('span');
+            }
+
+            $percent.css( 'width', percentage * 100 + '%' );
+        });
+
+        // 文件上传成功，给item添加成功class, 用样式标记上传成功。
+        uploader.on( 'uploadSuccess', function( file ,response) {
+
+            console.log(response);
+            if(response.status == 'success') {
+                address_id += response.insert_id+ ',';
+
+            }
+//            address_id = address_id.substring(0,address_id.length-1);
+            console.log(address_id);
+
+
+            $( '#'+file.id ).addClass('upload-state-done');
+        });
+
+        // 文件上传失败，现实上传出错。
+        uploader.on( 'uploadError', function( file ) {
+            var $li = $( '#'+file.id ),
+                    $error = $li.find('div.error');
+
+            // 避免重复创建
+            if ( !$error.length ) {
+                $error = $('<div class="error"></div>').appendTo( $li );
+            }
+
+            $error.text('上传失败');
+        });
+
+        // 完成上传完了，成功或者失败，先删除进度条。
+        uploader.on( 'uploadComplete', function( file ) {
+            $( '#'+file.id ).find('.progress').remove();
+        });
+
+
+        //点击发布
+        $('#publish').click(function (ev) {
+            ev.preventDefault();
+
+            var address_arr;
+            var address_str;
+            var title = $('#title').val();
+            var content = $('#content').val();
+
+            var share_id = $('#share-id').val();
+
+            //开始检查各项内容
+            if(address_id == '') {
+                layer.open({
+                    content: '请上传图片',
+                    time: 1 //1秒后自动关闭
+                });
+                return false;
+            }
+
+            address_str = address_id.substring(0,address_id.length-1);
+
+            address_arr = address_str.split(',');
+
+            if(address_arr.length < 3) {
+                layer.open({
+                    content: '上传图片个数不得少于3个',
+                    time: 1 //1秒后自动关闭
+                });
+                return false;
+            }
+
+            if(title == '') {
+                layer.open({
+                    content: '标题不得为空',
+                    time: 1 //1秒后自动关闭
+                });
+                return false;
+            }
+
+            if(content == '') {
+                layer.open({
+                    content: '内容不得为空',
+                    time: 1 //1秒后自动关闭
+                });
+                return false;
+            }
+
+
+            $.ajax({
+                url : "{:U('Buy/submit_share_form')}",
+                type : 'POST',
+                data : {
+                    share_id : share_id,
+                    title : title,
+                    content : content,
+                    pic_list : address_str
+                },
+                beforeSend : function () {
+
+                },
+                success : function (data, response, status) {
+
+
+                    var response_data = $.parseJSON(data);
+
+
+
+                    if (response_data.status == 'fail') {
+                        layer.open({
+                            content: response_data.message,
+                            time: 1 //1秒后自动关闭
+                        });
+                        return;
+                    }
+                    if(response_data.status == 'success') {
+                        layer.open({
+                            content: '提交成功',
+                            time: 1 //1秒后自动关闭
+                        });
+                        window.location.href = "{:U('Users/personal_center')}"
+                    }
+                }
+            });
+
+
+
+
+        });
+
+
+
+
+
+
+    });
+
+
+
+
+</script>
+{/block}
+
+
+
+
+
+
+
+
+

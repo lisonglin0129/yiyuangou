@@ -1,0 +1,196 @@
+{extend name="base/base"}
+{block name="head"}
+<link rel="stylesheet" href="__MOBILE_FONTS__/iconfont.css">
+<link href="__MOBILE_CSS__/common1.css" rel="stylesheet">
+<link href="__MOBILE_CSS__/indexho.css" rel="stylesheet">
+<link href="__MOBILE_CSS__/promote.css" rel="stylesheet">
+<script type="text/javascript"  src="__MOBILE_JS__/jquery.min.js"></script>
+<script>
+    $(function(){
+        //总页码
+        window.level='{$level}';
+        window.count='{$pages}';
+        //滚动条拖动
+        window.scrollFlag = true;
+        window.first = 10;
+        window.page = 1;
+        $(window).scroll(function () {
+            var year=$('#year').val();
+            var month=$('#month').val();
+            if (window.page < window.count) {
+                if (window.scrollFlag) {
+                    if ($(document).scrollTop() >= ($('#load-more').offset().top + $('#load-more').outerHeight() - $(window).height() - 20)) {
+                        setTimeout(function(){
+                            $.ajax({
+                                url: "{:U('spread/ajax_promote_detail_list')}",
+                                type: 'POST',
+                                data: {
+                                    offset:window.first,
+                                    year:year,
+                                    month:month,
+                                    level:window.level
+                                },
+                                success: function(data, response, status){
+                                    $('#load-more').before(data);
+                                }
+                            });
+                            window.scrollFlag = true;
+                            window.first += 10;
+                            window.page += 1;
+                        }, 500);
+                        window.scrollFlag = false;
+                    }
+                }
+            } else {
+                $('#load-more').html('没有更多数据');
+            }
+        });
+        $('.det-time button').click(function () {
+            $('.det-dates').show();
+        })
+        $('.li1').click(function(){
+            var obj=$(this);
+            var year=obj.html();
+            if(year=='全部'){
+                $('#time').html('全部');
+                $('#year').val(null);$('#month').val(null);
+                $('.det-dates').hide();
+                search();
+                return false;
+            }
+            $('#time').html(year);
+            $('#year').val(obj.data('val'));
+            $('.det-dates').hide();
+            $('.det-das').show();
+        })
+        $('.det-das li').click(function () {
+            var obj=$(this);
+            var month=obj.html();
+            if(month=='全部'){
+                $('.det-das').hide();$('#month').val(null);search();
+                return false;
+            }
+            $('#time').append(month);
+            $('#month').val(obj.data('val'));
+            $('.det-das').hide();
+            //搜索
+            search();
+        })
+    })
+    function search(){
+        var year_filter=$('#year').val();
+        var mon_filter=$('#month').val();
+        setTimeout(function(){
+            $.ajax({
+                url: "{:U('spread/ajax_promote_detail_list')}",
+                type: 'POST',
+                data: {
+                    year:year_filter,
+                    month:mon_filter,
+                    level:window.level
+                },
+                success: function(data, response, status){
+                    if(data){
+                        $('.clr,.shouyi').remove();
+                        $('#load-more').before(data);
+                        $('.users').show();
+                        $('.p').remove();
+                        $('#total').html($('#total_m').val());
+                        $('#reward').html($('#total_r').val());
+                    }else{
+                        $('.clr,.shouyi').remove();
+                        $('.users').hide();
+                        $('.p').remove();
+                        $('#load-more').before('<p  style="color: #808080;text-align: center" class="p">暂无数据</p>');
+                    }
+
+
+                }
+            });
+        }, 500);
+    }
+</script>
+{/block}
+{block name="main"}
+<div class="home">
+    <!-- 头部 -->
+    <!-- <iframe src="header.html" width="750" height="80" scrolling="no" frameborder="0"></iframe> -->
+    <header>
+        <a href="javascript:history.back(-1)" class="heads"><i class="icon iconfont cio1">&#xe600;</i></a>
+        <span class="heads-p">推广明细</span>
+    </header>
+
+
+    <section style="background-color:#f7f7f7">
+        <div class="det-time">
+            <button type="button"><span id="time">全部</span><i class="icon iconfont ico11">&#xe60c;</i></button>
+            <input type="hidden" id="year" value=""><input type="hidden" id="month" value="">
+            <div class="det-dates">
+                <div class="arrow-up"></div>
+                <div class="arrow-up arrow-ups"></div>
+                <div class="det-dates1">
+                    <ul>
+                        <li class="li1" data-val="">全部</li>
+                        <li class="li1" data-val="2016">2016年</li>
+                        <li class="li1" data-val="2015">2015年</li>
+                        <li class="li1" data-val="2014">2014年</li>
+                        <li class="li1" data-val="2013">2013年</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="det-das det-das1">
+                <ul>
+                    <li data-val="">全部</li>
+                    <li data-val="1">1月</li>
+                    <li data-val="2">2月</li>
+                    <li data-val="3">3月</li>
+                    <li data-val="4">4月</li>
+                    <li data-val="5">5月</li>
+                    <li data-val="6">6月</li>
+                    <li data-val="7">7月</li>
+                    <li data-val="8">8月</li>
+                    <li data-val="9">9月</li>
+                    <li data-val="10">10月</li>
+                    <li data-val="11">11月</li>
+                    <li data-val="12">12月</li>
+                </ul>
+            </div>
+        </div>
+        <section class="t-detail">推广▪详情</section>
+        <div class="users">
+            <span>总消费</span>
+            <span id="total">{$data.total_fee}</span>
+            <span>元</span>
+        </div>
+        <div class="users users1">
+            <span>总收益</span>
+            <span id="reward">{$data.total_reward}</span>
+            <span>元</span>
+        </div>
+        {volist name="data['list']" id="vo"}
+        <div class="clr"></div>
+        <div class="shouyi">
+            <div class="shouyi-le">
+                <section>{$vo.reward}元</section>
+                <section class="shouyi-2">推广收益</section>
+            </div>
+            <span class="yiji">{$vo.level}级用户 {$vo.username} {:date('Y年m月',$vo['month_time'])}</span>
+        </div>
+        {/volist}
+        <p id="load-more" style="color: #808080;text-align: center"></p>
+
+    </section>
+
+    <!-- 底部 -->
+    <div class="foots"></div>
+    <footer>
+        <a href="{:U('Index/index')}" class="foots1">夺宝</a>
+        <a href="{:U('Index/all_goods', array('cate'=> '0-1'))}" class="foots2">全部商品</a>
+        <a href="{:U('Index/all_share_order')}" class="foots3">晒单</a>
+        <a href="{:U('Cart/cart_list')}" class="foots4">购物车</a>
+        <a href="{:U('Users/personal_center')}" class="foots5 act">我的</a>
+    </footer>
+
+</div>
+{/block}
+

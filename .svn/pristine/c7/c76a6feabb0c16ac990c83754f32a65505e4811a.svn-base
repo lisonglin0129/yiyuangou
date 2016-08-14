@@ -1,0 +1,39 @@
+{extend name="base/base"}
+{block name="head"}
+<link rel="stylesheet" href="__MOBILE_FONTS__/iconfont.css">
+<link href="__MOBILE_CSS__/common1.css" rel="stylesheet">
+<link href="__MOBILE_CSS__/usercenter.css" rel="stylesheet">
+<script type="text/javascript"  src="__MOBILE_JS__/jquery.min.js"></script>
+<script src="__common__/plugin/copy/jquery.zclip.min.js"></script>
+{/block}
+{block name="main"}
+<div class="home">
+    <!-- 头部 -->
+        <header style="" class="w-header w-headers w-headers-red">
+            <a href="" class="heads w-swweep">关闭</a>
+            <span class="heads-p w-heads-p">领取香肠一元购红包</span>
+        </header>
+        
+        <section class="red-user-se red-user-se1s">
+            <img src="" class="red_user red_users"/>
+            <p class="red-user-p1">小魔女的红包</p>
+            <p class="red-user-p2">15.04 <span class="red-user-p2-s">元</span></p>
+            <p class="red-user-p3">领取金额：15.04元，注册香肠一元购，</p>
+            <p class="red-user-p3"> 关注微信公众号，把现金带回家。</p>
+        </section>
+        <div style="width: 750px;height: 20px;background-color: #ededed"></div>
+
+         <form method ="" action ="">
+                <section class="red-user-se2">
+                   <input type="number" class="red-user-inp1s"  placeholder="请输入您的手机号码" name="phone"/>
+                   <span class="red-user-span1s">手机号：</span> 
+                </section>
+                <section class="red-user-se2 red-user-se3">
+                   <input type="password" class="red-user-inp1s "  placeholder="请输入您密码" name="passwordss"/>
+                    <span class="red-user-span1s">密码：</span> 
+                </section>
+
+                <input type="submit" class="red-user-inp" value="立即领取" />
+        </form>
+</div>
+{/block}

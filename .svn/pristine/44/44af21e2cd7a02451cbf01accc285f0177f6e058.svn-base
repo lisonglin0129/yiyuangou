@@ -1,0 +1,670 @@
+{extend name="base/common"}
+
+
+{block name="head"}
+<link href="__MOBILE_CSS__/detail.css" rel="stylesheet"/>
+<script src="__MOBILE_JS__/jquery.min.js"></script>
+<script src="__MOBILE_JS__/js.js"></script>
+<link href="__MOBILE_CSS__/jiaodian.css" rel="stylesheet"/>
+<script src="__MOBILE_JS__/jquery.event.drag-1.5.min.js"></script>
+<script src="__MOBILE_JS__/jquery.touchSlider.js"></script>
+<link href="__MOBILE_CSS__/user.css" rel="stylesheet"/>
+<script src="__MOBILE_JS__/index.js"></script>
+
+
+<style>
+    b {
+        color: #ffffff;
+    }
+</style>
+
+<script>
+    $(function () {
+        $(".main_visual").hover(function () {
+            $("#btn_prev,#btn_next").fadeIn()
+        }, function () {
+            $("#btn_prev,#btn_next").fadeOut()
+        })
+        $dragBln = false;
+        $(".main_image").touchSlider({
+            flexible: true,
+            speed: 200,
+            btn_prev: $("#btn_prev"),
+            btn_next: $("#btn_next"),
+            paging: $(".flicking_con a"),
+            counter: function (e) {
+                $(".flicking_con a").removeClass("on").eq(e.current - 1).addClass("on");
+            }
+        });
+        $(".main_image").bind("mousedown", function () {
+            $dragBln = false;
+        })
+        $(".main_image").bind("dragstart", function () {
+            $dragBln = true;
+        })
+        $(".main_image a").click(function () {
+            if ($dragBln) {
+                return false;
+            }
+        })
+        timer = setInterval(function () {
+            $("#btn_next").click();
+        }, 5000);
+        $(".main_visual").hover(function () {
+            clearInterval(timer);
+        }, function () {
+            timer = setInterval(function () {
+                $("#btn_next").click();
+            }, 5000);
+        })
+        $(".main_image").bind("touchstart", function () {
+            clearInterval(timer);
+        }).bind("touchend", function () {
+            timer = setInterval(function () {
+                $("#btn_next").click();
+            }, 5000);
+        })
+        $('.odd').click(function () {
+            $('#odd').show();
+            $('#even').hide();
+        })
+        $('.even').click(function () {
+            $('#odd').hide();
+            $('#even').show();
+        })
+
+
+        //加入清单点击
+        $('.add-to-cart').click(function (ev) {
+
+            ev.preventDefault();
+            var obj = $(this);
+            //判断期数与个数是否正确
+            var nper_id = obj.attr('nper-id');
+            var car_list = $("#cart-list").val();
+
+
+            //Ajax提交
+            $.ajax({
+                url: obj.attr('add-cart-url'),
+                type: 'POST',
+                data: {
+                    nper_id: nper_id,
+                    join_type: obj.attr('join_type')
+                },
+                beforeSend: function () {
+
+                },
+                success: function (data, response, status) {
+                    var response_data = $.parseJSON(data);
+
+                    if (response_data.status == 'fail') {
+                        layer.open({
+                            content: response_data.message,
+                            time: 1 //1秒后自动关闭
+                        });
+                        return;
+                    }
+                    layer.open({
+                        content: '添加成功',
+                        time: 1
+                    });
+//                        if(response_data.status == 'success') {
+//                            alert('登陆成功');
+//                            window.location.href = $('#personal-url').val()
+//                        }
+                }
+            });
+
+        });
+
+
+        //立即参与点击
+        $('.immediate-participate').click(function (ev) {
+
+            ev.preventDefault();
+            var obj=$(this);
+            //判断是否登录，没有登录跳转到登录页面，否则添加购物车并跳转到购物车列表页面
+
+            var is_login = $('#is-login').val();
+            var nper_id = $(this).attr('nper-id');
+
+
+            if (is_login == 1) {
+
+                //Ajax提交
+                $.ajax({
+                    url: "{:U('Cart/ajax_add_cart')}",
+                    type: 'POST',
+                    data: {
+                        nper_id: nper_id,
+                        join_type: obj.attr('join_type')
+                    },
+                    beforeSend: function () {
+
+                    },
+                    success: function (data, response, status) {
+
+
+                        var response_data = $.parseJSON(data);
+                        console.log(response_data);
+                        if (response_data.status == 'fail') {
+                            layer.open({
+                                content: response_data.message,
+                                time: 1
+                            });
+                            return;
+                        }
+
+
+                        //成功,跳转到购物车列表页面
+                        window.location.href = $('#cart-list').val()
+
+                    }
+                });
+
+            } else {
+                window.location.href = $('#is-login').attr('login-url');
+            }
+
+
+        });
+
+
+        //查看我的购买号码
+        $('.my-code-b').click(function () {
+           // $('.my-code').show();
+            $(this).parent().find('.mm').show();
+        });
+
+
+        $('.my-code-confirm').click(function () {
+            $(this).parents('.mm').hide();
+        });
+
+
+        //查看获奖者的号码
+        $('#win-code').click(function (ev) {
+            ev.preventDefault();
+            $('.win-code').show();
+        });
+
+        $('.win-code-confirm').click(function () {
+            $('.win-code').hide();
+        });
+
+
+        //得到总页码
+        $.ajax({
+            url: "{:U('Goods/all_join_count')}",
+            type: 'POST',
+            data: {
+                nper_id: $('#nper-id').val()
+            },
+            success: function (data, response, status) {
+                window.count = parseInt(data);
+            }
+        });
+
+
+        //滚动条拖动
+        window.scrollFlag = true;
+        window.first = 10;
+        window.page = 1;
+        $(window).scroll(function () {
+            if (window.page < window.count) {
+                if (window.scrollFlag) {
+                    var join_type=1;
+                    var offset=$('#odd-load-more').offset().top
+                    var height=$('#odd-load-more').outerHeight();
+                    if($('#even').css('display')!='none'){
+                        join_type=2;
+                        offset=$('#even-load-more').offset().top
+                        height=$('#even-load-more').outerHeight();
+                    }
+                    if ($(document).scrollTop() >= (offset +  height- $(window).height() - 20)) {
+                        setTimeout(function () {
+                            $.ajax({
+                                url: "{:U('Goods/ajax_goods_join')}",
+                                type: 'POST',
+                                data: {
+                                    offset: window.first,
+                                    nper_id: $('#nper-id').val(),
+                                    join_type:join_type
+                                },
+                                success: function (data, response, status) {
+                                    if(join_type==1){
+                                        $('#odd-load-more').before(data);
+                                    }else{
+                                        $('#even-load-more').before(data);
+                                    }
+
+                                }
+                            });
+                            window.scrollFlag = true;
+                            window.first += 10;
+                            window.page += 1;
+                        }, 10);
+                        window.scrollFlag = false;
+                    }
+                }
+            } else {
+                $('#load-more').html('<section style="width:100%;height30px;text-align:center;margin-top:10px;">没有更多数据</section>');
+            }
+        });
+
+    });
+</script>
+{/block}
+{block name="main"}
+<div class="g-body">
+    <div class="m-detail">
+        <div class="m-simpleHeader" id="dvHeader">
+            <a href="javascript:history.go(-1);" data-pro="back" data-back="true" class="m-simpleHeader-back"><i
+                    class="ico-back"></i></a>
+
+            <h1>商品详情</h1>
+        </div>
+        <div class="m-detail-menu">
+
+        </div>
+        <div class="g-wrap">
+            <div class="g-wrap-hd" style="margin-bottom: 0px;border-bottom: 1px solid transparent;">
+
+
+                <div class="w-slide m-detail-show">
+
+
+                    <div class="w-slide-wrap" style="width:80vw;height:80vw;margin-bottom: 5px;margin-top: 18px;">
+                        <ul class="w-slide-wrap-list" data-pro="list" style="width:100%;">
+
+                            <div class="kePublic">
+                                <!--效果html开始-->
+                                <div class="main_visual" style="width:100%;">
+                                    <div class="shiyuan-1"></div>
+                                    <div class="flicking_con">
+                                        <a href="#">1</a>
+                                        <a href="#">2</a>
+                                        <a href="#">3</a>
+                                        <a href="#">4</a>
+                                        <a href="#">5</a>
+                                    </div>
+                                    {if condition="$goods_detail.code eq 'shiyuanduobao'"}
+                                    <i class="ico ico-label ico-label-ten ico100 ico101"></i>
+                                    {/if}
+                                    <div class="main_image main_image1s" style="width:100%;">
+                                        <ul>
+
+                                            {volist name="goods_detail.img_path" id="data"}
+                                            <li><span class="img_3" style='height:80vw;width:80vw;background: url("{$data}");
+                                                    background-size: 100% 100%;
+                                                    ;'></span></li>
+                                            {/volist}
+
+                                        </ul>
+                                        <a href="javascript:;" id="btn_prev"></a>
+                                        <a href="javascript:;" id="btn_next"></a>
+                                    </div>
+                                </div>
+                                <!--效果html结束-->
+                                <div class="clear"></div>
+                            </div>
+</ul>
+                    </div>
+
+                    </ul>
+                </div>
+            </div>
+            {switch name="goods_detail.status"}
+            {case value="1"}
+
+            <!--status = 1-->
+            <div class="w-goods w-goods-xxl m-detail-goods">
+                <div class="w-goods-info w-goods-infos">
+                    <p class="w-goods-title">{$goods_detail.name}</p>
+
+                    <p class="w-goods-period" style="margin-left: 15px;">期号：{$goods_detail.nper_id|num_base_mask=0}</p>
+                </div>
+            </div>
+			<div class="ws-sss">
+            <div class="m-detail-userCodes m-detail-userCodes1s ws-p1 ws-p1s">
+
+                {if condition="($is_login == 1)"}
+
+                {empty name="goods_detail.odd_code_list"}
+                <p class="m-detail-userCodes-blank">您没有参与本次夺宝哦</p>
+
+                {else /}
+
+
+                您参与了 {$goods_detail.odd_code_list_num} 人次
+
+                {if condition="$goods_detail['odd_code_list_num'] <= 6"}
+
+                {volist name="goods_detail.odd_code_list" id="data"}
+                {$data} &nbsp;
+                {/volist}
+                {else /}
+                {volist name="goods_detail.odd_code_list_less" id="data"}
+                {$data} &nbsp;
+                {/volist}
+                <button class="my-code-b">点击查看全部号码</button>
+
+                <!--我的购买号码  弹出框+遮罩层开始-->
+                <div class="my-code mm" style="display:none">
+                    <div class="dbjl-trop01"></div>
+                    <!--遮罩层-->
+                    <div class="dbjl-trop02">
+                        <div class="dbjl-trop02-1">
+                            <div class="dbjl-trop02-left"></div>
+                            <!--点击消失-->
+                            <div class="clr"></div>
+                            <div class="dbjl-trop02-01">
+                                <section>夺宝号码</section>
+                                <section>参与<span style="color:red;">{$goods_detail.odd_code_list_num}</span>人次，夺宝号码：
+                                </section>
+                                <section class="seed">
+                                    {volist name="goods_detail.odd_code_list" id="data"}
+                                    <span style="color:#666">{$data}</span>
+                                    {/volist}
+
+                                </section>
+                            </div>
+                            <section class="dbjl-trop02-02 my-code-confirm">确定</section>
+                        </div>
+                    </div>
+                </div>
+                <!--弹出框+遮罩层结束-->
+
+                {/if}
+                {/empty}
+               <p align="center"> <span class="zero-sp1">参与奇数夺宝</span></p>
+
+                <div class="zero-d">
+                    <div class="zero-plan">
+                        <div class="zero-plans" style="width:{$goods_detail.odd_process}%;"></div>
+                    </div>
+                    <span class="zero-sp2">{$goods_detail.odd_process}%</span>
+                    <section>
+                        <section class="zero-set">支持人数：<span class="zero-red p1s">{$goods_detail.odd_join_num}</span>
+                        </section>
+                        <section class="zero-set zero-sets">总需人数：<span class="zero-red p2s">{$goods_detail.sum_times}</span>
+                        </section>
+                    </section>
+                </div>
+                <div class="inventorys">
+                    <a href="" nper-id="{$goods_detail.nper_id}" join_type="1"
+                       class="inventorys-l zero-duo immediate-participate">0元夺宝</a>
+                    <a class="inventorys-l inventorys-r add-to-cart" add-cart-url="{:U('Cart/ajax_add_cart')}"
+                       nper-id="{$goods_detail.nper_id}" join_type="1">加入清单</a>
+                </div>
+                {else /}
+                <!--<p class="m-detail-userCodes-blank"><a href="{:U('OtherUsers/login')}"><b style="color:#db3652;">请登录</b></a>，查看你的夺宝号码！</p>-->
+                {/if}
+            </div>
+            <div class="m-detail-userCodes m-detail-userCodes1s ws-p1 ws-p2s" style="background-color: #e8f3f6;">
+			
+                {if condition="($is_login == 1)"}
+
+                {empty name="goods_detail.even_code_list"}
+                <p class="m-detail-userCodes-blank">您没有参与本次夺宝哦</p>
+
+                {else /}
+
+
+                您参与了 {$goods_detail.even_code_list_num} 人次
+
+                {if condition="$goods_detail['even_code_list_num'] <= 6"}
+
+                {volist name="goods_detail.even_code_list" id="data"}
+                {$data} &nbsp;
+                {/volist}
+                {else /}
+                {volist name="goods_detail.even_code_list_less" id="data"}
+                {$data} &nbsp;
+                {/volist}
+                <button class="my-code-b">点击查看全部号码</button>
+
+                <!--我的购买号码  弹出框+遮罩层开始-->
+                <div class="my-code mm" style="display:none">
+                    <div class="dbjl-trop01"></div>
+                    <!--遮罩层-->
+                    <div class="dbjl-trop02">
+                        <div class="dbjl-trop02-1">
+                            <div class="dbjl-trop02-left"></div>
+                            <!--点击消失-->
+                            <div class="clr"></div>
+                            <div class="dbjl-trop02-01">
+                                <section>夺宝号码</section>
+                                <section>参与<span style="color:red;">{$goods_detail.even_code_list_num}</span>人次，夺宝号码：
+                                </section>
+                                <section class="seed">
+                                    {volist name="goods_detail.even_code_list" id="data"}
+                                    <span style="color:#666">{$data}</span>
+                                    {/volist}
+
+                                </section>
+                            </div>
+                            <section class="dbjl-trop02-02 my-code-confirm">确定</section>
+                        </div>
+                    </div>
+                </div>
+                <!--弹出框+遮罩层结束-->
+
+                {/if}
+                {/empty}
+                <p align="center"><span class="zero-sp1">参与偶数夺宝</span></p>
+
+                <div class="zero-d">
+                    <div class="zero-plan">
+                        <div class="zero-plans" style="width:{$goods_detail.even_process}%;"></div>
+                    </div>
+                    <span class="zero-sp2">{$goods_detail.even_process}%</span>
+                    <section>
+                        <section class="zero-set">支持人数：<span class="zero-red p3s">{$goods_detail.even_join_num}</span>
+                        </section>
+                        <section class="zero-set zero-sets">总需人数：<span class="zero-red p4s">{$goods_detail.sum_times}</span>
+                        </section>
+                    </section>
+                </div>
+                <div class="inventorys">
+                    <a href="" nper-id="{$goods_detail.nper_id}" join_type="2"
+                       class="inventorys-l zero-duo immediate-participate">0元夺宝</a>
+                    <a class="inventorys-l inventorys-r add-to-cart" add-cart-url="{:U('Cart/ajax_add_cart')}"
+                       nper-id="{$goods_detail.nper_id}" join_type="2" href="">加入清单</a>
+                </div>
+                {else /}
+                <p class="m-detail-userCodes-blank"><a href="{:U('OtherUsers/login')}"><b style="color:#db3652;">请登录</b></a>，查看你的夺宝号码！
+                </p>
+                {/if}
+            </div>
+            </div>
+			{/case}
+            {case value="2"}
+            <!--status = 2-->
+
+            <div class="w-goods w-goods-xxl m-detail-goods">
+                <div class="w-goods-info">
+                    <p class="w-goods-title">{$goods_detail.name}</p>
+
+                    <p class="w-goods-period" style="margin-left: 15px;">期号：{$goods_detail.nper_id|num_base_mask=0}</p>
+
+                    <div class="w-progressBar list-sq1 list-sq11">
+                        <!--响应式样式在common.css文件中-->
+                        <!-- <p class="wrap">
+                            <span class="bar" style="width:50.6%;"><i class="color"></i></span>
+                        </p> -->
+                        <!-- <ul class="txt">
+                            <li class="txt-l"><p>总需85 人次</p></li>
+                            <li class="txt-r"><p>剩余<b class="txt-blue">42</b></p></li>
+                        </ul> -->
+
+                        <div class="list-sq1-left"><span style="float: left;">揭晓倒计时</span><span class="w-countdown"
+                                                                                                time="{$goods_detail.countdown}"
+                                                                                                style="font-size:16px;"></span>
+                        </div>
+
+                        <a href="{:U('Goods/calculation_Details',array('nper_id'=>$goods_detail['nper_id']))}">
+                            <div class="list-sq1-right">查看计算详情</div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            {/case}
+
+            {case value="3"}
+
+
+            <!--中奖者购买号码   弹出框+遮罩层开始-->
+            <div class="win-code mm" style="display:none">
+                <div class="dbjl-trop01"></div>
+                <!--遮罩层-->
+                <div class="dbjl-trop02">
+                    <div class="dbjl-trop02-1">
+                        <div class="dbjl-trop02-left"></div>
+                        <!--点击消失-->
+                        <div class="clr"></div>
+                        <div class="dbjl-trop02-01">
+                            <section>夺宝号码</section>
+                            <section>参与<span style="color:red;">{$goods_detail.zero_win_code_list_num}</span>人次，夺宝号码：
+                            </section>
+                            <section class="seed">
+                                {volist name="goods_detail.zero_win_code_list" id="data"}
+                                <span style="color:#666">{$data}</span>
+                                {/volist}
+
+                            </section>
+                        </div>
+                        <section class="dbjl-trop02-02 win-code-confirm">确定</section>
+                    </div>
+                </div>
+            </div>
+            <!--弹出框+遮罩层结束-->
+
+            <!--status = 3-->
+            <div class="w-goods w-goods-xxl m-detail-goods">
+                <div class="w-goods-info w-goods-infos">
+                    <p class="w-goods-title">{$goods_detail.name}</p>
+
+                    <p class="w-goods-period">期号：{$goods_detail.nper_id|num_base_mask=0}</p>
+
+                    <div class="w-progressBar list-sq1">
+                        <div class="list-sq2">
+                            <div class="list-sq2-1"></div>
+                            <div class="list-sq2-2"><img src="{$goods_detail.user_face}"/></div>
+                            <div class="list-sq2-right">
+                                <section><span>获奖者：{$goods_detail.luck_user}</span>&nbsp;
+                                    <section>
+                                        <section><span>用户ID：{$goods_detail.luck_uid}(唯一不变的标识)</span>
+                                            <section>
+                                                <section><span>本期参与人数：{$goods_detail.zero_win_code_list_num}人次</span>&nbsp;&nbsp;&nbsp;&nbsp;<a
+                                                        id="win-code" href="" style="color: blue">查看Ta的号码</a></section>
+                                                <section><span>揭晓时间：{$goods_detail.announce_time}</span></section>
+                                                </section>
+                                            </section>
+                                        </section>
+                                    </section>
+                             </div>
+                            <div class="list-sq2-3">
+                                <span style="margin-left:18px;display:block;float:left;">幸运号码</span>
+                                <span style="font-size:20px;margin-left:10px;display:block;float:left;">{$goods_detail.luck_num|default=''}</span>
+                                <a href="{:U('Goods/calculation_details',array('nper_id'=>$goods_detail['nper_id']))}">
+                                    <div class="list-xxhm">查看计算详情</div>
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            {/case}
+            {/switch}
+        </div>
+
+        <div class="g-wrap-bd">
+            <div class="m-detail-more">
+                <a href="{:U('Goods/graphic_details',array('goods_id'=>$goods_detail['goods_id']))}" class="w-bar">图文详情
+                    <span class="w-bar-hint">( 建议在wifi下查看 )</span><span class="w-bar-ext"><b
+                            class="ico-next"></b></span></a>
+                <a href="{:U('Goods/before_announce',array('goods_id'=>$goods_detail['goods_id']))}"
+                   class="w-bar">往期揭晓<span class="w-bar-ext"><b class="ico-next"></b></span></a>
+                <a href="{:U('Goods/goods_share_order',array('goods_id'=>$goods_detail['goods_id']))}" class="w-bar">晒单分享<span
+                        class="w-bar-ext"><b class="ico-next"></b></span></a>
+            </div>
+            <div class="m-detail-record">
+                <div class="w-bar w-bars">
+                    <div class="w-bar-left odd">奇数夺宝记录</div>
+                    <div class="w-bar-left w-bar-right even">偶数夺宝记录</div>
+                </div>
+                <div id="odd">
+                    {empty name="goods_detail.odd_record"}
+                    <p style="font-size: 13px;color:#ccc;width:100%;text-align:center;margin: 10px 0px 10px 0px;">
+                        暂时没有参与记录</p>
+                    {else /}
+                    {volist name="goods_detail.odd_record" id="data"}
+                    <div class="m-detail-record-wrap ">
+                        <div class="tq">
+                            <div class="tq-1"><img src="{$data.user_face}"/></div>
+                            <div class="add "><a
+                                    href="{:U('OtherUsers/other_person_center',array('uid'=>$data['uid']))}"><span
+                                    style="color:#0079FE;">{$data.nick_name}</span></a><span>({$data.ip_area}IP：{$data.reg_ip})</span>
+                                <section>参与了<span
+                                        style="color:red;">{$data.count}</span>人次<span> {$data.pay_time}</span>
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+                    {/volist}
+                    <p id="odd-load-more"></p>
+                    {/empty}
+                </div>
+                <div id="even" style="display: none">
+                    {empty name="goods_detail.even_record"}
+                    <p style="font-size: 13px;color:#ccc;width:100%;text-align:center;margin: 10px 0px 10px 0px;">
+                        暂时没有参与记录</p>
+                    {else /}
+                    {volist name="goods_detail.even_record" id="data"}
+                    <div class="m-detail-record-wrap">
+                        <div class="tq">
+                            <div class="tq-1"><img src="{$data.user_face}"/></div>
+                            <div class="add "><a
+                                    href="{:U('OtherUsers/other_person_center',array('uid'=>$data['uid']))}"><span
+                                    style="color:#0079FE;">{$data.nick_name}</span></a><span>({$data.ip_area}IP：{$data.reg_ip})</span>
+                                <section>参与了<span
+                                        style="color:red;">{$data.count}</span>人次<span> {$data.pay_time}</span>
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+                    {/volist}
+                    <p id="even-load-more"></p>
+                    {/empty}
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    {eq name="goods_detail.status" value="1"}
+
+    <div class="m-simpleFooter m-detail-buy">
+        <div data-pro="text" class="m-simpleFooter-text" style="text-align:center">
+            <a id="immediate-participate" class="w-button w-button-main" nper-id="{$goods_detail.nper_id}"
+               href="">立即参与</a>
+            <!--<a id="add-to-cart" class="w-button" add-cart-url = "{:U('Cart/ajaxAddCart')}" nper-id = "{$goods_detail.nper_id}" href="">加入清单</a>-->
+        </div>
+        <div data-pro="ext" class="m-simpleFooter-ext"></div>
+    </div>
+    {/eq}
+
+
+</div>
+</div>
+<input type="hidden" id="is-login" value="{$is_login}" login-url="{:U('OtherUsers/login')}"/>
+
+<input type="hidden" id="cart-list" value="{:U('Cart/cart_list')}"/>
+<input type="hidden" id="nper-id" value="{$goods_detail.nper_id}"/>
+
+
+{/block}

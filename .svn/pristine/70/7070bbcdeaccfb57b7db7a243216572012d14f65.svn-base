@@ -1,0 +1,76 @@
+{extend name='base/base' /}
+{block name='css'}
+{/block}
+{block name='content'}
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('breadcrumbs', 'fixed')
+        } catch (e) {
+        }
+    </script>
+
+    <ul class="breadcrumb">
+        <li>
+            <i class="icon-home home-icon"></i>
+            <a href="javascript:">后台管理</a>
+        </li>
+        <li class="active">商品推荐</li>
+    </ul><!-- .breadcrumb -->
+
+
+</div>
+
+<div class="page-content">
+    <div class="page-header">
+        <form id="form_condition" class="form-search">
+            <div class="row">
+                <div class="col-xs-8">
+                    <div class="row">
+                        <div class="col-xs-1" style="line-height: 31px">
+                            夺宝类型：
+                        </div>
+                        <div class="col-xs-2" style="min-width: 120px">
+                            <select class="form-control" id="form-field-select-1" name="type">
+                                <option value="">全部</option>
+                                {foreach name='goods_recommend' id='recommend'}
+                                    <option value="{$recommend.id|default=''}">{$recommend.name}</option>
+                                {/foreach}
+                            </select>
+                        </div>
+                        <div class="col-xs-6" style="min-width: 120px">
+                            <div class="input-group">
+                                <span class="input-group-btn">
+                                    <a href="{:U('promot_exec',array('type'=>'add_promot'))}" target="_blank" class="btn btn-success btn-sm">
+                                        <i class="icon-plus icon-on-right bigger-110"></i>
+                                        新增
+                                    </a>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <!-- PAGE CONTENT BEGINS -->
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="table-responsive">
+                        <div id="form_content" data-url="{:U('show_promo_list')}"></div>
+                    </div><!-- /.table-responsive -->
+                </div><!-- /span -->
+            </div><!-- /row -->
+        </div><!-- /.col -->
+    </div><!-- /.row -->
+</div><!-- /.page-content -->
+
+<input type="hidden" id="del_url" value="{:U('promot_del')}">
+<input type="hidden" id="search_url" value="{:U('show_promo_list')}">
+<input type="hidden" id="trigger_open_url" value="{:U('core/gdfc/init_new_nper')}">
+{/block}
+{block name="js"}
+{js href='__common__/admin/js/goods/map_pic.js' /}
+{/block}

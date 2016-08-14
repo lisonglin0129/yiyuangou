@@ -1,0 +1,113 @@
+/**
+ * Created by phil on 2016/5/6.
+ */
+
+$(function () {
+    var m_type=$('#m_type').val();
+    var m_id=$('#m_id').val();
+    if(m_type==2){
+        var um =UM.getEditor('detail');
+    }
+    var func = {
+        //保存内容
+        submit: function () {
+            var url = $("#submit_url").val();
+            var param = $("#form_content").serialize();
+            var key=$("input[name='keyword']").val();
+            if(!key) {
+                layer.msg('关键字不能为空');
+                return false;
+            }
+                if(m_type==3){
+                    var check_audit = $('.check:checked');
+                    if(check_audit.length == 0) {
+                        layer.msg('请选择小图');
+                        return false;
+                    }
+                    var check_str = [];
+                    check_audit.each(function () {
+                        check_str.push($(this).val());
+
+                    });
+                    if(check_str.length>7){
+                        layer.msg('最多只能选择7个');return false;
+                    }
+                    param=param+'&content='+check_str.join(',');
+                }
+                common.ajax_post(url, param, true, function (rt) {
+                    common.post_tips(rt,function(){
+                        location.href = $("#root_url").val();
+                    });
+                }, true);
+
+        },
+        imgs_list: function (obj) {
+            var url=obj.data('val');
+            var id=obj.val();
+           if(!id){
+               $('#content').html('<p>请先选择大图,小图最多选9个</p>');return false;
+           }
+            common.ajax_post(url, {id:id}, true, function (rt) {
+                $('#content').html(rt);
+            }, true);
+        },
+        imgs_m_list:function(index_mid,id){
+            var url=$('#imgs_list_url').val();
+            common.ajax_post(url, {id:index_mid,mid:id}, true, function (rt) {
+                $('#content').html(rt);
+            }, true);
+        },
+        valid:function(){
+            if(!m_id || (m_id && $('#key').val()!=$("input[name='keyword']").val())){
+                $.post($('#valid_url').val(),{key:$("input[name='keyword']").val()},function(data){
+                    if(data.code=='-1'){
+                        layer.msg('关键字已存在');$("input[name='keyword']").val(null);return false;
+                    }
+                },'json')
+            }
+        }
+
+    };
+    $(".upload").click(function (ev) {
+        ev.preventDefault();
+        var upload_url = $('#upload_img_url_system').val();
+        layer.open({
+            id:'up_img_iframe',
+            type: 2,
+            area: ['700px', '530px'],
+            fix: false, //不固定
+            content: upload_url,
+            cancel : function () {
+                var name=$("#up_img_iframe").find('iframe').attr('name');
+                var content = window.frames[name].document.getElementById('return_list').value;
+                if(content != '') {
+                    console.log(content);
+                    var pic_info = $.parseJSON(content);
+                    var pic_img = $('.pic_img');
+                    $('.pic_id').val(pic_info[0]['id']);
+
+                    if(pic_img.is(":hidden")) {
+                        pic_img.show();
+                    }
+                    pic_img.attr('src',pic_info[0]['path']);
+                }
+
+
+            }
+        });
+    })
+
+    $(document).on("click", ".submit_btn", function () {
+        func.submit();
+    });
+    $(document).on("keyup", "input[name='keyword']", function () {
+        func.valid();
+    });
+    $(document).on("change", "#index_mid", function () {
+        var obj=$(this);
+        func.imgs_list(obj);
+    });
+    if(m_id&&m_type==3){
+        func.imgs_m_list($('#index_mid').val(),m_id);
+    }
+});

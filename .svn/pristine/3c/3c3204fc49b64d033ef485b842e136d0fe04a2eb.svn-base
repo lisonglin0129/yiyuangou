@@ -1,0 +1,16 @@
+{notempty name="list"}
+{volist name="list" id="vo"}
+<section class="reco-top2">
+    <section class="ret2-top1">
+        <span>{$vo.money}元</span>
+        <span>提现金额（手续费：{$vo.need}元）</span>
+        <span {if condition="$vo['status'] eq 2"}class="secow"{elseif condition="$vo['status'] eq '-2'" /}class="secow1"{/if}>{if condition="$vo['status'] eq 1"}审核中{elseif condition="$vo['status'] eq '2'"}已通过{else /}未通过{/if}</span>
+    </section>
+    <section class="ret2-top2">
+        <span>提现时间：{:date('Y-m-d H:i',$vo['create_time'])}</span>
+    </section>
+</section>
+{/volist}
+{else /}
+<p style="color: #808080;text-align: center">暂无数据</p>
+{/notempty}

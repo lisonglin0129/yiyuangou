@@ -1,0 +1,43 @@
+/**
+ * Created by deloo on 2016/5/21.
+ */
+/**
+ * Created by deloo on 2016/5/21.
+ */
+$(function(){
+    var promote={
+        init:function(){
+            //var
+            //    banks=$(),
+            //    account_btns=$(".pro-extract_btns");
+            ///*无账号页面默认隐藏*/
+            ///*account_btns.hide();*/
+            //$(".pec-account-add").on("click",function(){
+            //    $(".pec-accounts").show();
+            //    no_account.hide();
+            //});
+        }
+    };
+    promote.init();
+    $(document).on("click",".pec-b-del",function(){
+        var obj=$(this);
+        var del_url=$('#del_url').val();
+        var id=obj.attr('aid');
+        layer.confirm('确定删除该银行卡吗？', {
+            btn: ['删除','取消'] //按钮
+        }, function(){
+            $.getJSON(del_url,{id:id},function(data){
+                if(data.code==1){
+                    layer.msg('删除成功');
+                    setTimeout(function(){
+                    location.reload();
+                    },2000);
+                }else{
+                    layer.msg('删除失败');
+                }
+            })
+
+        }, function(){
+        });
+    });
+});

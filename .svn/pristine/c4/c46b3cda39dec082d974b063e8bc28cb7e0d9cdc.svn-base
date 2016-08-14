@@ -1,0 +1,100 @@
+/**
+ * Created by phil on 2016/5/6.
+ */
+
+$(function () {
+    var reward_per=$('#reward_per').val();
+    var dis_level=$('#dis_level').val();
+    var score_reward=$('#score_reward').val();
+    if(dis_level>0){
+        $('#level_div').show();
+        $('#level option').each(function(){
+            if($(this).val()==dis_level){
+                $(this).attr('selected','selected');
+            }
+        })
+    }else{
+        $('#level_div').hide();
+    }
+    if(reward_per){
+        var arr_per=reward_per.split(',');
+        $('.level').each(function(i){
+            if(i<dis_level){
+                $(this).show();
+                $(this).find('input').val(arr_per[i]);
+            }
+        })
+    }
+    if(score_reward){
+        var arr_score=score_reward.split(',');
+        $('.score').each(function(i){
+            if(i<dis_level){
+                $(this).show();
+                $(this).find('input').val(arr_score[i]);
+            }
+        })
+    }
+    var func = {
+
+        //保存内容
+        submit: function () {
+            var url = $("#submit_url").val();
+            var param = $("#form_content").serialize();
+            var score=[],per=[];
+            $('.level').each(function(){
+                if($(this).css('display')!='none'){
+                    per.push($(this).find('input').val())
+                }
+            })
+            $('.score').each(function(){
+                if($(this).css('display')!='none'){
+                    score.push($(this).find('input').val())
+                }
+            })
+            common.ajax_post(url, param+'&reward_per='+per.join(',')+'&score_reward='+score.join(','), true, function (rt) {
+
+                common.post_tips(rt,function(){
+                    location.reload();
+                });
+
+
+
+            }, true);
+        }
+
+
+    };
+
+    $(document).on("click", ".submit_btn", function () {
+        func.submit();
+    });
+    $(document).on("change", "#status", function () {
+        var status=$(this).val();
+        $('.form-group input').each(function(){
+            $(this).val(null);
+        })
+        if(status==1){
+            $('#level_div').show();
+        }else{
+            $('#level').val(null);
+            $('#level_div').hide();
+            $('.level input').val(null);
+            $('.score input').val(null);
+            $('.level,.score').hide();
+        }
+    });
+    $(document).on("change", "#level", function () {
+        var level=$(this).val();
+        $('.level').hide();
+        $('.score').hide();
+        $('.level input').val(null);
+        $('.score input').val(null);
+        if(level){
+            $('.level,.score').each(function (i) {
+                if(i<level*2){
+                    $(this).show();
+                }
+            })
+        }
+    });
+});

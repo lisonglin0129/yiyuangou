@@ -1,0 +1,552 @@
+/**
+ * Created by phil on 2016/4/13.
+ */
+$(function () {
+    var img_id = $("input[name='user_pic']").val();
+    var jiyan_confirm;
+    var time_reset = 120;
+    var time_sec;
+    var time_index;
+    var func = {
+        init: function () {
+            var modal=$(".modal.password_edit");
+            //func.chk_countdown();
+            $(document).on("click",".edit_user_password",function(){
+                modal.show();
+            });
+            $(document).on("click",".password_edit .modal_close",function(){
+                modal.hide();
+            });
+        },
+        //打开上传图片的页面
+        open_upload_box: function () {
+            var url = $("#open_cut_box").val();
+            common.ajax_post(url, false, true, function (rt) {
+                common.check_ajax_post(rt, function (obj) {
+                    var index = layer.confirm(obj.html, {
+                        type: 1,
+                        title: '修改头像',
+                        btn: ["确定保存", "取消"],
+                        shade: [0.3, "#444"],
+                        area: ["810px", "550px"]
+
+                    }, function () {
+                        if (img_id == $("input[name='user_pic']").val()) {
+                            layer.msg('没有修改头像');
+                            layer.close(index);
+                            return true;
+                        }
+                        var url = $('#save_login_user_img').val();
+                        var param = {
+                            "id": $("input[name='user_pic']").val()
+                        };
+                        common.ajax_post(url, param, true, function (rt2) {
+                            common.check_ajax_post(rt2, function () {
+                                layer.msg('保存成功!');
+                                $("#user_img").attr("src", $("input[name='user_pic_path']").val())
+                                layer.close(index);
+                            }, function (obj) {
+                                var tips;
+                                switch (obj.code) {
+                                    case "-100":
+                                        tips = '图片参数不能为空';
+                                        break;
+                                    case "-110":
+                                        tips = '图片不存在';
+                                        break;
+                                    default:
+                                        tips = '上传失败';
+                                }
+                                layer.tips(tips);
+                            })
+                        })
+
+
+                    }, function () {
+                    });
+                    //获取用户头像信息
+                    var url = $("#get_login_user_img").val();
+                    common.ajax_post(url, false, true, function (rt1) {
+                        common.check_ajax_post(rt1, function (obj1) {
+                            $("img.img_40").attr("src", obj1.img_path);
+                            $("img.img_90").attr("src", obj1.img_path);
+                            $("img.img_160").attr("src", obj1.img_path);
+                            $("img.img_280").attr("src", obj1.img_path);
+
+                            $("input[name='user_pic']").val(obj1.img_id);
+                        }, function () {
+
+                        })
+                    });
+
+
+                    func.init_upload();
+                }, function () {
+                });
+            }, true);
+        },
+        //初始化上传按钮
+        init_upload: function () {
+            var uploader = WebUploader.create({
+                auto: true,
+                duplicate: true,
+                // swf文件路径
+                swf: $("#swf_path").val(),
+                // 文件接收服务端。
+                server: $("#server_path").val(),
+                // 选择文件的按钮。可选。
+                // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+                pick: {
+                    id: '#picker',
+                    multiple: false
+                },
+                // 不压缩image, 默认如果是jpeg，文件上传前会压缩一把再上传！
+                resize: false,
+                // 只允许选择图片文件。
+                accept: {
+                    title: 'Images',
+                    extensions: 'gif,jpg,jpeg,png',
+                    mimeTypes: 'image/*'
+                }
+            });
+
+            uploader.on('uploadSuccess', function (file, response) {
+                $("img.img_40").attr("src", response.img_path);
+                $("img.img_90").attr("src", response.img_path);
+                $("img.img_160").attr("src", response.img_path);
+                $("img.img_280").attr("src", response.img_path);
+
+                $("input[name='user_pic']").val(response.id);
+                $("input[name='user_pic_path']").val(response.img_path);
+                layer.msg('上传成功');
+            });
+
+            uploader.on('uploadError', function (file) {
+                layer.msg('上传出错');
+            });
+
+            uploader.on('uploadProgress', function (file, percentage) {
+                //var process = common.round(percentage * 100, 2);
+                //$('.bar .process .text').html(process + '%');
+                //$('.bar .process').css("width", process + '%');
+            });
+
+            uploader.on('uploadFinished', function (file) {
+                //common.artAlert('上传完毕!', false, false, true, true);
+                //$('.bar .process .text').html('--');
+                //$('.bar .process').css("width", '0%');
+            });
+        },
+        //积分转换虚拟币
+            transensure:function(obj) {
+            var money=$(obj).parent().siblings('.alert_z1_content').find('.money').val();
+            var cash=$('#my_score').val();
+            if(!parseInt(money)){
+                layer.msg('请输入输出积分');return false;
+            }
+            if(parseInt(money)!=money){
+                layer.msg('输出积分不是整数');return false;
+            }
+            var password=$(obj).parent().siblings('.alert_z1_content').find('.password').val();
+            if(!password){
+                layer.msg('请输入密码');return false;
+            }
+            var url = $("#transensure_url").val();
+            var font_res_money = $(".sort_money")[0].textContent;
+            var param = {score:money,password:password,font_res_money:font_res_money};
+            common.ajax_post(url, param, true, function (rt1) {
+                if ( rt1 == '-103' ) {
+                    layer.msg('积分输入错误');
+                    return;
+                } else if ( rt1 == '-104' ) {
+                    layer.msg('密码输入错误');
+                    return;
+                } else if ( rt1 == '-105' ) {
+                    layer.msg('校验失败,无法转换');
+                    return;
+                }
+                layer.msg('转换成功');
+                layer.close(index);
+                location.reload();
+
+
+            },true)
+
+
+        },
+
+        //修改昵称
+        edit_nick_name: function () {
+            var user_nick = $(".nick_name").val();
+            $(".edit_nick_name_show").hide();
+            $(".edit_nick_name").show();
+            $(".edit_nick_name_input").val(user_nick);
+        },
+        //取消修改昵称
+        cancel_edit_nick: function () {
+            $(".edit_nick_name_show").show();
+            $(".edit_nick_name").hide();
+        },
+        //取消修改昵称
+        save_nick_name: function () {
+            var url = $("#save_nick_name").val();
+            var param = {
+                "nick_name": $(".edit_nick_name_input").val()
+            };
+            common.ajax_post(url, param, true, function (rt) {
+                common.check_ajax_post(rt, function () {
+                    $(".edit_nick_name_show").show();
+                    $(".edit_nick_name").hide();
+                    layer.msg("恭喜!保存成功");
+                    $(".nick_name").val($(".edit_nick_name_input").val());
+                    $(".nickname_text").text($(".nick_name").val());
+                    $(".m-toolbar-login-btn").text($(".nick_name").val());
+                }, function () {
+                    layer.msg("保存失败,请输入4-20位字符或1-10位汉字");
+                })
+            }, true, [0.3, "#444"]);
+        },
+        //修改手机
+        edit_mobile: function () {
+            $("#mobileShow").hide();
+            $("#mobileEdit").show();
+        },
+        //取消修改手机
+        cancel_edit_mobile: function () {
+            $("#mobileShow").show();
+            $("#mobileEdit").hide();
+        },
+        //保存修改手机
+        save_phone: function () {
+            var phone = $("input[name='phone']").val();
+            var phone_rex = /[1][3-9][0-9]{9}/;
+            if (!phone_rex.test(phone)) {
+                layer.msg("请输入正确的手机号!");
+                return;
+            }
+            var url = $("#save_phone").val();
+            var param = $("#form_content").serialize();
+            common.ajax_post(url, param, true, function (rt) {
+                common.check_ajax_post(rt, function () {
+                    layer.msg('修改成功');
+                    window.clearInterval(time_index);
+                    /**写倒计时时间清空*/
+                    func.write_countdown(null);
+
+                    $(".mobile_text").html(phone);
+                    $(".cancel_edit_mobile").trigger("click");
+                }, function (obj) {
+                    var tips = "";
+                    switch (obj.code) {
+                        case "-100":
+                            tips = "手机不能为空";
+                            break;
+                        case "-110":
+                            tips = "验证码不能为空";
+                            break;
+                        case "-120":
+                            tips = "手机号格式错误";
+                            break;
+                        case "-130":
+                            tips = "该手机号已经注册";
+                            break;
+                        case "-200":
+                            tips = "手机号不能为空";
+                            break;
+                        case "-210":
+                            tips = "手机验证码不能为空";
+                            break;
+                        case "-220":
+                            tips = "手机验证码不存在";
+                            break;
+                        case "-230":
+                            tips = "手机验证码已过期";
+                            break;
+                        case "-240":
+                            tips = "使用次数超出规定范围";
+                            break;
+                        case "-250":
+                            tips = "验证码不可用";
+                            break;
+                        case "-260":
+                            tips = "设置验证码失败";
+                            break;
+                        case "-270":
+                            tips = "验证码已失效";
+                        default:
+                            tips = "修改失败";
+                    }
+                    layer.msg(tips);
+                })
+            }, true, [0.3, "#444"])
+        },
+        /**获取手机验证码*/
+        get_phone_code: function () {
+            var url = $("#get_phone_code").val();
+            var param = $("#form_content").serialize();
+            common.ajax_post(url, param, true, function (rt) {
+                common.check_ajax_post(rt, function () {
+                    layer.msg("获取短信验证码成功!");
+                    func.time_clock(time_reset);
+                }, function (obj) {
+                    var tips = "";
+                    switch (obj.code) {
+                        case "-100":
+                            tips = "手机号码格式不正确";
+                            break;
+                        case "-105":
+                            tips = "该手机已经存在";
+                            break;
+                        case "-110":
+                            tips = "拖拽错误,请重新获取";
+                            break;
+                        case "-120":
+                            tips = "验证码错误";
+                            break;
+                        default:
+                            tips = "获取验证码失败";
+                    }
+                    layer.msg(tips);
+                });
+
+            }, true, [0.3, "#444"])
+        },
+        /**显示极验证*/
+        vacode: function () {
+            var jiyan = '';
+            var url = $("#gee_test").val() + "?rand=" + Math.round(Math.random() * 10000);
+            common.ajax_post(url, false, true, function (rt) {
+                var obj = common.str2json(rt);
+                jiyan_confirm = layer.confirm("<div class='show_jiyan'></div>", {
+                    "shade": [0.4, "#444"],
+                    "closeBtn": true,
+                    "type": 1,
+                    "btn": false,
+                    "title": false
+                });
+                //实例化极验
+                initGeetest({
+                    gt: obj.gt,
+                    challenge: obj.challenge,
+                    product: "embed", // 产品形式
+                    offline: !obj.success
+                }, function (captchaObj) {
+                    captchaObj.appendTo(".show_jiyan");
+                    //验证成功后回调
+                    captchaObj.onSuccess(function () {
+                        var geetest_challenge = $(".geetest_challenge").val();
+                        var geetest_validate = $(".geetest_validate").val();
+                        var geetest_seccode = $(".geetest_seccode").val();
+
+                        $("input[name='geetest_challenge']").val(geetest_challenge);
+                        $("input[name='geetest_validate']").val(geetest_validate);
+                        $("input[name='geetest_seccode']").val(geetest_seccode);
+                        layer.close(jiyan_confirm);
+
+                        func.get_phone_code();
+                    });
+                });
+            }, true, [0.4, "#444"]);
+        },
+        /**倒计时120秒*/
+        time_clock: function (time_sec) {
+            /**第一次存剩余时间S*/
+            func.write_countdown(time_sec);
+            /**第一次存剩余时间E*/
+
+            $(".vacode").addClass("disabled").removeClass("get_phone_code");
+            $(".vacode").html(time_sec + "s再试");
+            time_index = window.setInterval(function () {
+                $(".vacode").html(--time_sec + "s再试");
+
+                /**每5秒存一次剩余时间S*/
+                if (time_sec % 5 == 0 && time_sec != 0) {
+                    func.write_countdown(time_sec);
+                }
+                /**每5秒存一次剩余时间E*/
+
+                if (time_sec == 0) {
+
+                    /**写倒计时时间清空S*/
+                    func.write_countdown(null);
+                    /**写倒计时时间清空E*/
+
+
+                    $(".vacode").html('再次获取').addClass("get_phone_code").removeClass("disabled");
+                    window.clearInterval(time_index);
+                }
+                //alert(0)
+            }, 1000)
+        },
+        //向服务器写剩余时间
+        write_countdown: function (func_time) {
+            var url = $("#write_countdown").val();
+            common.ajax_post(url, {"sec": func_time}, true, function (rt) {
+                console.log(rt);
+            });
+        },
+        //检查倒计时
+        chk_countdown: function () {
+            var url = $("#chk_countdown").val();
+            common.ajax_post(url, false, true, function (rt) {
+                common.check_ajax_post(rt, function (obj) {
+                    var sec = obj.sec;
+                    if (!isNaN(sec)) {
+                        func.time_clock(sec);
+                    }
+                }, function () {
+                    console.log('允许获取验证码');
+                })
+            });
+        },
+        //检测密码格式
+        check_pass:function(old,pass1,pass2){
+            if(old==""||pass1==""||pass2==""){
+                layer.msg("密码不能为空");return false;
+            }
+            if(pass1!==pass2){
+                layer.msg("新密码不一致");return false;
+            }else {
+                if(pass1==old){
+                    layer.msg("新密码不得和旧密码相同");
+                }else{
+                    return true;
+                }
+            }
+        },
+        //修改密码
+        change_password:function(){
+            var url = $("#change_pass").val();
+            var old = $("#old_pass").val();
+            var new_pass1 = $("#new_pass1").val();
+            var new_pass2 = $("#new_pass2").val();
+            /*var res = func.check_pass(old,new_pass1,new_pass2);
+            if(!res){
+                return false;
+            }*/
+            var param = {"old":old,"new1":new_pass1,"new2":new_pass2};
+            common.ajax_post(url,param, true, function (rt) {
+                var obj = JSON.parse(rt);
+                layer.msg(obj.code);
+            });
+
+        },
+
+        count_money:function (obj) {
+            var money = parseInt(obj.val());
+            var cash=$('#my_score').val();
+            var c_money = parseInt($("#c_money").val());
+            var c_score = parseInt($("#c_score").val());
+            var count_money = money/c_score*c_money;
+
+            if(parseFloat(money)>parseFloat(cash)){
+                layer.msg('兑换积分最大不能超过'+cash);
+                obj.val(cash);
+                var count_money = cash/c_score*c_money;
+                $(".sort_money").text(count_money.toFixed(2));
+                return false;
+            }
+
+            if (isNaN(money)) {
+                $(".sort_money").text('0');
+                return;
+
+
+            }
+            $(".sort_money").text(count_money.toFixed(2));
+
+            
+        },
+    };
+
+    //修改密码
+    $(document).on("click",".pwd_submit",function(){
+        func.change_password();
+    });
+    //上传图片
+    $(document).on("click", ".open_up_box", function () {
+        func.open_upload_box();
+    });
+
+    //积分转金额计算
+    $(document).on("keyup", ".money", function () {
+        func.count_money($(this));
+    });
+
+
+    //修改手机
+    $(document).on("click", ".mobile_edit_btn", function () {
+        func.edit_mobile();
+    });
+    //取消修改手机
+    $(document).on("click", ".cancel_edit_mobile", function () {
+        func.cancel_edit_mobile();
+    });
+    //保存修改手机
+    $(document).on("click", ".save_phone", function () {
+        func.save_phone();
+    });
+    //获取手机验证码
+    $(document).on("click", ".get_phone_code", function () {
+        var phone = $("input[name='phone']").val();
+        var phone_rex = /[1][3-9][0-9]{9}/;
+
+        if (!phone_rex.test(phone)) {
+            layer.msg("请输入正确的手机号!");
+            return;
+        }
+        func.vacode();
+    });
+
+    //积分转换虚拟币
+    $(document).on('click','.all_buy',function(){
+        var scorce = $("#scorce").val();
+        $(".money").val(scorce);
+        func.count_money($(".money"));
+
+    })
+
+    $(document).on('click','.transensure',function(){
+        func.transensure($(this));
+
+    });
+
+
+    //修改昵称
+    $(document).on("click", ".edit_nick_name_btn", function () {
+        func.edit_nick_name();
+    });
+    //取消修改昵称
+    $(document).on("click", ".cancel_edit_nick", function () {
+        func.cancel_edit_nick();
+    });
+    //保存修改昵称
+    $(document).on("click", ".save_nick_name", function () {
+        func.save_nick_name();
+    });
+
+    var index;
+    //转为虚拟币弹出层
+    $(document).on("click","#trans_to_btn",function(){
+        if ( $("#c_score").val() == '' || $("#c_money").val() == '' ) {
+            layer.msg('读取后台配置错误,请联系管理员.');return false;
+        }
+        //初始化显示金额
+        $(".sort_money").text('0');
+        var name = $("#money_name").val();
+        index = layer.open({
+            type: 1,
+            move: false,
+            area: ['720px', '540px'], //宽高
+            title: '转为'+name,
+            content: $(".m-trans-hd").eq(0).html()
+        });
+    });
+
+    $(document).on('click','.layui-layer-close1',function () {
+        layer.close(index);
+        
+    });
+
+    func.init();
+});

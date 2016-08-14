@@ -1,0 +1,42 @@
+.prom-top1{
+	margin: 0 auto;
+	width: 715px;
+	height: 100px;
+	background-color: #fff;
+	border-radius: 10px;
+	margin-bottom: 10px;
+}
+.prom-left1{
+	margin-top: 14px;
+	width: 640px;
+	height: 72px;
+	float: right;
+}
+.prom-left1-1{
+	width: 135px;
+	height: 72px;
+	border-right: 1px solid #ccc;
+	float: left;
+	line-height: 37px;
+}
+.prom-left1-1 section{
+	text-align: left;
+}
+.prom-left1-1 section:first-child{
+	font-size: 30px;
+	color: #fd5e64;
+}
+.prom-left1-1 section:last-child{
+	font-size: 18px;
+	color: #666;
+}
+.prom-left1-2{
+	width: 400px;
+	height: 72px;
+	float: left;
+	color: #666;
+	text-align: center;
+	overflow: hidden;
+    font-size: 21px;
+    line-height: 35px;
+}

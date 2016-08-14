@@ -1,0 +1,15 @@
+{volist name="list" id="vo"}
+<section class="prom-top1">
+    <section class="prom-left1">
+        <section class="prom-left1-1">
+            <section>{$vo.reward}元</section>
+            <section>奖励现金</section>
+        </section>
+
+        <section class="prom-left1-2">
+            <section>用户名　{$vo.username|default='--'}</section>
+            <section>注册时间　{:date('Y-m-d H:i',$vo['create_time'])}</section>
+        </section>
+    </section>
+</section>
+{/volist}

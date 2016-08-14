@@ -1,0 +1,17 @@
+$(function() {
+	
+	//来自telephone_charge.html
+
+		$(document).on("click",".how_phone",function(){
+			var a =$(this).index(".how_phone");
+			$(".layer").eq(a).show();
+		});
+
+	
+		$(document).on("click",".cli_dis",function(){
+			$(".layer").hide();
+		})
+
+
+	
+})

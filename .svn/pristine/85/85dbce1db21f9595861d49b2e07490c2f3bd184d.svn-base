@@ -1,0 +1,143 @@
+{extend name="base/base"/}
+{block name="title"}提现申请{/block}
+{block name="user_css"}
+{css href="__static__/css/usercenter.css" /}
+{css href="__static__/css/promote.css" /}
+{/block}
+{block name='content'}
+<div class="g-body">
+    <div class="m-user">
+        <div class="g-wrap">
+            <div class="m-user-frame-wraper">
+                <!--用户中心  菜单-->
+                {include file="ucenter/_nav" /}
+                <!--用户中心 main-->
+                <div class="m-user-frame-colMain ">
+                    <div class="m-user-frame-content">
+                        <ul class="w-crumbs f-clear">
+                            <li class="w-crumbs-item">当前位置：</li>
+                            <li class="w-crumbs-item"><a href="{:U('promote')}">我的推广</a><span class="w-crumbs-split">&gt;</span>
+                            </li>
+                            <li class="w-crumbs-item w-crumbs-active">提现申请</li>
+                        </ul>
+                        <div class="m-user-comm-wraper">
+                            <div class=" pro-title">
+                                <h2>提现申请</h2>
+                            </div>
+                            <div class=" pro-detail pex-con">
+                                <div class="pro-es-success">
+                                    <span class="pes-bg"></span>
+                                    <h4 class="pes-tip">提现¥<span id="extract_money">0.00</span>元申请已提交!</h4>
+
+                                    <p>正常情况下我们将在三个工作日内将相应款项汇入您提供的帐号</p>
+                                    <a href="{:U('extract_list')}">查看提现记录</a>
+                                </div>
+                                <div class="pro-form prf-extract_submit">
+                                    <div class="pf-line pf-l-m-account">
+                                        <label class="pf-l-l">请选择到帐账号</label>
+
+                                        <div class="pf-l-m ">
+                                            {volist name="accounts" id="vo"}
+                                            {if condition="$vo['account_type'] eq 2"}
+                                            <div {if condition="$vo['is_default'] eq 1" }class="pec-banks active" {else
+                                            /}class="pec-banks"{/if}>
+                                            <i class="iconfont icon-zhifubao"></i>
+
+                                            <div class="pec-b-text">
+                                                <h2>支付宝<span>网络银行</span></h2>
+
+                                                <p>****&nbsp;****&nbsp;****&nbsp;{:substr($vo['bank_no'],-4)}</p>
+                                            </div>
+                                            <div class="pec-b-sel" aid="{$vo.id}">
+                                                <span class=""></span>
+                                                <i class="iconfont">&#xe60f;</i>
+                                            </div>
+                                        </div>
+                                        {else/}
+                                        <div {if condition="$vo['is_default'] eq 1" }class="pec-banks active" {else
+                                        /}class="pec-banks"{/if}>
+                                        <i class="iconfont icon-{switch name='vo.type'}
+                                    {case value='3'}zhonghang{/case}
+                                    {case value='4'}nonghang{/case}
+                                     {case value='5'}gongshang{/case}
+                                    {case value='6'}jianshen{/case}
+                                     {case value='7'}minsheng{/case}
+                                    {case value='8'}jiaohang{/case}
+                                     {case value='9'}guangfa{/case}
+                                    {case value='10'}xingye{/case}
+                                     {case value='11'}zhaoshang{/case}
+                                    {case value='12'}guangda{/case}
+                                     {case value='13'}youzheng{/case}
+                                    {case value='14'}zhongxin{/case}
+                                     {case value='15'}pufa{/case}
+                                    {/switch}
+                                    "></i>
+
+                                        <div class="pec-b-text">
+                                            <h2>{$vo.bank_name}<span>储蓄卡</span></h2>
+
+                                            <p>****&nbsp;****&nbsp;****&nbsp;{:substr($vo['bank_no'],-4)}</p>
+                                        </div>
+                                        <div class="pec-b-sel" aid="{$vo.id}">
+                                            <span class=""></span>
+                                            <i class="iconfont">&#xe60f;</i>
+                                        </div>
+                                    </div>
+                                    {/if}
+                                    {/volist}
+                                </div>
+                            </div>
+                            <div class="pf-line">
+                                <label class="pf-l-l">请输入提现金额</label>
+
+                                <div class="pf-l-m">
+                                    <input type="hidden" id="cash" value="{$cash|default=0}">
+                                    <input type="text"
+                                           placeholder="最多可以提取 {$cash|default=0}元"
+                                           name="money" id="money">
+                                </div>
+                                <span class="pf-l-mes">手续费<span id="need">1</span>元,(1%收取,向上取整)</span>
+                            </div>
+                            <div class="pf-line">
+                                <label class="pf-l-l">请输入提现密码</label>
+
+                                <div class="pf-l-m">
+                                    <input type="password" placeholder="" id="password">
+                                </div>
+                                <span class="pf-l-tip"><i class="iconfont">&#xe64b;</i><span>初始密码为平台登录密码</span></span>
+                            </div>
+                            <div class="pf-line">
+                                <input class="pf-l-s-cancel" type="button" onclick="javascript:history.go(-1)"
+                                       value="取消">
+                                <input class="pf-l-s-sub" type="button" value="申请提现">
+                            </div>
+                        </div>
+                        <div class="pec-notice">
+                            <span><i class="iconfont pec-n-ti">&#xe64c;</i></span>
+
+                            <div class="pec-n-t">
+                                <h4>注意事项</h4>
+
+                                <p>
+                                    1、为了保证您的账户安全性，提现需要进行审核操作，收到提现申请后，后台会在三个工作日内对您的提现<br>
+                                    申请进行审核同时告知审核结果，请您耐心等待；<br>
+                                    2、提现金额须大于100且为整数,不支持支付宝提现，银行提现收取1%的手续费；<br>
+                                    3、正常情况下我们将在三个工作日内将相应款项汇入您提供的帐号。
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="m-user-frame-clear"></div>
+    </div>
+</div>
+</div>
+</div>
+<input type="hidden" id="apply_url" value="{:U('extract_apply')}">
+<input type="hidden" id="check_url" value="{:U('extract_check')}">
+{/block}
+{block name="user_js"}
+{js href="__static__/js/ucenter/extract_submit.js" /}
+{/block}

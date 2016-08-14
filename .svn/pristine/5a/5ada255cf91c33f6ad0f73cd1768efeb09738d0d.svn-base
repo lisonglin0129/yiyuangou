@@ -1,0 +1,155 @@
+{extend name="base/base"/}
+{block name="title"}充值{/block}
+{block name="user_css"}
+{css href="__static__/css/payment.css" /}
+{/block}
+{block name='content'}
+<div class="g-body">
+    <div class="m-cashier m-cashier-usePayments">
+
+        <div class="g-wrap">
+            <div class="m-cashier-recharge">
+                <h1 class="title">充值{:C('MONEY_NAME')}</h1>
+                <span style="color: red;">1元=1{:C('MONEY_NAME')}，可用来参与夺宝，充值金额无法退回。</span>
+                <div class="content" style="background: #fff;">
+                    <table>
+                        <tbody>
+                        <tr>
+                            <th>充值金额：</th>
+                            <td>
+                                <div class="w-pay w-money" id="pro-view-9">
+                                    <div class="w-pay-selector" pro="selector">
+                                        <div class="w-pay-money" id="pro-view-3" data-money="10"> 10元</div>
+                                        <div class="w-pay-money" id="pro-view-4" data-money="20"> 20元</div>
+                                        <div class="w-pay-money  w-pay-money-selected" id="pro-view-5" data-money="100"> 100元</div>
+                                        <div class="w-pay-money" id="pro-view-6" data-money="200"> 200元</div>
+                                        <div class="w-pay-money"  data-money="0" id="pro-view-7"><span>其他金额</span>&nbsp;&nbsp;
+                                            <div class="w-input" id="pro-view-8">
+                                                <input class="w-input-input" pro="input" type="text" maxlength="6" style="width: 50px;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>支付方式：</th>
+                            <td>
+                                <div tag="payments" module="payments/Payments" cpid="20151217CP002" module-id="module-3"
+                                     module-launched="true">
+                                    <div class="w-pay-selector" id="pro-view-12">
+                                        {eq name="$pay_type.ALI_PAY" value="1"}
+                                            <div class="w-pay-type pay_btn w-pay-selected" data-plat="alipay" title="支付宝">
+                                                <img src="__static__/img/0023.png" alt="支付宝" >
+                                            </div>
+                                        {/eq}
+
+                                        {eq name="$pay_type.W_PAY" value="1"}
+                                            <div class="w-pay-type pay_btn" data-plat="wxpay" title="微信支付">
+                                                <img src="__static__/img/SMWX.png" alt="微信扫码" >
+                                            </div>
+                                        {/eq}
+
+                                        {eq name="$pay_type.BEE_ALI_PAY" value="1"}
+                                            <div class="w-pay-type pay_btn" data-plat="bee-alipay" title="支付宝(BEECLOUD)">
+                                                <img src="__static__/img/0023.png" alt="支付宝" >
+                                            </div>
+                                        {/eq}
+
+                                        {eq name="$pay_type.BEE_W_PAY" value="1"}
+                                            <div class="w-pay-type pay_btn" data-plat="bee-wechat" title="微信支付(BEECLOUD)">
+                                                <img src="__static__/img/SMWX.png" alt="微信扫码" >
+                                            </div>
+                                         {/eq}
+
+                                        {eq name="$pay_type.AIBEI_PAY" value="1"}
+                                            <div class="w-pay-type pay_btn" data-plat="aipay" title="爱贝支付">
+                                                 <img style="width: 140px;height: 49px;" src="__static__/img/aibeipay.jpg" alt="爱贝支付" >
+                                            </div>
+                                        {/eq}
+
+                                        <!-- <div class="w-pay-type w-pay-type-multi" id="pro-view-15">
+                                             信用卡
+                                         </div>
+                                         <div class="w-pay-type w-pay-type-multi" id="pro-view-16">
+                                             储蓄卡
+                                         </div>-->
+                                        <!--信用卡-->
+                                        <div class="w-pay-layer" id="pro-view-17" style="display: none;">
+                                            <div class="w-pay-layer-inner">
+                                                <p class="w-pay-layer-title">请选择信用卡</p>
+                                                <div pro="entry">
+                                                    <!--循环-->
+                                                    <div class="w-pay-bank" id="pro-view-28">
+                                                        平安银行
+                                                    </div>
+                                                    <div class="w-pay-bank" id="pro-view-29">
+                                                        广发银行
+                                                    </div>
+                                                    <div class="w-pay-bank" id="pro-view-30">
+                                                        浦发银行
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--储蓄卡-->
+                                        <div class="w-pay-layer" id="pro-view-31" style="display: none;">
+                                            <div class="w-pay-layer-inner">
+                                                <p class="w-pay-layer-title">请选择储蓄卡</p>
+                                                <div pro="entry">
+                                                    <!--循环-->
+                                                    <div class="w-pay-bank" id="pro-view-44">
+                                                        华夏银行
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th></th>
+                            <td>
+                                <form action="{:U('Pay/recharge_do')}" id="form_recharge" target="_blank">
+                                    <input type="hidden" name="pay_type" value="alipay">
+                                    <input type="hidden" name="money" value="1">
+                                    <button class="w-button w-button-main w-button-xl submit" type="submit" id="pro-view-1"><span>立即充值</span>
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+        <div class="g-wrap" style="display:none;">
+            <div class="">
+                <table class="m-cashier-result-wrapper">
+                    <tbody>
+                    <tr>
+                        <td>
+                            <div class="m-cashier-result">
+                                <b class="ico ico-suc"></b>
+                                <div class="cont">
+                                    <h1 class="title">恭喜您，获得1{:C('MONEY_UNIT')}{:C('MONEY_NAME')}！</h1>
+                                    <ul class="tips txt-gray">
+                                        <li>您现在可以 <a class="w-button w-button-main" href="/index.do">返回首页</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<input type="hidden" id="money_unit" value="{:C('MONEY_NAME')}">
+{/block}
+{block name="user_js"}
+{js href="__yyg__/js/pay/recharge.js" /}
+{/block}

@@ -1,0 +1,61 @@
+{extend name="base/common"}
+
+
+
+{block name="head"}
+
+<link href="__MOBILE_CSS__/user.css" rel="stylesheet"/>
+<script src="__MOBILE_JS__/jquery.min.js"></script>
+<script src="__MOBILE_JS__/js.js"></script>
+{/block}
+
+
+{block name="main"}
+
+
+
+
+
+
+
+
+<div class="m-user" id="dvWrapper">
+	<div class="m-simpleHeader" id="dvHeader">
+		<a href="javascript:history.go(-1);" data-pro="back" data-back="true" class="m-simpleHeader-back"><i class="ico ico-back"></i></a>
+		<a href="{:U('Order/recharge')}" data-pro="ok" class="m-simpleHeader-ok" id="aHome">充值</a>
+		<h1>我的{:C('MONEY_NAME')}</h1>
+	</div>
+	<div class="m-user-index t5"></div>	
+	<section class="sr3 sr5" style="width: 185px;margin: 0 auto;font-size: 13px;">目前仅提供一年内的充值记录。</section>
+
+    {empty name="rechargeRecord"}
+
+       <p style="width: 95px;margin: 0 auto;font-size: 13px;">您没有充值记录</p> 
+
+    {else /}
+
+    {volist name="rechargeRecord" id="vo"}
+        <div class="gr-1 w-nav-item wd1 wd2 wd5">
+            <section>
+                {switch name="vo.plat_form" }
+                {case value="aipay"}爱贝支付{/case}
+                {case value="wxpay"}微信支付{/case}
+                {case value="alipay"}支付宝支付{/case}
+                {default /}其他
+                {/switch}
+                <span class="sr1">￥{$vo.price}</span></section>
+            <div class="db2">
+                时间 {$vo.pay_time}
+            </div>
+        </div>
+    {/volist}
+
+
+
+    {/empty}
+
+
+
+</div>
+
+{/block}

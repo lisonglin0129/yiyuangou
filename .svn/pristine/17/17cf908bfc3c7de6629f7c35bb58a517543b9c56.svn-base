@@ -1,0 +1,113 @@
+{extend name="base/common"}
+
+{block name="head"}
+<script src="__MOBILE_JS__/jquery.min.js"></script>
+<link href="__MOBILE_CSS__/user.css" rel="stylesheet"/>
+<script src="__MOBILE_JS__/js.js"></script>
+<style type="text/css">
+
+</style>
+{/block}
+
+{block name="main"}
+<div class="m-user mm mm1s" id="dvWrapper">
+	<div class="m-simpleHeader" id="dvHeader">
+		<a href="{:U('Index/index')}" data-pro="back" data-back="true" class="m-simpleHeader-back"><i class="ico ico-back"></i></a>
+		<h1>个人中心</h1>
+	</div>
+	<div class="m-user-index">
+		<div class="m-user-summary m-user-summary-simple is m-user-is">
+			<div class="info">
+				<div class="m-user-avatar">
+					<img width="50" height="50"  src="{$personal_center.user_face|default=''}"/>
+				</div>
+				<div class="txt w-txts">
+					<div class="name namess">
+                        {$personal_center.nick_name}
+					</div>
+
+					<div class="id idd w-ids">
+						<section class="w-spans">余额：{$personal_center.money}{:C('MONEY_NAME')}</section><span class="cz czs"><a href="{:U('Order/recharge')}"  style="color: #D83652">充值</a></span>
+
+						<!--<section class="w-spans">积分：20000000积分</section><span class="cz">转为香肠币</span>
+
+						
+						
+						<span class="w-spans">积分：{$personal_center.money}{:C('MONEY_NAME')}</span>-->
+					</div>
+				</div>
+			</div>
+			<a href="{:U('Users/personal_data')}"><span style="float:right;margin-right:15px;color:#fff;margin-top:40px;"><i class="ico ico-next"></i></span></a>
+		</div>
+	</div>
+</div>
+<!--<a href="wdhb.html">-->
+<!--<div class="gr-1 w-nav-item">-->
+	<!--<section>我的红包<span style="float:right;margin-right:15px;color:#a9a9a9;"><i class="ico ico-next"></i></span></section>-->
+<!--</div>-->
+<!--</a>-->
+<a href="{:U('Buy/person_indiana')}">
+<div class="gr-1 w-nav-item">
+	<section>夺宝记录<span style="float:right;margin-right:15px;color:#a9a9a9;"><i class="ico ico-next"></i></span></section>
+</div>
+</a>
+<a href="{:U('Buy/personal_win_record')}">
+<div class="gr-1 w-nav-item">
+	<section>幸运记录<span style="float:right;margin-right:15px;color:#a9a9a9;"><i class="ico ico-next"></i></span></section>
+</div>
+</a>
+<!--<a href="xyd.html">-->
+<!--<div class="gr-1 w-nav-item">-->
+	<!--<section>心愿单<span style="float:right;margin-right:15px;color:#a9a9a9;"><i class="ico ico-next"></i></span></section>-->
+<!--</div>-->
+<!--</a>-->
+<a href="{:U('Buy/my_share_list')}">
+<div class="gr-1 w-nav-item">
+	<section>我的晒单<span style="float:right;margin-right:15px;color:#a9a9a9;"><i class="ico ico-next"></i></span></section>
+</div>
+</a>
+<!--<a href="wdbs.html">-->
+<!--<div class="gr-1 w-nav-item">-->
+	<!--<section>我的宝石<span style="float:right;margin-right:15px;color:#a9a9a9;"><i class="ico ico-next"></i></span></section>-->
+<!--</div>-->
+<!--</a>-->
+<a href="{:U('Order/recharge_record')}">
+<div class="gr-1 w-nav-item">
+	<section>充值记录<span style="float:right;margin-right:15px;color:#a9a9a9;"><i class="ico ico-next"></i></span></section>
+</div>
+</a>
+<a href="{:U('Article/home_page')}">
+<div class="gr-1 gr-3 w-nav-item" style="border-bottom:none">
+	<section>夺宝客服<span style="float:right;margin-right:15px;color:#a9a9a9;"><i class="ico ico-next"></i></span></section>
+</div>
+</a>
+{if condition="(empty($register) eq false AND $register['status'] eq '1') OR (empty($level) eq false AND $level['status'] eq '1')"}
+<a href="{:U('Spread/index')}">
+    <div class="gr-1 gr-3 w-nav-item">
+        <section>我的推广<span style="float:right;margin-right:15px;color:#a9a9a9;"><i class="ico ico-next"></i></span></section>
+    </div>
+</a>
+{/if}
+{if condition="empty($register) eq false AND $register['status'] eq '1'"}
+<!-- <a href="{:U('Spread/index')}">
+    <div class="gr-1 gr-3 w-nav-item">
+        <section>注册推广<span style="float:right;margin-right:15px;color:#a9a9a9;"><i class="ico ico-next"></i></span></section>
+    </div>
+</a> -->
+{/if}
+{if condition="(empty($register) eq false AND $register['status'] eq '1') OR (empty($level) eq false AND $level['status'] eq '1')"}
+<!-- <a href="{:U('extract/index')}">
+    <div class="gr-1 gr-3 w-nav-item">
+        <section>我要提现<span style="float:right;margin-right:15px;color:#a9a9a9;"><i class="ico ico-next"></i></span></section>
+    </div>
+</a> -->
+{/if}
+<a href="{:U('Users/logout')}">
+<div class="gr-1 gr-2 w-nav-item">
+	<section>退出登录</section>
+</div>
+</a>
+<script>
+</script>
+
+{/block}

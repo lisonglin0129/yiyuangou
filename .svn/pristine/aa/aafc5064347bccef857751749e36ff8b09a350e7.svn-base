@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{block name="title"}个人中心{/block}</title>
+    <meta charset="UTF-8"/>
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=750,user-scalable=no,target-densitydpi=device-dpi"/>
+    {block name="head"}引入外部文件{/block}
+</head>
+<body style="color: #333">
+
+{block name="main"}页面主题部分{/block}
+{block name="user_js"}{/block}
+{js href='__common__/plugin/layer_mobile/layer.js' /}
+{js href='__common__/plugin/layer/layer.js' /}
+</body>
+</html>

@@ -1,0 +1,27 @@
+<div class="pro-t-con">
+    <table width="100%"  border="0" class="pro-table" align="center" cellpadding="0" cellspacing="0">
+        <tr align="center">
+            <th>注册时间</th>
+            <th>用户等级</th>
+            <th>用户名</th>
+            <th>奖励现金</th>
+        </tr>
+        {notempty name="list['data']"}
+        {volist name="list['data']" id="vo"}
+        <tr align="center" class="even">
+            <td>{:date('Y-m-d H:i:s',$vo['create_time'])}</td>
+            <td>一级用户</td>
+            <td>{$vo.username}</td>
+            <td class="pro-t-income">￥<span>{$vo.reward}</span></td>
+        </tr>
+        {/volist}
+        {else /}
+        <tr  align="center">
+            <td colspan="5"> 暂无数据</td>
+        </tr>
+        {/notempty}
+    </table>
+</div>
+<div class="xc_pages" data-flag="deposer">
+    {$pages}
+</div>

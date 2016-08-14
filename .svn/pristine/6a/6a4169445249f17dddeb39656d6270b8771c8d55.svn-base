@@ -1,0 +1,53 @@
+{extend name='base/base' /}
+{block name='content'}
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('breadcrumbs', 'fixed')
+        } catch (e) {
+        }
+    </script>
+
+    <ul class="breadcrumb">
+        <li>
+            <i class="icon-home home-icon"></i>
+            <a href="javascript:">后台管理</a>
+        </li>
+        <li>
+            <a href="javascript:">清空缓存</a>
+        </li>
+    </ul><!-- .breadcrumb -->
+
+
+</div>
+
+
+<div class="page-content" >
+
+    <div class="row">
+        <div class="col-xs-12">
+            <!-- PAGE CONTENT BEGINS -->
+            <div class="row">
+                <div class="col-xs-12">
+                    <form id="clear_form" method="post">
+                    <div class="checkbox">
+                            <label>
+                                <input type="checkbox" name="cache" value="1">确定清空缓存
+                            </label><br/>
+                    </div><!-- /.table-responsive -->
+                        <button class="btn btn-success" type="button">清空缓存</button>
+                    </form>
+                </div><!-- /span -->
+            </div><!-- /row -->
+        </div><!-- /.col -->
+    </div><!-- /.row -->
+</div><!-- /.page-content -->
+<input id="submit_url" type="hidden" value="{:U('clear')}">
+<input id="root_url" type="hidden" value="{:U('index')}">
+
+
+{/block}
+
+{block name="js"}
+{js href='__common__/admin/js/clear_cache/index.js' /}
+{/block}

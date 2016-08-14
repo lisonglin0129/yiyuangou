@@ -1,0 +1,185 @@
+$(function () {
+    var valid = true;
+    var type = $("#type").val();
+    var func = {
+        init:function () {
+            if(type != 'add') {
+                func.sel_goods();
+            }
+        },
+        //保存内容
+        submit: function () {
+            var url = $("#submit_url").val();
+            var param = $("#form_content").serialize();
+            common.ajax_post(url, param, true, function (rt) {
+                if(type=='add'){
+                    common.post_tips(rt, function () {
+                        layer.confirm("添加成功,是否继续添加指定中奖用户?",{
+                            "icon":1,
+                            "title":false,
+                            "closeBtn":false,
+                            "btn":["继续添加","返回列表"]
+                        },function(){
+                            layer.msg("请稍候...",{'time':500});
+                            $("#sel_plat").val('');
+                            $("#sel_goods").val('');
+                            $("#gid").val('');
+                            $("#nper").val('');
+                            $("#user").val('');
+                        },function(){
+                            layer.msg("请稍候...");
+                            common.delay(function () {
+                                location.href = $("#root_url").val();
+                            }, 1000, 1)
+                        });
+
+                    });
+                }
+                else {
+                    common.post_tips(rt,function(){
+                        location.href = $("#root_url").val();
+                    });
+
+                }
+
+            }, true);
+        },
+        //ajax获取分类商品内容
+        sel_goods:function(){
+            var category = $("select[name='category").val();
+            if ( category == '' ) {
+                return;
+            }
+            var url = $("#sel_goods_url").val();
+            var param ={"id": $("#sel_goods").find("option:selected").val()};
+            common.ajax_post(url,param,false,function(rt){
+                common.post_tips(rt,function(obj){
+                    $("select[name='gid']").html(obj.html);
+                });
+                var goods =$("#goods").val();
+                if(goods){
+                    $("select[name='gid']").find("option[value='"+goods+"']").prop('selected',true);
+                }
+            });
+        },
+
+        //ajax获取商品期数
+        sel_nper:function () {
+            $("#nper").val();
+            var gid = $("#gid").val();
+            var url = $("#nper_url").val();
+            var nper_type = $("input[name=nper_type]:checked").val();
+            var param ={"id":gid,'nper_type':nper_type};
+            common.ajax_post(url,param,false,function(rt){
+                common.post_tips(rt,function(obj){
+                    var $users_0=$('#users_0').empty();
+                    var $users_1=$('#users_1').empty();
+                    var $users_2=$('#users_2').empty();
+                    $("#nper").val(obj.id);
+                    if(typeof(obj.users)!='undefined' && obj.users.length>0){
+                        var len = obj.users.length;
+                        if(nper_type==2){
+
+                            $('div.nper_type_1').hide();
+                            $('div.nper_type_2').show();
+                        }else{
+                            $('div.nper_type_2').hide();
+                            $('div.nper_type_1').show();
+                        }
+                        for(var i=0;i<len;i++){
+                            var user = obj.users[i];
+                            var title = (user['type']=='-1'?'*':' ')+ user['nick_name'] + '('+user['num']+')次';
+                            var $ele = $('<option>');
+                            $ele.text(title);
+                            $ele.val(user['username']);
+                            $ele.attr('data-uid',user['uid'])
+                            if(typeof(user['has_odd'])!='undefined'){
+                                $ele.attr('has_odd',user['has_odd']);
+                            }
+                            if(typeof(user['has_even'])!='undefined'){
+                                $ele.attr('has_even',user['has_even']);
+                            }
+                            if(user['join_type']==0){
+                                $users_0.append($ele);
+                            }else if(user['join_type']==1){
+                                $users_1.append($ele);
+                            }else if(user['join_type']==2){
+                                $users_2.append($ele);
+                            }
+                        }
+                    }
+                });
+            });
+
+        },
+        //AJAX动态模糊查询
+        'user_filter':function(is_odd){
+            $('.nper_type_2 option').prop('disabled',true);
+            if(is_odd){
+                $('.nper_type_2 option[has_odd=true]').prop('disabled',false);
+            }else {
+                $('.nper_type_2 option[has_even=true]').prop('disabled',false);
+            }
+        }
+    }
+
+    func.init();
+    //选择平台获取分类内容
+    $(document).on("change", "#sel_plat", function () {
+        func.sel_plat();
+    });
+
+    //选择分类获取商品内容
+    $(document).on("change", "#sel_goods", function () {
+        func.sel_goods();
+    });
+    $(document).on("change",'#gid',function () {
+        func.sel_nper();
+    });
+    $(document).on("change",'input[name=nper_type]',function () {
+        func.sel_nper();
+    });
+    $(document).on("change",'input[name=rt_point_type]',function () {
+        console.log($(this).val());
+        func.user_filter($(this).val()==1);
+    });
+    $(document).on('keypress',"#user",function () {
+        var url= $("#get_user").val();
+        $('#user').typeahead({
+            ajax: {
+                url:url, //获取数据URL
+                timeout: 1, //延时请求
+                method: 'post',//请求方式
+                triggerLength: 1, //输入多少字符后开始请求
+                preProcess: function (data) { //请求成功后执行函数
+                    return JSON.parse(data);
+                }
+            },
+        });
+
+    });
+    $(document).on('change','.users_sel',function(){
+        if($(this).prop('disabled')==true) return false;
+        $('#user').val($(this).val());
+        $('select.users_sel').not(this).find('option:selected').prop('selected',false);
+    });
+    $(document).on("click", ".submit_btn", function () {
+        func.submit();
+    });
+    $(document).ready(function () {
+        var url= $("#get_user").val();
+        //common.ajax_post(url,'',false,function(rt){
+        //    common.post_tips(rt,function(obj){
+        //        var data =obj.data;
+        //        $('#user').typeahead({
+        //            source: data,
+        //            display: 'name',
+        //            val: 'id',
+        //        });
+        //    });
+        //});
+
+
+    });
+
+});

@@ -1,0 +1,77 @@
+/**
+ * Created by deloo on 2016/5/21.
+ */
+$(function(){
+    var promote={
+        init:function(){
+            common.delay(function () {
+                promote.promote_list();
+            }, 200, 1)
+            /*时间选择*/
+            $(".pd-s-year").on("click",function(){
+                $(this).find("ul").toggleClass("active");
+            });
+            $(".pd-s-y li").on("click",function(){
+                $(".pd-s-year span").text($(this).text());
+                $(".pd-s-year span").attr('year',$(this).data('val'));
+            });
+            $(".pd-s-month").on("click",function(){
+                $(this).find("ul").toggleClass("active");
+            });
+            $(".pd-s-m li").on("click",function(){
+                $(".pd-s-month span").text($(this).text());
+                $(".pd-s-month span").attr('month',$(this).data('val'));
+            });
+
+            /*弹出层开启*/
+
+            /*弹出层关闭*/
+            $(document).on("click",".pd-m-close",function(){
+                $(".pd-m-info").removeClass("active");
+                setTimeout(function() {
+                    $(".pd-m-info").hide();
+                },50);
+            });
+
+            /*默认明细表格隐藏*/
+            $(".pd-t-detail").hide();
+
+            /*打开明细表格*/
+
+            /*返回全部记录*/
+            $(document).on("click",".pd-t-btn-all",function(){
+                $(".pd-t-detail").hide();
+                $(".pd-t-list").show();
+            });
+        },
+        promote_list: function (page) {
+            page = page?page:$(".page_btn").data('page');
+            var year_fitter=$('#year').attr('year');
+            var month_fitter = $('#month').attr('month');
+            var url = $("#register_detail_url").val();
+            var param = {
+                page: !page ? 1 : page,
+                year_fitter:year_fitter,
+                month_fitter: month_fitter
+            };
+            common.ajax_post(url, param, true, function (rt) {
+                common.check_ajax_post(rt, function (obj) {
+                    $(".pro-detail").html(obj.html);
+                }, function () {
+                })
+            })
+        },
+        //筛选几个月
+        time_select: function () {
+            promote.promote_list();
+        }
+
+    };
+    promote.init();
+    $(document).on("click",".pd-s-btn",function(){
+        promote.time_select()
+    });
+    $(document).on("click",".page_btn",function(){
+        promote.promote_list($(this).data('page'))
+    });
+});

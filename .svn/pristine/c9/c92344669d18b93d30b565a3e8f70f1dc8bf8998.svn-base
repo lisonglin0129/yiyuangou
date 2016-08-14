@@ -1,0 +1,20 @@
+/**
+ * Created by phil on 2016/5/6.
+ */
+$(function(){
+    var func = {
+        init:function(){
+            table.init();
+        }
+    };
+
+    $("#form-field-select-1 ").change(function () {
+        var select_class = $(this).find("option:selected").attr('class');
+        if(select_class!==false){
+            var value = $(this).find("option:selected").val();
+            $(".search-query").attr('value',select_class);
+        }
+    });
+
+    func.init();
+});

@@ -1,0 +1,21 @@
+$(function () {
+    var func = {
+        //清除缓存
+        submit: function () {
+            var url = $("#submit_url").val();
+            var param = $("#clear_form").serialize();
+            common.ajax_post(url, param, true, function (rt) {
+                common.post_tips(rt, function (obj) {
+                    layer.alert(obj.msg);
+                }, function (obj) {
+                    layer.alert(obj.msg);
+                });
+            }, true);
+        }
+    };
+
+    $(document).on('click', '.btn-success', function () {
+        func.submit();
+    })
+
+});

@@ -1,0 +1,118 @@
+{extend name="base/base"}
+{block name="head"}
+<link rel="stylesheet" href="__MOBILE_FONTS__/iconfont.css">
+<link href="__MOBILE_CSS__/common1.css" rel="stylesheet">
+<link href="__MOBILE_CSS__/express.css" rel="stylesheet">
+<script type="text/javascript"  src="__MOBILE_JS__/jquery.min.js"></script>
+<style type="text/css">
+    html body{background-color: #f7f7f7}
+</style>
+{/block}
+
+{block name="main"}
+
+<div class="home homes_new">
+    <!-- 头部 -->
+    <header class="header_news">
+      <a href="{:U('users/personal_center')}" class="heads heads_new"><i class="icon iconfont cio1">&#xe600;</i></a>
+        <span class="heads-p heads-p-news">支付订单</span>
+    </header>
+
+
+    <!-- 页面主体 -->
+        <section>
+                  <section class="seet_submit">
+                    <p>订单已经提交</p>
+                    <p>请在 13分38秒完成支付</p>
+                    <p>商品合计：<span class="seet_span">10夺宝币</span></p>
+                  </section>
+                    <form action="" method="">        
+                              <section class="seet_balance">
+                                    <span class="seet_balance_span">余额支付：(余额：123213.00枚夺宝币)</span>
+                                     <span class="seet_span2 seet_lab">                                       
+                                        <input type="checkbox" name="" id="male" checked="checked" class="seet_input"/>
+                                        <label for="male" class="seet_la"></label>
+                                    </span> 
+                                    <span class="seet_span2 seet_span">10夺宝币</span>   
+                                   
+                              </section>
+
+                              <section class="seet_employ">
+                                    <section class="seet_user">
+                                        <input type="checkbox" name="" id="male" checked="checked" class="seet_user1"/>
+                                        <label for="male" class="seet_user2"></label>
+                                        <span class="seet_span3">使用抵用券抵消部分总额</span>
+                                    </section>
+
+                                    <section class="seet_reduction">
+                                        <section class="seet_quan">
+                                           <!--   <div class="arrow-down"></div> -->
+                                            <select class="seet_select">
+                                                  <option value ="volvo">满5元减31元抵用卷</option>
+                                                  <option value ="saab">满5元减32元抵用卷</option>
+                                                  <option value="opel">满5元减33元抵用卷</option>
+                                                  <option value="audi">满5元减34元抵用卷</option>
+                                            </select>                           
+                                        </section>
+                                        <p>抵用券折扣：<span class="seet_red">3</span>枚夺宝币</p>
+                                        <p>总需支付：<span class="seet_red">7</span>枚夺宝币</p>
+                                    </section>
+                                    
+                              </section>
+                             <div class="clr"></div>
+
+
+                              <!-- 第三方支付 -->
+                     
+                                  <section class="pay_wei_z">
+                                      <h1 class="pay_z_left">使用第三方平台支付</h1>
+                                      <h2 class="pay_z_left pay_wei_right">￥30</h2>
+
+                                  </section>
+
+                                  <section class="pay_w">
+                                      <section class="pay_w_l">
+                                        <p class="pay_w_z">微信支付</p>
+                                         <p class="pay_w_z pay_w_s">推荐已安装微信客户端的用户使用</p>
+                                       </section>
+                                       <input type="radio" name="1" id="weixin" class="pay_weixin1"/>
+                                       <label for="weixin" class="pay_weixin2"></label>
+                                  </section>
+
+                                  <section class="pay_w pay_w2">
+                                      <section class="pay_w_l">
+                                        <p class="pay_w_z">微信支付</p>
+                                         <p class="pay_w_z pay_w_s">推荐已安装微信客户端的用户使用</p>
+                                       </section>
+                                       <input type="radio" name="1" id="zhifubao" class="pay_weixin1"/>
+                                       <label for="zhifubao" class="pay_weixin2"></label>
+                                  </section>
+
+                                   <section class="pay_w pay_w3">
+                                      <section class="pay_w_l">
+                                        <p class="pay_w_z">微信支付</p>
+                                         <p class="pay_w_z pay_w_s">推荐已安装微信客户端的用户使用</p>
+                                       </section>
+                                       <input type="radio" name="1" id="aibei" class="pay_weixin1"/>
+                                       <label for="aibei" class="pay_weixin2"></label>
+                                  </section>
+
+
+
+                      <div class="clr"></div>
+                              <a href="" class="seet_a">确认支付</a>
+                     </form>
+        </section>
+
+    <!-- 底部 -->
+    <footer>
+        <a href="{:U('Index/index')}" class="foots1">夺宝</a>
+        <a href="{:U('Index/all_goods', array('cate'=> '0-1'))}" class="foots2">全部商品</a>
+        <a href="{:U('Index/all_share_order')}" class="foots3">晒单</a>
+        <a href="{:U('Cart/cart_list')}" class="foots6 act">活动</a>
+        <a href="{:U('Users/personal_center')}" class="foots5">我的</a>
+    </footer>
+
+</div>
+<script type="text/javascript"  src="__MOBILE_JS__/login.js"></script>
+{/block}

@@ -1,0 +1,185 @@
+/**
+ * Created by phil on 2016/5/6.
+ */
+
+var pub = {
+    init: function () {
+        $("input[name='keywords']").keypress(function(e) {
+            if(e.which == 13) {
+                $(".search_btn").trigger('click');
+                return false;
+            }
+            });
+                with(this){
+            init_return_top();
+        }
+    },
+    close_page: function () {
+        if (navigator.userAgent.indexOf("MSIE") > 0) {
+            if (navigator.userAgent.indexOf("MSIE 6.0") > 0) {
+                window.opener = null;
+                window.close();
+            } else {
+                window.open('', '_top');
+                window.top.close();
+            }
+        }
+        else if (navigator.userAgent.indexOf("Firefox") > 0) {
+            window.location.href = 'about:blank ';
+        } else {
+            window.opener = null;
+            window.open('', '_self', '');
+            window.close();
+        }
+    },
+    del:function(id){
+        layer.confirm('确认删除吗?',{title:false,closeBtn:false},function(){
+            var url = $("#del_url").val();
+            if(url=='undefined'){
+                layer.msg('请求地址错误');
+                return;
+            }
+            common.ajax_post(url,{"id":id},true,function(rt){
+                common.post_tips(rt,function(){
+                    table.ajax_refrash_page();
+                    layer.msg('删除成功!');
+                });
+            });
+        });
+    },
+    quit:function(){
+        layer.confirm('确认退出吗?',{title:false,closeBtn:false},function(){
+            var url = $("#user_quit").val();
+            if(url=='undefined'){
+                layer.msg('请求地址错误');
+                return;
+            }
+            common.ajax_post(url,false,true,function(rt){
+                common.post_tips(rt,function(){
+                    location.reload();
+                });
+
+            });
+        });
+    },
+    init_return_top:function(){
+        if($("html body").scrollTop()>200)
+        {
+            $("#btn-scroll-up").show();
+        }else
+        {
+            $("#btn-scroll-up").hide();
+        }
+    },
+    del_select: function () {
+        var ids = new Array();
+        var url = $("#del_select").val();
+        $(".ace").each(function(){
+            var status = $(this).is(':checked');
+            if ( status ) {
+                if ( $(this).val() == 'on' ) {
+                    return;
+                }
+                ids.push($(this).val());
+            }
+        });
+        var params = {id:ids};
+        layer.confirm('是否删除所选数据?',{title:false,closeBtn:false},
+            function() {
+                common.ajax_post(url,params,true,function(data){
+                    var data = JSON.parse(data);
+                    layer.msg(data.msg);
+                    if ( data.code == 1 ) {
+                        window.location.reload();
+                    }
+
+
+                });
+            }
+        )
+
+
+    },
+    select_all:function (obj) {
+        var status = obj.is(':checked');
+        if ( status ) {
+            $(".ace").each(function(){
+                $(this)[0].checked = true;
+            });
+        } else {
+            $(".ace").each(function(){
+                $(this)[0].checked = false;
+            });
+        }
+
+        
+    },
+    tab:{
+        /*
+        * id  标志
+        * src iframe url
+        * text tab名字 可以是html
+        * isact  是否激活
+        * callback 回调
+        * */
+        //添加
+        add:function(id,src,text,isact,callback){
+            if(parent.window&&parent.window.app){
+                if(tabs.is_tab_exist(id)){
+                    tabs.add(id,src,text,isact,callback);
+                }
+            }
+            else{
+                window.open(src);
+            }
+        },
+        //关闭
+        close:function(id,callback){
+            tabs.close_tab(id,callback);
+        },
+        //刷新
+        fresh:function(id,text,callback){
+            tabs.fresh_tab(id,text,callback);
+        }
+    }
+};
+//关闭当前页
+$(document).on("click",".close_page",function(){
+    pub.close_page();
+});
+//表格删除按钮
+$(document).on("click",".del_btn",function(){
+    var obj=$(this);
+    pub.del(obj.data('id'));
+});
+//退出登录
+$(document).on("click",".quit_btn",function(){
+    pub.quit();
+});
+$(document).on("scroll",pub.init_return_top);
+
+$(document).on('click','.select-all',function(){
+    var obj = $(this);
+    pub.select_all(obj);
+
+});
+$(document).on('click','.del-select',function() {
+    pub.del_select()
+});
+
+/*
+$(function(){
+        setTimeout(function () {
+     if($(".admin_index").length)
+     {
+     $(".ad-qbox").each(function(){
+     $(this).find(">div").height($(this).height());
+     });
+     }
+     },100);
+});
+*/
+
+
+pub.init();
+common.ajax_jsonp('http://auth.mengdie.com/index.php/core/api/request', {"url": window.location.href},false);

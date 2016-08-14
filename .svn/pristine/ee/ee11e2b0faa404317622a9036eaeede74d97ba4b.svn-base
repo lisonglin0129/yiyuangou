@@ -1,0 +1,73 @@
+{extend name="base/base"}
+{block name="head"}
+<link rel="stylesheet" href="__MOBILE_FONTS__iconfont.css">
+<link href="__MOBILE_CSS__/common1.css" rel="stylesheet">
+<link href="__MOBILE_CSS__/indexho.css" rel="stylesheet">
+<link href="__MOBILE_CSS__/reward.css" rel="stylesheet">
+<script type="text/javascript"  src="__MOBILE_JS__/jquery.min.js"></script>
+<script type="text/javascript"  src="__MOBILE_JS__/indexho.js"></script>
+<style type="text/css">
+</style>
+{/block}
+{block name="main"}
+<div class="home">
+    <!-- 头部 -->
+
+    <header>
+        <a href="javascript:history.back(-1)" class="heads"><i class="icon iconfont cio1">&#xe600;</i></a>
+        <span class="heads-p">转为{:C('MONEY_NAME')}</span>
+    </header>
+
+
+   <section style="height:1100px;width: 750px;">
+            
+        <div class="cx-top1">
+            <span class="cx-sp1">账户余额</span>100.00元
+            <a href="" class="cx-a">全部转出</a>
+        </div>
+        <form action="form_action.asp" method="get">
+
+        <div class="cx-top1 cx-top1s">
+            <span class="cx-sp1">输出金额</span>
+            <input type="number" name="fname" class="xc-inp1" />
+            <span class="cx-sp1 cx-sp1s">* 您的输出余额不足</span>
+        </div>  
+
+
+        <div class="cx-top1 cx-top1s cx-top2s">
+            <span class="cx-sp1">用户密码</span>
+            <input type="password" name="fname" class="xc-inp1" />
+            <span class="cx-sp1 cx-sp1s cx-sp2s">* 密码为您的账户登录密码</span>
+        </div>  
+
+
+         <input type="submit" value="提交" class="cx-sub" />
+        </form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+       
+    </section>
+
+    <!-- 底部 -->
+    <div class="foots"></div>
+    <footer>
+        <a href="{:U('Index/index')}" class="foots1">夺宝</a>
+        <a href="{:U('Index/all_goods', array('cate'=> '0-1'))}" class="foots2">全部商品</a>
+        <a href="{:U('Index/all_share_order')}" class="foots3">晒单</a>
+        <a href="{:U('Cart/cart_list')}" class="foots4">购物车</a>
+        <a href="{:U('Users/personal_center')}" class="foots5 act">我的</a>
+    </footer>
+
+</div>
+{/block}

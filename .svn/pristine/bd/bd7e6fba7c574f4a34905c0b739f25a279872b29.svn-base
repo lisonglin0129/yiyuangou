@@ -1,0 +1,52 @@
+{if condition="!empty($reward_type) AND $reward_type eq '-1'"}
+<section class="per_layers"></section>
+<section class="per_layers_exchange">
+    
+    <!--<section class="per_section">
+        <h1 class="per_close_h1">您已兑换{$money_name|default=''}</h1>
+        <p>恭喜您</p>
+        <p> 恭喜您！兑换了<span id="money">{$list.money|default=''}</span>{$money_name|default=''}</p>
+        <section class="per_close_img"></section>
+         <div class="per_close per_close1">确定</div>
+    </section>-->
+    <div class="person_layers" style="display: block;">
+        <section class="per_layers"></section>
+        <section class="per_layers_exchange">
+
+            <section class="per_section">
+                <h1 class="per_close_h1">您已兑换{$money_name|default=''}</h1>
+                <section class="per_close_img">
+                    <p>恭喜您</p>
+                    <p> 恭喜您！兑换了<span id="money">{$list.money|default=''}</span>{$money_name|default=''}</p>
+                    <section class="per-img"></section>
+                </section>
+            </section>
+            <div style="clear: both;"></div>
+            <div class="per_close">确定</div>
+        </section>
+    </div>
+</section>
+{else /}
+
+<section class="per_layers"></section>
+<section class="per_layers_exchange per_layers_exchanges">
+
+    <section class="per_section per_sections">
+        <h1 class="per_close_h1">您已兑换充值卡</h1>
+        <p>恭喜您</p>
+        <p> 恭喜您！ 兑换了{:count($list)}张<span>{$money|default=''}元</span>充值卡</p>
+        {volist name='list' id='vo'}
+        <section class="per_card_numbers">
+            <section class="per_card_right">
+                <p>卡号：{$vo.num|default=''}</p>
+                <p>密码：{$vo.sec|default=''}</p>
+            </section>
+
+        </section>
+
+        {/volist}
+       <div class="per_close">确定</div>
+    </section>
+
+</section>
+{/if}

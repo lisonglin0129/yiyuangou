@@ -1,0 +1,82 @@
+/**
+ * Created by deloo on 2016/5/23.
+ */
+/**
+ * Created by deloo on 2016/5/21.
+ */
+$(function(){
+    var promote={
+        init:function() {
+            common.delay(function () {
+                promote.extract_list();
+            }, 200, 1)
+            /*时间选择*/
+            $(".pf-l-accounts").on("click", function () {
+                $(this).toggleClass("active");
+            });
+            $(".pf-l-a-sel li").on("click", function () {
+                $(".pf-l-accounts span").text($(this).text());
+            });
+            $(".pf-l-m-account .pec-banks").on("click",function(){
+                if($(this).hasClass("active"))
+                {
+                    $(this).removeClass("active");
+                }
+                else {
+                    $(".pf-l-m-account .pec-banks").removeClass("active");
+                    $(this).addClass("active");
+                }
+
+            });
+        },
+        extract_list: function (page) {
+            page = page?page:$(".page_btn.cur").val();
+            var start=$('.pd-s-year').find('input').val();
+            var end = $('.pd-s-month').find('input').val();
+            var url = $("#extract_list_url").val();
+            var param = {
+                page: !page ? 1 : page,
+                start:start,
+                end: end
+            };
+            common.ajax_post(url, param, true, function (rt) {
+                common.check_ajax_post(rt, function (obj) {
+                    $("#pro-detail").html(obj.html);
+                }, function () {
+                })
+            })
+        },
+        time_select: function () {
+                promote.extract_list();
+        }
+
+    };
+    promote.init();
+    $(document).on("click",".pd-s-btn",function(){
+      promote.time_select();
+    });
+    $(document).on("click",".page_btn",function(){
+            promote.extract_list($(this).data('page'))
+    });
+    $(document).on("click",".pec-b-del",function(){
+        var obj=$(this);
+        var del_url=$('#extract_del_url').val();
+        var id=obj.data('id');
+        layer.confirm('确定删除该提现记录吗？', {
+            btn: ['删除','取消'] //按钮
+        }, function(){
+            $.getJSON(del_url,{id:id},function(data){
+                if(data.code==1){
+                    layer.msg('删除成功',{time:2000});
+                    setTimeout(function(){
+                       location.reload();
+                    },2000);
+                }else{
+                    layer.msg('删除失败');
+                }
+            })
+
+        }, function(){
+        });
+    });
+});

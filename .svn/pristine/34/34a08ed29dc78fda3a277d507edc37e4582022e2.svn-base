@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>{block name="title"}{/block}</title>
+    <meta name="keywords" content="{$keywords|default=''}" />
+    <meta name="description" content="{$description|default=''}" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    {include file="base/common_css" /}
+    {block name="css"}{/block}
+</head>
+<body>
+{block name="content"}
+{/block}
+<!--[if lt IE 9]>
+{js href="__ADMIN_ASSETS__/js/html5shiv.js" /}
+{js href="__ADMIN_ASSETS__/js/respond.min.js" /}
+<![endif]-->
+{include file="base/common_js" /}
+{js href="__ADMIN_ASSETS__/js/bootstrap.min.js" /}
+{js href="__ADMIN_ASSETS__/js/typeahead-bs2.min.js" /}
+{js href="__ADMIN_ASSETS__/js/ace-elements.min.js" /}
+{js href="__ADMIN_ASSETS__/js/ace.min.js" /}
+{js href="__ADMIN_ASSETS__/js/ace-extra.min.js"/}
+{js href="__ADMIN_ASSETS__/js/jquery.mobile.custom.min.js" /}
+{block name="js"}{/block}
+<div style="display:none">
+    {include file="base/base_url" /}
+</div>
+</body>
+</html>

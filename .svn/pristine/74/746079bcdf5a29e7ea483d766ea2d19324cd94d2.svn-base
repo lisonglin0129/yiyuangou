@@ -1,0 +1,375 @@
+{extend name="base/common"}
+
+
+
+{block name="head"}
+
+
+
+    <script type="text/javascript" src="__MOBILE_JS__/jquery.min.js"></script>
+    <script src="http://apps.bdimg.com/libs/layer/2.1/layer.js"></script>
+    <script>
+        var img_path = "__MOBILE_IMG__";
+    </script>
+    <script type="text/javascript" src="__MOBILE_JS__/js.js"></script>
+<!--    <script src="__MOBILE_JS__/jquery.event.drag-1.5.min.js"></script>-->
+    <script src="__MOBILE_JS__/jquery.touchSlider.js"></script>
+    <link href="__MOBILE_CSS__/index.css" rel="stylesheet" />
+    <link href="__MOBILE_CSS__/jiaodian.css" type="text/css" rel="stylesheet"/>
+
+
+    <script>
+        $(document).ready(function () {
+
+            $(".main_image").touchSlider({
+                flexible : true,
+                mouseTouch: true,
+                container: this,
+                speed : 200,
+                counter : function (e) {
+                    $(".flicking_con a").removeClass("on").eq(e.current-1).addClass("on");
+                }
+            });
+            var timer=setInterval(function(){
+                $(".main_image")[0].animate(-1, true);
+            },5000);
+
+            //加入购物车
+            $('.w-button-addToCart').click(function() {
+
+                //判断期数与个数是否正确
+                var nper_id = $(this).attr('nper-id');
+
+
+
+                //Ajax提交
+                $.ajax({
+                    url : $('#cart-url').val(),
+                    type : 'POST',
+                    data : {
+                        nper_id : nper_id
+                    },
+                    beforeSend : function () {
+
+                    },
+                    success : function (data, response, status) {
+                        var response_data = $.parseJSON(data);
+
+                        if (response_data.exist_flag == false) {
+                            $('#count').text(parseInt($('#count').text())+1);
+                            $('#count').show();
+                        }
+//                        if(response_data.status == 'success') {
+//                            alert('登陆成功');
+//                            window.location.href = $('#personal-url').val()
+//                        }
+                    }
+                });
+
+
+
+            });
+
+
+            //判断是否显示购物车数量
+            if($('#count').text() == '0') {
+                $('#count').hide();
+            }
+
+
+            //点击关闭中奖提示按钮
+            $('.zjts6').click(function(){
+
+                $.ajax({
+                    url : "{:U('Goods/confirm_win_notice')}",
+                    type : 'POST',
+                    data : {
+                        win_record_id : $('#win_record_id').val()
+                    },
+                    beforeSend : function () {
+
+                    },
+                    success : function (data, response, status) {
+
+
+                        var response_data = $.parseJSON(data);
+
+
+
+                        if (response_data.status == 'fail') {
+                            layer.open({
+                                content: response_data.message,
+                                time: 1
+                            });
+                            return;
+                        }
+                        if(response_data.status == 'success') {
+                            $('.body123').hide();
+                            $('.zjts').hide();
+                        }
+                    }
+                });
+
+            });
+
+            $(".footer_dl").click(function(){
+                var ua = navigator.userAgent.toLowerCase();
+                if(ua.match(/MicroMessenger/i)=="micromessenger") {
+                    layer.open({
+                        content: '微信浏览器暂不支持下载，请用其他浏览器下载',
+                        time: 1 //1秒后自动关闭
+                    });
+                } else {
+                    window.location.href="http://7xtewd.com2.z0.glb.clouddn.com/xiangchang.apk";
+                }
+            });
+            //点击确认收货地址
+            $('#confirm_address').click(function(ev){
+                ev.preventDefault();
+                $('.zjts6').trigger('click');
+                window.location.href = $(this).attr('href');
+            });
+
+
+
+        });
+    </script>
+{/block}
+
+
+
+{block name="main"}
+
+
+
+{include file="public/header" /}
+
+{notempty name="win_notice"}
+<!--遮罩弹出层-->
+<div class="body123"></div>
+<div class="zjts">
+    <div class="zjts2">
+        <div class="zjts6"></div>
+        <div class="zjts5">
+            <img src="{$win_notice.img_path}" class="zjts5-1"/>
+            <section style="color:#555;">
+                {$win_notice.name|mb_substr=0,20}
+            </section>
+            <section>期号：{$win_notice.nper_id|num_base_mask=0}</section>
+            <section>中奖号码：{$win_notice.luck_num}</section>
+        </div>
+        <a id="confirm_address" href="{:U('Buy/prize_info_confirm',array('win_record_id'=>$win_notice['win_record_id']))}"><div class="zjts3">确认收货地址</div></a>
+        <input type="hidden" id="win_record_id" value="{$win_notice.win_record_id}"/>
+    </div>
+
+</div>
+
+<!--点击显示弹出层--->
+{/notempty}
+
+
+
+
+
+
+<div class="g-body">
+			<div class="m-index" style="padding-top:0px;">
+				<!--焦点图-->
+
+				<div class="kePublic">
+					<!--效果html开始-->
+					<div class="main_visual" style="height:49vw;">
+						<div class="flicking_con">
+
+						</div>
+						<div class="main_image">
+							<ul>
+                                {volist name="home_promo_list" id="each_home_promo"}
+                                <li class="w-slide-wrap-list-item">
+                                    {switch name="each_home_promo.type"}
+                                    {case value="1"}
+                                    <a href="{:U('Goods/jump_to_goods_buying',array('gid'=>$each_home_promo['content']))}" title="{$each_home_promo.title|htmlspecialchars}" target="_blank"><img src="__UPLOAD_DOMAIN__{$each_home_promo.img_path}" onerror="no_img($(this));" ></a>
+                                    {/case}
+                                    {case value="2"}
+                                    <a href="{$each_home_promo.content}" title="{$each_home_promo.title|htmlspecialchars}" target="_blank">
+                                        <img src="__UPLOAD_DOMAIN__{$each_home_promo.img_path}"></a>
+                                    {/case}
+                                    {case value="3"}
+                                    <a href="{:dwz_filter('lists/search',['keyword'=>$each_home_promo['content']])}" title="{$each_home_promo.title|htmlspecialchars}" target="_blank"><img src="__UPLOAD_DOMAIN__{$each_home_promo.img_path}"></a>
+                                    {/case}
+                                    {/switch}
+                                </li>
+                                {/volist}
+
+							</ul>
+						</div>
+					</div>
+					<!--效果html结束-->
+					<div class="clear"></div>
+				</div>
+
+                <div class="w-menus">
+                    <a href="{:U('mobile/index/all_goods')}" class="w-menus-htm"><section class="n-menus-sect"></section>商品分类</a>
+                    <a href="{:U('mobile/index/all_goods',array('cate'=>'0-2'))}" class="w-menus-htm"><section class="n-menus-sect n-menus-sect2"></section>最新商品</a>
+                   
+
+
+                     
+                    
+                    <a href="{:U('mobile/index/all_share_order')}" class="w-menus-htm"><section class="n-menus-sect n-menus-sect3"></section>晒单分享</a>
+                    <a href="{:U('mobile/spread/index')}" class="w-menus-htm"><section class="n-menus-sect n-menus-sect4"></section>邀请好友</a>
+                </div>
+
+                {notempty name="latest_announcement"}
+
+                    <!--最新揭晓-->
+
+                    <div class="g-wrap g-body-bd">
+
+                        <div class="m-index-mod m-index-newArrivals">
+                            <div class="m-index-mod-hd">
+                                <h3>最新揭晓</h3>
+
+                            </div>
+                            <div class="m-index-mod-bd">
+                                <ul class="w-goodsList w-goodsList-brief m-index-newArrivals-list">
+
+                                    {volist name="latest_announcement" id="vo"}
+                                    <li class="w-goodsList-item">
+                                        {if condition="$vo.code eq 'shiyuanduobao'"}
+                                            <img class="ico ico-label ico-label-goods" src="__MOBILE_STATIC__/img/icon_ten.png">
+                                        {/if}
+                                        <div class="w-goods w-goods-brief">
+                                            <div class="w-goods-pic w-new-pic">
+                                                <a href="{if condition="$vo['nper_type'] eq 1"}{:U('Goods/goods_detail',array('nper_id'=>$vo['nper_id']))}{else /}{:U('Goods/zero_detail',array('nper_id'=>$vo['nper_id']))}{/if}"  >
+                                                    <img src="{$vo.image_src}"/>
+                                                </a>
+                                            </div>
+                                            <p class="w-goods-title f-txtabb"><div class="w-countdown" time="{$vo.count_down}"></div></p>
+                                        </div>
+                                    </li>
+                                    {/volist}
+
+                                </ul>
+                            </div>
+                        </div>
+
+
+                    {/notempty}
+				
+
+
+
+				 <!------新品上架------>  
+					<div class="m-index-mod m-index-newArrivals">
+						<div class="m-index-mod-hd">
+							<h3>上架新品</h3>
+							<a class="m-index-mod-more" href="{:U('index/all_goods',array('cate'=>'0-1'))}">更多</a>
+						</div>						
+						<div class="m-index-mod-bd">
+							<ul class="w-goodsList w-goodsList-brief m-index-newArrivals-list">
+
+                                {volist name="new_goods" id="vo"}
+                                    <li class="w-goodsList-item">
+                                        {if condition="$vo.code eq 'shiyuanduobao'"}
+                                            <img class="ico ico-label ico-label-goods" src="__MOBILE_STATIC__/img/icon_ten.png">
+                                        {/if}
+                                        <div class="w-goods w-goods-brief">
+                                            <div class="w-goods-pic w-new-pic">
+                                                <a href="{:U('Goods/goods_detail',array('nper_id'=>$vo['nper_id']))}"  title="{$vo.name}">
+                                                    <img src="{$vo.image_src}"/>
+                                                </a>
+                                            </div>
+                                            <p class="w-goods-title f-txtabb"><a title="{$vo.name}" href="{:U('index/all_goods',array('cate'=>'0-1'))}" >{$vo.name}</a></p>
+                                        </div>
+                                    </li>
+                                {/volist}
+
+						    </ul>
+						</div>
+					</div>
+
+                    
+					<div class="m-index-mod m-index-popular">
+						<div class="m-index-mod-hd">
+							<h3>今日热门商品</h3>
+								<a class="m-index-mod-more" href="{:U('index/all_goods',array('cate'=>'0-1'))}" >更多</a>
+						</div>
+						<div class="m-index-mod-bd">
+							<ul class="w-goodsList w-goodsList-s m-index-popular-list">
+                                {volist name="hot_goods" id="vo"}
+                                    <li class="w-goodsList-item">
+
+                                        <div class="w-goods w-goods-ing" data-gid="1093" data-period="303175306" data-price="8090" data-buyUnit="10">
+                                            {if condition="$vo.code eq 'shiyuanduobao'"}
+                                                 <img class="ico ico-label ico-label-goods" src="__MOBILE_STATIC__/img/icon_ten.png">
+                                            {/if}
+                                            <div class="w-goods-pic w-hot-pic">
+                                                <a href="{:U('Goods/goods_detail',array('nper_id'=>$vo['nper_id']))}">
+                                                    <img src="{$vo.image_src}" />
+                                                </a>
+                                            </div>
+
+                                            <div class="w-goods-info">
+                                                <p class="w-goods-title f-txtabb"><a href="{:U('Goods/goods_detail',array('nper_id'=>$vo['nper_id']))}" >{$vo.name}</a></p>
+                                                <div class="w-progressBar">
+                                                    <p class="txt">揭晓进度<strong>{$vo.progress}%</strong></p>
+                                                    <p class="wrap">
+                                                        <span class="bar" style="width:{$vo.progress}%;"><i class="color"></i></span>
+                                                    </p>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="w-goods-shortFunc  m-tip">
+                                                <button class="w-button w-button-round w-button-addToCart w-bt1s" nper-id="{$vo.nper_id}"></button>
+                                            </div>
+
+                                           <div class="w-index">
+                                           <!--1元夺宝-->
+
+
+                                             <!--1元夺宝 AND 0元夺宝  -->
+                                               {if condition="$zero_start eq 1 AND $vo['is_zero'] eq 1"}
+                                             <a href="{:U('Goods/goods_detail',array('nper_id'=>$vo['nper_id']))}" class="w-index-a w-index-z">{:C('ONE_AWARD_BTN_KEYWORDS')}</a>
+                                              <a href="{:U('Goods/zero_detail',array('nper_id'=>$vo['nper_id']))}" class="w-index-a w-index-z">0元夺宝</a>
+                                               {else /}
+                                               <a href="{:U('Goods/goods_detail',array('nper_id'=>$vo['nper_id']))}" class="w-index-a">{:C('ONE_AWARD_BTN_KEYWORDS')}</a>
+                                               {/if}
+                                           </div>
+                                        </div>
+                                    </li>
+                                {/volist}
+                            </ul>
+                            <div class="w-more">
+                                <a href="{:U('index/all_goods',array('cate'=>'0-1'))}" >点击查看更多商品</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+			</div>
+		</div>
+<input type="hidden" value="{:U('Cart/ajax_add_cart')}" id="cart-url"/>
+<div class="g-footer">
+    <div class="g-wrap">
+        <p style="margin-bottom: 7px;text-align: left;border-bottom: #DCDCDC 1px dotted;padding: 2px 6px;">特别说明：苹果公司不是{:C('WEBSITE_NAME')}赞助商，并且苹果公司也不会以任何形式参与其中！</p>
+            <ul class="m-state f-clear">
+                <li><i class="ico ico-state ico-state-1"></i>公平公正公开</li>
+                <li><i class="ico ico-state ico-state-2"></i>正品保证</li>
+                <li class="last"><i class="ico ico-state ico-state-3"></i>权益保障</li>
+            </ul>
+        <p class="m-link">
+            <a href="{:U('Article/help')}" >什么是{:C('WEBSITE_NAME')}？</a><var>|</var>
+            <a href="{$down}"  target="_blank" style="color:#0079fe" class="footer_dl">下载APP</a>
+        </p>
+        <p class="m-copyright">{$wap_config_info.record_num|default=''}  &nbsp;<span>{$wap_config_info.copy_right|default=''}</span></p>
+    </div>
+</div>
+<!--底部导航栏--->
+
+<a href="{:U('Cart/cart_list')}"><div class="indw end"><span id="count" style="position:absolute;width:20px;height:20px;margin-left:30px;top:-5px;font-size:13px;background-color:#000;border-radius:12px;color:#fff;line-height:20px;text-align:center">{$cart_num}</span></div></a>
+<div class="fhdb"></div>
+<script src="__MOBILE_JS__/fly.js"></script>
+<script src="__MOBILE_JS__/requestAnimationFrame.js"></script>
+{/block}
+

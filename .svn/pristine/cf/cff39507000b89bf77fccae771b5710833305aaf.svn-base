@@ -1,0 +1,26 @@
+{notempty name="data['list']"}
+<div class="users">
+    <span>下级总用户</span>
+    <span>{$data.total_users}</span>
+    <span>人</span>
+</div>
+<div class="users users1">
+    <span>总收益</span>
+    <span>{$data.total_reward}</span>
+    <span>元</span>
+</div>
+{volist name="data['list']" id="vo"}
+<div class="clr"></div>
+<div class="shouyi" data-val="{$vo.level}">
+    <div class="shouyi-le">
+        <section>{$vo.reward}元</section>
+        <section class="shouyi-2">推广收益</section>
+    </div>
+    <span class="yiji">{$vo.level}级用户 ({$vo.level_count}人)</span>
+    <a href="{:U('promote_detail_list',['level'=>$vo['level']])}"  class="a1s"><i class="icon iconfont ico12">&#xe60d;</i></a>
+</div>
+{/volist}
+{else /}
+<p  style="color: #808080;text-align: center">暂无数据</p>
+{/notempty}
+

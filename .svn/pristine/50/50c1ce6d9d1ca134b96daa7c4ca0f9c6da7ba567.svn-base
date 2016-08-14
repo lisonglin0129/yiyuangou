@@ -1,0 +1,83 @@
+/**
+ * Created by deloo on 2016/5/21.
+ */
+$(function(){
+    var promote={
+        init:function() {
+            /*时间选择*/
+            $('.pro-es-success').hide();
+            $(".pf-l-accounts").on("click", function () {
+                $(this).toggleClass("active");
+            });
+            $(".pf-l-a-sel li").on("click", function () {
+                $(".pf-l-accounts span").text($(this).text());
+            });
+            $(".pf-l-m-account .pec-banks").on("click",function(){
+                if($(this).hasClass("active"))
+                {
+                    $(this).removeClass("active");
+                }
+                else {
+                    $(".pf-l-m-account .pec-banks").removeClass("active");
+                    $(this).addClass("active");
+                }
+
+            });
+        }
+
+    };
+    promote.init();
+    $('#money').blur(function () {
+        var money=$('#money').val();
+        var cash=$('#cash').val();
+        var need=Math.ceil(money/100);
+        $('#need').html(need);
+        if(Number(money)+Number(need)>cash){
+            layer.msg('提取金额和手续费超出余额');$('#money').val(null);$('#money').focus();return false;
+        }
+
+    })
+    $(document).on("click",".pf-l-s-sub",function(){
+        if(!$('.pec-banks').hasClass('active')){
+            layer.msg('请选择银行');return false;
+        }
+        var aid=$('.active').find('.pec-b-sel').attr('aid');
+        var cash=$('#cash').val();
+        var money=$('#money').val();
+        if(!money){
+            layer.msg('请输入提现金额');$('#money').focus();return false;
+        }
+        if(money<100){
+            layer.msg('提取金额不能低于100');$('#money').val(null);$('#money').focus();return false;
+        }
+        if(parseInt(money)!=money){
+            layer.msg('提取金额不是整数');$('#money').val(null);$('#money').focus();return false;
+        }
+        //var last=(parseFloat(cash)-parseFloat(money)-parseFloat($('#need').html())).toFixed(2);
+        var password=$('#password').val();
+        if(!password){
+            layer.msg('请输入密码');return false;
+        }else{
+            var index=layer.load(1);
+            $.post($('#check_url').val(),{password:password},function(data){
+                if(data.code==1){
+                    var url=$('#apply_url').val();
+                    $.post(url,{money:money,account_id:aid},function(data){
+                        layer.close(index);
+                        if(data.code==1){
+                            $('#extract_money').html(money);
+                            $('.pro-es-success').show();
+                            $('.pro-form').hide();
+                        }else{
+                            layer.msg('申请失败');return false;
+                        }
+                    },'json')
+                }else{
+                    layer.close(index);
+                    layer.msg('密码错误');return false;
+                }
+            },'json')
+        }
+
+    })
+});

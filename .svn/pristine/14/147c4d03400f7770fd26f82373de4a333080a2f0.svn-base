@@ -1,0 +1,22 @@
+<section class="w-packet-1">
+{notempty name='list'}
+{volist name="list" id="vo"}
+<div class="w-packet-img w-packet-bac">
+    <h1 class="w-packet-h1s">{$vo.money|default=0}</h1>
+    <h1 class="w-packet-h1">商品中奖红包</h1>
+    <ul class="w-packet-ul">
+        <li>中奖商品：{$vo.goods_name|default='--'}</li>
+        <li>金额：{$vo.money|default=0}元</li>
+        <li>有效期：{:date('Y-m-d H:i:s',$vo['end_time'])}</li>
+        <!--<li>使用说明：直减3夺宝币（夺宝 类商品全场通用）</li>-->
+        <li class="packet-bt"  data-url="http://{$Think.server.http_host}{:U('mobile/packet/info',['packet_id'=>$vo['id'],'uid'=>$vo['uid']])}" >发送红包</li>
+    </ul>
+</div>
+{/volist}
+</section>
+<div class="xc_pages" data-flag="unused">
+    {$pages}
+</div>
+{else /}
+<p align="center">暂无数据</p>
+{/notempty}

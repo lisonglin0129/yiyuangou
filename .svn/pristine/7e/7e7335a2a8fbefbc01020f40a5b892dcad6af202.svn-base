@@ -1,0 +1,175 @@
+{extend name="base/base" /}
+{block name="css"}
+{css href="__common__/admin/css/goods/form.css" /}
+{css href="__plugin__/umeditor/themes/default/css/umeditor.min.css"/}
+{/block}
+{block name="content"}
+
+<div class="page-content">
+    <div class="page-header">
+        <h1>
+            分销管理
+            <small>
+                <i class="icon-double-angle-right"></i>
+                分销推广设置
+            </small>
+        </h1>
+    </div>
+    <!-- /.page-header -->
+
+    <div class="row">
+        <div class="col-xs-12">
+            <!-- PAGE CONTENT BEGINS -->
+            <form class="form-horizontal" role="form" id="form_content">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right"> 是否开启分销推广 </label>
+
+                    <div class="col-sm-6" style="min-width: 120px">
+                        <select class="col-xs-10 col-sm-5" data-placeholder="请选择" name="status" id="status">
+                            <option value="2" {if condition="!empty($spread.status) AND $spread.status eq '2'" }selected="selected" {/if} >关闭</option>
+                            <option value="1" {if condition="!empty($spread.status) AND $spread.status eq '1'" }selected="selected" {/if} >开启</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="space-4"></div>
+
+
+                <div class="form-group" id="level_div" style="display: none">
+                    <label class="col-sm-3 control-label no-padding-right">分销级别</label>
+
+                    <div class="col-sm-6">
+                        <select class="col-xs-10 col-sm-5" data-placeholder="请选择" name="level" id="level">
+                            <option value="">请选择</option>
+                            <option value="1">一级（A）</option>
+                            <option value="2">二级（B）</option>
+                            <option value="3">三级（C）</option>
+                            <!--<option value="4">四级（D）</option>-->
+                            <!--<option value="5">五级（E）</option>-->
+                            <!--<option value="6">六级（F）</option>-->
+                            <!--<option value="7">七级（G）</option>-->
+                        </select>
+                    </div>
+                </div>
+                <div class="space-4"></div>
+
+                <div class="form-group level" id="per1" style="display: none">
+                    <label class="col-sm-3 control-label no-padding-right">一级推广奖励比例</label>
+
+                    <div class="col-sm-6">
+                        <input type="text" placeholder="请输入" class="col-xs-10 col-sm-5" name="per"
+                               value=""/><span style="font-size: large">%</span>
+                    </div>
+                </div>
+                <div class="form-group score" id="score1" style="display: none">
+                    <label class="col-sm-3 control-label no-padding-right">一级推广返积分数</label>
+
+                    <div class="col-sm-6">
+                        <input type="text" placeholder="请输入" class="col-xs-10 col-sm-5" name="score"
+                               value=""/>
+                    </div>
+                </div>
+                <div class="space-4"></div>
+                <div class="form-group level" id="per2" style="display: none">
+                    <label class="col-sm-3 control-label no-padding-right">二级推广奖励比例</label>
+
+                    <div class="col-sm-6">
+                        <input type="text" placeholder="请输入" class="col-xs-10 col-sm-5" name="per"
+                               value=""/><span style="font-size: large">%</span>
+                    </div>
+                </div>
+                <div class="form-group score" id="score2" style="display: none">
+                    <label class="col-sm-3 control-label no-padding-right">二级推广返积分数</label>
+
+                    <div class="col-sm-6">
+                        <input type="text" placeholder="请输入" class="col-xs-10 col-sm-5" name="score"
+                               value=""/>
+                    </div>
+                </div>
+                <div class="space-4"></div>
+                <div class="form-group level" id="per3" style="display: none">
+                    <label class="col-sm-3 control-label no-padding-right">三级推广奖励比例</label>
+
+                    <div class="col-sm-6">
+                        <input type="text" placeholder="请输入" class="col-xs-10 col-sm-5" name="per"
+                               value=""/><span style="font-size: large">%</span>
+                    </div>
+                </div>
+                <div class="form-group score" id="score3" style="display: none">
+                    <label class="col-sm-3 control-label no-padding-right">三级推广返积分数</label>
+
+                    <div class="col-sm-6">
+                        <input type="text" placeholder="请输入" class="col-xs-10 col-sm-5" name="score"
+                               value=""/>
+                    </div>
+                </div>
+                <!--<div class="space-4"></div>-->
+                <!--<div class="form-group level" id="per4" style="display: none">-->
+                    <!--<label class="col-sm-3 control-label no-padding-right">四级推广奖励比列</label>-->
+
+                    <!--<div class="col-sm-6">-->
+                        <!--<input type="text" placeholder="请输入" class="col-xs-10 col-sm-5" name="per"-->
+                               <!--value=""/>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="space-4"></div>-->
+                <!--<div class="form-group level" id="per5" style="display: none">-->
+                    <!--<label class="col-sm-3 control-label no-padding-right">五级推广奖励比列</label>-->
+
+                    <!--<div class="col-sm-6">-->
+                        <!--<input type="text" placeholder="请输入" class="col-xs-10 col-sm-5" name="per"-->
+                               <!--value=""/>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="space-4"></div>-->
+                <!--<div class="form-group level" id="per6" style="display: none">-->
+                    <!--<label class="col-sm-3 control-label no-padding-right">六级推广奖励比列</label>-->
+
+                    <!--<div class="col-sm-6">-->
+                        <!--<input type="text" placeholder="请输入" class="col-xs-10 col-sm-5" name="per"-->
+                               <!--value=""/>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="space-4"></div>-->
+                <!--<div class="form-group level" id="per7" style="display: none">-->
+                    <!--<label class="col-sm-3 control-label no-padding-right">七级推广奖励比列</label>-->
+
+                    <!--<div class="col-sm-6">-->
+                        <!--<input type="text" placeholder="请输入" class="col-xs-10 col-sm-5" name="per"-->
+                               <!--value=""/>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="space-4"></div>-->
+
+
+
+                <!--操作按钮-->
+                <div class="clearfix form-actions">
+                    <div class="col-md-offset-3 col-md-9">
+
+                        <button class="btn btn-info submit_btn" type="button">
+                            <i class="icon-ok bigger-110"></i>
+                            保存设置
+                        </button>
+                        &nbsp; &nbsp; &nbsp;
+
+                        <button class="btn btn-default close_page" type="button">
+                            <i class="fa fa-times bigger-110"></i>
+                            关闭页面
+                        </button>
+                    </div>
+                </div>
+                <input type="hidden" name="id" value="{$spread.id|default=''}">
+            </form>
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.page-content -->
+</div>
+<input type="hidden" id="reward_per" value="{$spread.reward_per|default=''}">
+<input type="hidden" id="dis_level" value="{$spread.level|default=''}">
+<input type="hidden" id="score_reward" value="{$spread.score_reward|default=''}">
+<input type="hidden" id="submit_url" value="{:U('dis_update')}">
+{/block}
+{block name="js"}
+{js href='__common__/admin/js/spread/level.js' /}
+{/block}

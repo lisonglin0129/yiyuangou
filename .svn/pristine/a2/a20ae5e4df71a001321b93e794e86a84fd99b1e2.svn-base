@@ -1,0 +1,59 @@
+/**
+ * Created by phil on 2016/4/13.
+ */
+$(function () {
+    var func = {
+        "init": function () {
+            func.pay_btn_select();
+
+        },
+        sel_pay_money: function (obj) {
+            $(".w-pay-money").removeClass('w-pay-money-selected');
+            obj.addClass("w-pay-money-selected");
+        },
+        pay_btn_select:function() {
+            $(".pay_btn").removeClass("w-pay-selected");
+            $(".pay_btn").each(function(){
+                if ( $(this)[0].style['display'] !== 'none' ) {
+                    $(this).addClass('w-pay-selected');
+                    return false;
+                }
+            });
+        },
+        //提交充值
+        submit:function(){
+            var money_unit = $("#money_unit").val();
+            var money = $(".w-pay-money.w-pay-money-selected").data("money");
+
+            var plat =$(".w-pay-type.w-pay-selected").data("plat");
+            var input = $(".w-pay-money.w-pay-money-selected").find(".w-input-input").val();
+            if(!common.empty(parseInt(input)) && !isNaN(input))money = parseInt(input);
+            if(common.empty(parseInt(plat)))plat ='alipay';
+            if(isNaN(parseInt(money))||parseInt(money)<=0){
+                layer.msg("请输入正确的金额");return false;
+            }
+
+            $("input[name='pay_type']").val(plat);
+            $("input[name='money']").val(money);
+            $("#form_recharge").submit();
+            return false;
+
+            //$("#form_recharge").submit();
+        }
+    };
+
+    $(document).on("click", ".pay_btn", function () {
+        var obj = $(this);
+        $('input[name=pay_type]').val(obj.data('plat'));
+        $(".pay_btn").removeClass("w-pay-selected");
+        obj.addClass("w-pay-selected");
+    });
+    $(document).on("click", ".w-pay-money", function () {
+        var obj = $(this);
+        func.sel_pay_money(obj);
+    });
+    $(document).on("click", ".submit", function () {
+        return func.submit();
+    });
+    func.init();
+});

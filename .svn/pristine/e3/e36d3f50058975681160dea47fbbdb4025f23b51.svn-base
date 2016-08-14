@@ -1,0 +1,78 @@
+{extend name="base/base"/}
+{block name="title"}我的夺宝记录{/block}
+{block name="user_css"}
+{css href="__static__/css/usercenter.css" /}
+{/block}
+
+{block name='content'}
+<div class="packet-t">
+	<div class="packet-op"></div>
+	<div class="packet-wx">
+		<div class="packet-wx-1">
+			<h1 class="packet-wx-h1">扫一扫</h1>
+			<p>千元红包等你来拿</p>
+			<div class="wx-so"><img style="height: 205px;width: 205px" src=""></div>
+			<p>{$copy_right|default=''}</p>
+		</div>
+		<div class="packet-wx-x"></div>
+	</div>
+</div>
+<div class="g-body">
+
+    <div class="m-user">
+        <div class="g-wrap">
+            <div class="m-user-frame-wraper">
+                <!--用户中心  菜单-->
+                {include file="ucenter/_nav" /}
+                <!--用户中心 main-->
+                <div class="m-user-frame-colMain ">
+                    <div class="m-user-frame-content" pro="userFrameWraper">
+
+                        <ul class="w-crumbs f-clear red-header">
+                            <li class="w-crumbs-item">当前位置：</li>
+                            <li class="w-crumbs-item"><a href="{:U('index')}">我的夺宝</a><span class="w-crumbs-split">&gt;</span></li>
+
+                            <li class="w-crumbs-item w-crumbs-active">我的红包</li>
+
+                        </ul>
+                        <h1>抵用卷即将过期时通知我：短信通知：{$phone|default='--'} <a href="{:U('person')}" class="packet-sp1">修改</a></h1>
+                        <section class="red-sect">
+ 							<section class="red-header">
+ 								<span class="packet-w packets unused">未使用　　<span id="unused_count">0</span></span>
+ 								<span class="packet-y packets used">已使用/已过期　　<span id="used_count">0</span></span>
+ 							</section>
+ 							<!-- 未使用 -->
+ 							<section class="packets-1 packet_unused" style="display:block">
+                                    <div pro="userCommLoading" class="w-loading"><b
+                                            class="w-loading-ico"></b><span class="w-loading-txt">正在努力加载……</span>
+                                    </div>
+ 							</section>
+
+ 							<!-- 已使用 -->
+ 							<section class="packets-1 packet_used">
+ 								<section class="w-packet-1">
+                                    <div pro="userCommLoading" class="w-loading"><b
+                                            class="w-loading-ico"></b><span class="w-loading-txt">正在努力加载……</span>
+                                    </div>
+ 								</section>
+ 							</section>
+                        </section>
+                        <div class="m-user-frame-clear"></div>
+                    </div>
+                </div>
+
+                <div class="m-user-frame-clear"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<input type="hidden" id="unused_url" value="{:U('unused_packet')}">
+<input type="hidden" id="used_url" value="{:U('used_packet')}">
+<input type="hidden" id="qr_url" value="http://{$Think.server.http_host}{:U('core/api/qr_code')}">
+<input type="hidden" id="load_unused" value="">
+<input type="hidden" id="load_used" value="">
+{/block}
+
+{block name="user_js"}
+{js href="__static__/js/ucenter/packet.js" /}
+{/block}

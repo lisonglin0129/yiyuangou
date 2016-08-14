@@ -1,0 +1,81 @@
+$(function(){
+    var func = {
+
+        init:function(){
+            func.get_unused_packet();
+        },
+        get_unused_packet: function (page) {
+            var unused_url=$('#unused_url').val();
+            $.post(unused_url,{page:page}, function (data) {
+                if(data.code==1){
+                    $('#unused_count').html(data.count);
+                    $('.packet_unused').html(data.html);
+                    $('#load_unused').val(1);
+                }
+            },'json')
+        },
+        get_used_packet: function (page) {
+            var used_url=$('#used_url').val();
+            $.post(used_url,{page:page}, function (data) {
+                if(data.code==1){
+                    $('#used_count').html(data.count);
+                    $('.packet_used').html(data.html);
+                    $('#load_used').val(1);
+                }
+            },'json')
+        }
+    };
+
+    func.init();
+
+
+// 来自文件red_packet.html
+    $(document).on("click",".unused",function(){
+      $(this).css('color','red');
+        $('.used').css('color','#000');
+        $('.packet_unused').show();
+        $('.packet_used').hide();
+        if(!$('#load_unused').val()){
+            func.get_unused_packet();
+        }
+    });
+    $(document).on("click",".used",function(){
+        $(this).css('color','red');
+        $('.unused').css('color','#000');
+        $('.packet_unused').hide();
+        $('.packet_used').show();
+        if(!$('#load_used').val()) {
+            func.get_used_packet();
+        }
+    });
+    $(document).on('click', '.page_btn', function () {
+        var obj = $(this);
+        var flag = obj.closest('.xc_pages').data('flag');
+        var page = obj.data('page');
+        switch (flag) {
+            case 'used':
+                func.get_used_packet(page);
+                break;
+            case 'unused':
+                func.get_unused_packet(page);
+                break;
+        }
+    });
+    $(document).on("click",".packet-bt",function(){
+        /**
+         * http://test.xiangchang.com/index.php/core/api/qr_code.html?text=http://test.xiangchang.com/index.php/mobile/other_users/register/spread_userid/19901.html
+         */
+          var src=$('#qr_url').val()+'?text='+$(this).data('url');
+        $('.wx-so').find('img').attr('src',src);
+        $(".packet-t").show()
+    });
+
+    $(document).on("click",".packet-wx-x",function(){
+        $(".packet-t").hide()
+    });
+
+
+
+
+
+});

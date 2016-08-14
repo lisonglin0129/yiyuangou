@@ -1,0 +1,124 @@
+{extend name="base/common"}
+
+
+{block name="title"}上传头像{/block}
+
+{block name="head"}
+<script src="__MOBILE_JS__/jquery.min.js"></script>
+<link href="__MOBILE_CSS__/user.css" rel="stylesheet"/>
+<script src="__MOBILE_JS__/js"></script>
+{js href="__plugin__/webuploader/webuploader.min.js" /}
+{css href="__plugin__/webuploader/webuploader.css" /}
+{/block}
+
+{block name="main"}
+<div style="margin: 0 auto;">
+    <div style="float: left">
+    <span>头像预览:</span>
+    </div>
+    <div style="float: left" id="imgList">
+
+    </div>
+    <div style="clear: both"></div>
+    <div id="uploader" class="wu-example">
+        <!--用来存放文件信息-->
+        <div id="thelist" class="uploader-list"></div>
+        <div class="btns">
+            <div id="picker">选择文件</div>
+            <button id="ctlBtn" class="btn btn-default">开始上传</button>
+        </div>
+    </div>
+</div>
+
+<input id="upload_url" type="hidden" value="{:U('core/upload/upload_img')}">
+<input type="hidden" id="swf_path" value="__plugin__/webuploader/uploader.swf"><!--swf-->
+<input type="hidden" id="save_url" value="{:U('yyg/ucenter/save_login_user_img')}">
+
+<script>
+    $(document).ready(function(){
+        var url = $("#upload_url").val();
+        var uploader = WebUploader.create({
+            // 自动上传。
+            auto: true,
+
+            // swf文件路径
+            swf: $("#swf_path").val(),
+
+            // 文件接收服务端。
+            server: url,
+
+            // 选择文件的按钮。可选。
+            // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+            pick: '#picker',
+
+            // 只允许选择文件，可选。
+            accept: {
+                title: 'Images',
+                extensions: 'gif,jpg,jpeg,bmp,png',
+                mimeTypes: 'image/*'
+            },
+            fileSizeLimit: 5 * 1024 * 1024 ,
+            fileNumLimit:12
+        });
+        var $list = $('#imgList');
+        // 当有文件添加进来的时候
+        uploader.on( 'fileQueued', function( file ) {
+            $("#imgList").empty();
+            var $li = $(
+                            '<div id="' + file.id + '" class="file-item thumbnail">' +
+                            '<img>' +
+                            '<div class="info">' + file.name + '</div>' +
+                            '</div>'
+                    ),
+                    $img = $li.find('img');
+
+
+            // $list为容器jQuery实例
+            $list.append( $li );
+
+            // 创建缩略图
+            // 如果为非图片文件，可以不用调用此方法。
+            // thumbnailWidth x thumbnailHeight 为 100 x 100
+            uploader.makeThumb( file, function( error, src ) {
+                if ( error ) {
+                    $img.replaceWith('<span>不能预览</span>');
+                    return;
+                }
+
+                $img.attr( 'src', src );
+            }, 80, 80 );
+        });
+
+        // 文件上传成功.
+        uploader.on( 'uploadSuccess', function( file,data ) {
+            var $li = $( '#'+file.id );
+            $li.find('.progress>.inner').remove();
+            var url = $("#save_url").val();
+            $.ajax({
+                url:url,
+                data:{id:data   .id},
+                dataType:'json',
+                type:'post',
+                success:function(data) {
+                    if ( data.code == 1 ) {
+                        layer.open({
+                            content: '上传成功',
+                            time: 1
+                        });
+                    } else {
+                        layer.open({
+                            content: '上传失败',
+                            time: 1
+                        });
+
+                    }
+
+                }
+
+            })
+        });
+
+    });
+</script>
+{/block}
+

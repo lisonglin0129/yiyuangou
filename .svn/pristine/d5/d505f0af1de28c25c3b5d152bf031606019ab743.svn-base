@@ -1,0 +1,28 @@
+.iwant-main{
+	margin:220px auto;
+	padding-top: 286px;
+	width: 580px;
+	height: 150px;
+	line-height: 35px;
+	text-align: center;
+	background:url(../img/pays.png) no-repeat 137px 0px;
+}
+.iwant-top1{
+	color: #e97777;
+	font-size: 27px;
+}
+.iwant-top2{
+	color: #afafaf;
+}
+.iwant-see{
+	display: block;
+	margin: 0 auto;
+	width: 710px;
+	height: 88px;
+	line-height: 88px;
+	text-align: center;
+	border-radius: 10px;
+	font-size: 35px;
+	background-color: #fe2b60;
+}
+

@@ -1,0 +1,131 @@
+
+
+{extend name="base/common"}
+
+{block name="head"}
+<link href="__MOBILE_CSS__/user.css" rel="stylesheet"/>
+<script src="__MOBILE_JS__/jquery.min.js"></script>
+<script src="http://apps.bdimg.com/libs/layer/2.1/layer.js"></script>
+
+
+<script>
+    $(function(){
+
+
+        //源自文件cz.html
+        $(".cz2-1").click(function() {
+            var index = $(this).index()-1;
+            $(".cz2-1").eq(index).css("border", "2px solid red").siblings(".cz2-1").css("border", "2px solid #F7F7F7");
+
+            //赋值金额
+
+            $('#price').val($(this).find('button').text());
+        });
+
+        $('.price-text').blur(function () {
+            var price = parseFloat($(this).val()).toFixed(2);
+            if(isNaN(price)) {
+                $('#price').val('');
+            }else{
+                $(this).val(price);
+                $('#price').val(price);
+            };
+        });
+
+		$('#mainform').attr('action',"{:U('Aipay/recharge')}");
+		$('.pay_type').change(function(){
+			if($(this).val()=='wxpay'){
+				$('#mainform').attr('action',"{:U('weixin/recharge')}");
+			}else if($(this).val()=='alipay'){
+				$('#mainform').attr('action',"{:U('Alipay/personal_charge')}");
+			}else{
+				$('#mainform').attr('action',"{:U('Aipay/recharge')}");
+			}
+		});
+
+		var select = $("input[name='pay_type']").eq(0);
+		select.attr('checked','checked');
+		$('#mainform').attr('action',select.attr('data-value'));
+
+		$("form").submit(function(){
+			if($('.price-text').val()<0.00){
+				alert("充值金额错误");return false;
+			}
+		});
+
+
+		//layer.alert('1元=1{:C('MONEY_UNIT')}{:C('MONEY_NAME')}，可用来参与夺宝，充值金额无法退回。');
+
+    })
+</script>
+
+
+
+{/block}
+
+
+
+
+
+{block name="main"}
+
+
+
+<div class="m-user mm czz" id="dvWrapper">
+	<div class="m-simpleHeader" id="dvHeader">
+		<a href="{:U('Users/personal_center')}" data-pro="back" data-back="true" class="m-simpleHeader-back"><i class="ico ico-back"></i></a>
+		<h1>充值</h1>
+	</div>
+</div>
+<div class="cz-1">
+	<span class="sp9">选择充值金额（元）</span>
+</div>
+<div class="cz-2">
+	<form action="{:U('Alipay/personal_charge')}" method="post" target="_self" id="mainform">
+        <input type="hidden" value="20" name="money" id="price"/>
+		<div class="cz2-1 fix_price" style="border:2px solid red">
+			<button type="button" class="cz2-11 att2">20</button>
+		</div>
+		<div class="cz2-1 fix_price">
+			<button type="button" class="cz2-11">50</button>
+		</div>
+		<div class="cz2-1 fix_price">
+			<button type="button" class="cz2-11">100</button>
+		</div>
+		<div class="cz2-1 fix_price">
+			<button type="button" class="cz2-11">200</button>
+		</div>
+		<div class="cz2-1 ">
+			<input type="number" class="cz2-12 price-text" value="" placeholder="其他金额"/>
+		</div>
+	<div class="aa">
+		<div class="clr"></div>
+		<div class="zffs1 zffs1s" style="border-top: none;">
+			<span class="sp9">请选择支付方式</span>
+		</div>
+		<!--  -->
+		{if condition="$pay_type['ALI_PAY'] eq 1 "}
+        <label class="rad adda "><input type="radio" name="pay_type" data-value="{:U('Alipay/personal_charge')}" class="rad1 pay_type" value="alipay"/>支付宝</label>
+		{/if}
+		{if condition="$pay_type['W_PAY'] eq 1 "}
+        <label class="rad adda "><input type="radio" name="pay_type" data-value="{:U('weixin/recharge')}" class="rad1 pay_type" value="wxpay"/>微信</label>
+		{/if}
+		{if condition="$pay_type['AIBEI_PAY'] eq 1 "}
+		<label class="rad adda "><input type="radio" name="pay_type"  data-value="{:U('Aipay/recharge')}" class="rad1 pay_type"  value="aipay"/>爱贝支付</label>
+		{/if}
+		<div class="clear"></div>
+		
+			
+		
+	</div>
+	<section style="font-size: 8px;margin: 0 auto;color: red;text-align: center;margin-top: 30px;">	
+		温馨提示：充值可获得{:C('MONEY_NAME')}（1元=1{:C('MONEY_NAME')}），可用于夺宝，已充值的款项无法退回。
+	</section>
+	<div class="ah">
+	</div>
+	<div class="aff affss">
+		<input type="submit" value="提交" class="sub1"/>
+	</div>
+    </form>
+</div>
+{/block}

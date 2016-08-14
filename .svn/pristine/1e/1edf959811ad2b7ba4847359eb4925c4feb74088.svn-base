@@ -1,0 +1,72 @@
+
+{extend name="base/common"}
+
+
+{block name="title"}个人中心 - 充值{/block}
+
+{block name="head"}
+<script src="__MOBILE_JS__/jquery.min.js"></script>
+<link href="__MOBILE_CSS__/user.css" rel="stylesheet"/>
+<script src="__MOBILE_JS__/js"></script>
+{/block}
+
+
+{block name="main"}
+<div class="m-user mm czz" id="dvWrapper">
+	<div class="m-simpleHeader" id="dvHeader">
+		<a href="javascript:history.go(-1);" data-pro="back" data-back="true" class="m-simpleHeader-back"><i class="ico ico-back"></i></a>
+		<h1>个人中心</h1>
+	</div>
+	<div class="clear">
+	</div>
+</div>
+<div class="aa">
+	<a href="{:U('upload_portrait')}">
+		<div class="grzl-1">
+			<div class="grzl-11">
+				<div class="grzl-11-left">
+					头像
+				</div>
+				<div class="grzl-11-right">
+					<img src="{$personal_data.user_face}">
+				</div>
+			</div>
+		</div>
+	</a>
+	<div class="grzl-2">
+		<section class="le">ID</section>
+		<section class="ri" style="color:#000;">{$personal_data.user_id}</section>
+	</div>
+	<div class="grzl-3">
+		<section class="le">账号</section>
+		<section class="le" style="color:#000;">{$personal_data.username}</section>
+	</div>
+	<a href="{:U('Users/modify_nickname')}">
+	<div class="grzl-2">
+		<section class="le">昵称</section>
+		<section class="ri" style="color:#0079fe;">{$personal_data.nick_name}</section>
+	</div>
+	</a>
+	<a href="{:U('Users/modify_phone')}">
+	<div class="grzl-2">
+		<section class="le">手机号码</section>
+		<section class="ri" style="color:#0079fe;">{$personal_data.phone}</section>
+	</div>
+	</a>
+	<a href="{:U('Users/address_list')}">
+	<div class="grzl-2">
+		<section class="le">我的收货地址</section>
+		<section class="ri">
+		<li class="ico-next" style="color:#A9A9A9;"></li>
+		</section>
+	</div>
+	</a>
+	<div class="grzl-2">
+		<section class="le">注册时间</section>
+		<section class="ri" style="color:#0079fe;">{$personal_data.create_time|date='Y-m-d',###|default="未知"}</section>
+	</div>
+</div>
+
+{/block}
+
+

@@ -1,0 +1,19 @@
+/**
+ * Created by deloo on 2016/3/23.
+ */
+$(document).on("click", ".w-tabs-tab-item", function () {
+    var obj = $(this);
+    var id = obj.attr("id");
+    $(".w-tabs-panel-item").hide();
+    $(".w-tabs-panel-item." + id).fadeIn();
+    $(".w-tabs-tab-item").removeClass("w-tabs-tab-item-selected");
+    obj.addClass("w-tabs-tab-item-selected");
+});
+
+//长度条设置
+$(function () {
+	
+	var a = $(".detail-table-top2s").height();
+  	 $(".rounds-line").height(a);
+
+})

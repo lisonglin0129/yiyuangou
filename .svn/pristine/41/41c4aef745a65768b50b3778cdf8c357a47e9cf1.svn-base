@@ -1,0 +1,270 @@
+{extend name="base/base"/}
+{block name="user_css"}
+{css href="__static__/css/index.css" /}
+{css href="__static__/css/swiper.min.css" /}
+{css href="__static__/css/act.css" /}
+{/block}
+{block name="title"}晒单分享{/block}
+{block name='content'}
+
+<div class="g-body">
+    <div  id="pro-view-0" >
+        <div class="m-share">
+            <div class="m-share-slogan m-share-slogans">
+                <div class="w-act-main"></div>
+            </div>
+<!-- ======================时间限购区=========================== -->
+        <section class="w-act-banner b1s">
+                <p class="swiper-p">时间限购区</p>
+                <p class="swiper-p2">某时间段内，0元购商品；（如：6月18日至6月20日0元可购买的商品）</p>
+                <p class="swiper-p2"> 某时间段内，低价购商品；（如：6月18日至6月20日0元可购买的商品）</p>
+            <div class="swiper-container">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <div class="w-swiper-act">   
+                                <img src="" class="w-swiper-img"/>
+                                <!-- p 标签误删，详情看js代码 -->
+                                <section class="figcaption">
+                                    <p>       
+                                        Apple iMac 27 英寸配备 Retina 5K 显示屏  MK482CH/AApple iMac 27 英寸配备 Retina 5K 显示屏  MK482CH/AApple iMac 27 英寸配备 Retina 5K 显示屏  MK482CH/A
+                                    </p>
+                                </section>                        
+                                <section class="w-swiper-sect">
+                                    <section class="w-swiper-time">
+                                     <i class="icon iconfont w-swiper-cio">&#xe672;</i>
+                                          <span>0</span><span>0</span><span class="w-swiper-sp">:</span>
+                                          <span>0</span><span>0</span><span class="w-swiper-sp">:</span>
+                                          <span>0</span><span>0</span>
+                                    </section>
+                                    <a href="" class="w-swiper-a">{:C('ONE_AWARD_BTN_KEYWORDS')}</a>
+                                </section>
+                        </div>
+
+                    </div>
+                    <div class="swiper-slide">Slide 2</div>
+                    <div class="swiper-slide">Slide 3</div>
+                </div>
+                <!-- Add Pagination 勿删 --> 
+                <!-- <div class="swiper-pagination"></div> -->
+                <!-- Add Arrows -->
+
+                <div class="act-s">
+                    <div class="swiper-button-next"><i class="icon iconfont atc-ico">&#xe611;</i></div>
+                    <div class="swiper-button-prev"><i class="icon iconfont atc-ico">&#xe61b;</i></div>
+                </div>
+            </div>
+        </section>
+
+
+
+
+
+<!-- =========================推广限购区============================= -->
+
+         <section class="w-act-banner act-promote b2s">
+               <p class="swiper-p swiper-ps">推广限购区</p>
+                <p class="swiper-p2">某时间段内，推广用户达到一定数量可购买该活动区的商品。</p>
+            <div class="swiper-container">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+
+                        <div class="w-swiper-act">   
+                                <img src="" class="w-swiper-img"/>                             
+                                <section class="figcaption w-swiper-promote">
+                                    <p class="w-promote-ps">索尼（SONY）PS4索尼（SONY）PS4索尼（SONY）PS4索尼（SONY）PS4</p>
+                                    <p class="w-promote-p">总需：2899 人次</p>
+                                </section>   
+                                <div class="w-promote-sect">
+                                    <div class="w-promote-sects"></div>
+                                </div>                                                    
+                                <section class="w-promote-sect2s">
+                                    <p>2345</p>
+                                    <p>17860</p>
+                                </section>
+                                 <section class="w-promote-sect2s w-promote-sect2ss">
+                                    <p>已参与人次</p>
+                                    <p>剩余人次</p>
+                                </section>
+
+                                <section class="w-promote-sect2s w-promote-sect3s">
+                                    <a href="" class="w-promote-a">{:C('ONE_AWARD_BTN_KEYWORDS')}</a>
+
+                                    <div class="w-promote-as"></div>
+                                </section>
+                        </div>
+
+
+
+                    </div>
+                    <div class="swiper-slide">Slide 2</div>
+                    <div class="swiper-slide">Slide 3</div>
+                </div>
+                <!-- Add Pagination 勿删 --> 
+                <!-- <div class="swiper-pagination"></div> -->
+                <!-- Add Arrows -->
+
+                <div class="act-s">
+                    <div class="swiper-button-next"><i class="icon iconfont atc-ico">&#xe611;</i></div>
+                    <div class="swiper-button-prev"><i class="icon iconfont atc-ico">&#xe61b;</i></div>
+                </div>
+            </div>
+        </section>
+
+
+ <!-- =========================充值限购区============================= -->
+
+         <section class="w-act-banner act-promote act-recharge b3s">
+               <p class="swiper-p swiper-ps">充值限购区</p>
+                <p class="swiper-p2">用户日充值满多少元0元购商品；用户周充值满多少元0元购商品；</p>
+                <p class="swiper-p2">用户日充值满多少元低价购商品；用户周充值满多少元低价购商品；</p>
+                <p class="swiper-p2">用户日充值满多少元低价购商品；用户周充值满多少元低价购商品；</p>
+            <div class="swiper-container">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+
+                        <div class="w-swiper-act">   
+                                <img src="" class="w-swiper-img"/>                             
+                                <section class="figcaption w-swiper-promote">
+                                    <p class="w-promote-ps">索尼（SONY）PS4索尼（SONY）PS4索尼（SONY）PS4索尼（SONY）PS4</p>
+                                    <p class="w-promote-p">总需：2899 人次</p>
+                                </section>   
+                                <div class="w-promote-sect">
+                                    <div class="w-promote-sects"></div>
+                                </div>                                                    
+                                <section class="w-promote-sect2s">
+                                    <p>2345</p>
+                                    <p>17860</p>
+                                </section>
+                                 <section class="w-promote-sect2s w-promote-sect2ss">
+                                    <p>已参与人次</p>
+                                    <p>剩余人次</p>
+                                </section>
+
+                                <section class="w-promote-sect2s w-promote-sect3s">
+                                    <a href="" class="w-promote-a">{:C('ONE_AWARD_BTN_KEYWORDS')}</a>
+
+                                    <div class="w-promote-as"></div>
+                                </section>
+                        </div>
+
+                        
+
+                    </div>
+                    <div class="swiper-slide">Slide 2</div>
+                    <div class="swiper-slide">Slide 3</div>
+                </div>
+                <!-- Add Pagination 勿删 --> 
+                <!-- <div class="swiper-pagination"></div> -->
+                <!-- Add Arrows -->
+
+               <div class="act-s">
+                    <div class="swiper-button-next"><i class="icon iconfont atc-ico">&#xe611;</i></div>
+                    <div class="swiper-button-prev"><i class="icon iconfont atc-ico">&#xe61b;</i></div>
+                </div>
+            </div>
+        </section>
+
+
+ <!-- =========================积分限购区============================= -->
+
+         <section class="w-act-banner act-promote act-integral b4s">
+               <p class="swiper-p swiper-ps">积分限购区</p>
+                <p class="swiper-p2"> 用户积分满多少可0元购商品。</p>
+            <div class="swiper-container">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+
+                        <div class="w-swiper-act">   
+                                <img src="" class="w-swiper-img"/>                             
+                                <section class="figcaption w-swiper-promote">
+                                    <p class="w-promote-ps">索尼（SONY）PS4索尼（SONY）PS4索尼（SONY）PS4索尼（SONY）PS4</p>
+                                    <p class="w-promote-p">总需：2899 人次</p>
+                                </section>   
+                                <div class="w-promote-sect">
+                                    <div class="w-promote-sects"></div>
+                                </div>                                                    
+                                <section class="w-promote-sect2s">
+                                    <p>2345</p>
+                                    <p>17860</p>
+                                </section>
+                                 <section class="w-promote-sect2s w-promote-sect2ss">
+                                    <p>已参与人次</p>
+                                    <p>剩余人次</p>
+                                </section>
+
+                                <section class="w-promote-sect2s w-promote-sect3s">
+                                    <a href="" class="w-promote-a">{:C('ONE_AWARD_BTN_KEYWORDS')}</a>
+
+                                    <div class="w-promote-as"></div>
+                                </section>
+                        </div>
+
+                        
+
+                    </div>
+
+                    <div class="swiper-slide">Slide 2</div>
+                    <div class="swiper-slide">Slide 3</div>
+                </div>
+                <!-- Add Pagination 勿删 --> 
+                <!-- <div class="swiper-pagination"></div> -->
+                <!-- Add Arrows -->
+                <div class="act-s">
+                    <div class="swiper-button-next"><i class="icon iconfont atc-ico">&#xe611;</i></div>
+                    <div class="swiper-button-prev"><i class="icon iconfont atc-ico">&#xe61b;</i></div>
+                </div>
+            </div>
+        </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <div class="w-loading" id="share_loading" style="display: none;">
+                <b class="w-loading-ico"></b>
+                <span class="w-loading-txt">正在努力加载……</span>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="temp_share" class="temp_share_list hidden_temp">
+
+</div>
+<input type="hidden" id="share_get" value="{:U('Share/pull_list')}">
+<input type="hidden" id="user_link" value="#" >
+<input type="hidden" id="goods_link" value="{:U('Goods/detail')}" >
+<input type="hidden" id="share_link" value="{:U('Share/detail')}" >
+{/block}
+{block name="user_js"}
+{js href='__static__/js/swiper.min.js' /}
+
+ <script>
+    var swiper = new Swiper('.swiper-container', {
+        pagination: '.swiper-pagination',
+        nextButton: '.swiper-button-next',
+        prevButton: '.swiper-button-prev',
+        paginationClickable: true,
+        centeredSlides: true,
+        // autoplay: 2500,
+        speed:1000,
+        autoplayDisableOnInteraction: false,
+        loop: true
+    });
+    </script>
+
+
+{js href='__static__/js/index.js' /}
+{js href='__static__/js/activity.js' /}
+{/block}

@@ -1,0 +1,143 @@
+{extend name="base/base" /}
+{block name="css"}
+{css href="__common__/admin/css/goods/form.css" /}
+{css href="__plugin__/umeditor/themes/default/css/umeditor.min.css"/}
+{/block}
+{block name="content"}
+
+<div class="page-content">
+    <div class="page-header">
+        <h1>
+            卡密管理
+            <small>
+                <i class="icon-double-angle-right"></i>
+                {notempty name='type'}
+                {switch name='type'}
+                {case value='add'}添加{/case}
+                {case value='edit'}编辑{/case}
+                {default /}查看
+                {/switch}
+                {/notempty}
+            </small>
+        </h1>
+    </div><!-- /.page-header -->
+
+    <div class="row">
+        <div class="col-xs-12">
+            <!-- PAGE CONTENT BEGINS -->
+            <form class="form-horizontal" role="form" id="form_content" method="post" action="{:U('csv_import_do')}" enctype="multipart/form-data" target="_blank">
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right"> 用户名所在列 </label>
+                    <div class="col-sm-6">
+                        <input type="text" name="col_username" value="1">
+                    </div>
+                </div>
+                <div class="space-4"></div>
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right"> 密码所在列 </label>
+                    <div class="col-sm-6">
+                        <input type="text" name="col_passwd" value="2">
+                    </div>
+                </div>
+                <div class="space-4"></div>
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right"> 昵称所在列(可选) </label>
+                    <div class="col-sm-6">
+                        <input type="text" name="col_nick" value="">
+                    </div>
+                </div>
+                <div class="space-4"></div>
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right"> 手机号码所在列(可选) </label>
+                    <div class="col-sm-6">
+                        <input type="text" name="col_phone" value="">
+                    </div>
+                </div>
+                <div class="space-4"></div>
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right"> 文件编码 </label>
+                    <div class="col-sm-6">
+                        <select name="charset">
+                            <option value="0">UTF-8</option>
+                            <option value="1">GB2312</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="space-4"></div>
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right">文件</label>
+                    <div class="col-sm-6">
+                        <input type="file" name="file">
+                    </div>
+                </div>
+                <div class="space-4"></div>
+
+                <!--操作按钮-->
+                <div class="clearfix form-actions">
+                    <div class="col-md-offset-3 col-md-9">
+                        <button class="btn btn-info submit_btn" type="button">
+                            <i class="icon-ok bigger-110"></i>
+                            提交表单
+                        </button>
+                        &nbsp; &nbsp; &nbsp;
+                        <button class="btn" type="reset">
+                            <i class="icon-undo bigger-110"></i>
+                            重置
+                        </button>
+                        &nbsp; &nbsp; &nbsp;
+                        <button class="btn btn-default close_page" type="button">
+                            <i class="fa fa-times bigger-110"></i>
+                            关闭页面
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div><!-- /.row -->
+    </div><!-- /.page-content -->
+</div>
+
+<input type="hidden" id="submit_url" value="{:U('csv_import_do')}">
+<input type="hidden" id="root_url" value="{:U('index')}">
+<input type="hidden" id="type" value="{$type|default='add'}">
+{/block}
+{block name="js"}
+<script language="javascript">
+$(function () {
+    var func = {
+
+        //保存内容
+        submit: function () {
+            var url = $("#submit_url").val();
+            var param = $("#form_content").serialize();
+
+            var formData = new FormData($( "#form_content" )[0]);
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: formData,
+                async: false,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (returndata) {
+                    alert(returndata);
+                },
+                error: function (returndata) {
+                    alert(returndata);
+                }
+            });
+        }
+    };
+    $(document).on("click", ".submit_btn", function () {
+        $("#form_content").submit();
+    });
+});
+</script>
+{js href='__plugin__/umeditor/lang/zh-cn/zh-cn.js' /}
+{/block}

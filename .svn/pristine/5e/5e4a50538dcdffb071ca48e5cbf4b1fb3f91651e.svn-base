@@ -1,0 +1,133 @@
+{extend name="base/base"/}
+{block name="title"}添加账户{/block}
+{block name="user_css"}
+{css href="__static__/css/usercenter.css" /}
+{css href="__static__/css/promote.css" /}
+{/block}
+{block name='content'}
+<div class="g-body">
+    <div class="m-user">
+        <div class="g-wrap">
+            <div class="m-user-frame-wraper">
+                <!--用户中心  菜单-->
+                {include file="ucenter/_nav" /}
+                <!--用户中心 main-->
+                <div class="m-user-frame-colMain ">
+                    <div class="m-user-frame-content" >
+                        <ul class="w-crumbs f-clear">
+                            <li class="w-crumbs-item">当前位置：</li>
+                            <li class="w-crumbs-item"><a href="promote.html">我的推广</a><span class="w-crumbs-split">&gt;</span></li>
+                            <li class="w-crumbs-item w-crumbs-active">添加账户</li>
+                        </ul>
+                        <div class="m-user-comm-wraper">
+                            <div class=" pro-title">
+                                <h2>添加账户</h2>
+                            </div>
+                            <div class=" pro-detail pex-con">
+                                <form method="post">
+                                <div class="pro-form prf-add-account">
+                                    <div class="pf-line">
+                                        <label class="pf-l-l">真实姓名</label>
+                                        <div class="pf-l-m">
+                                            <input type="text" placeholder="请输入您的姓名" name="name" id="name">
+                                        </div>
+                                        <span class="pf-l-tip"><i class="iconfont">&#xe64b;</i><span>请输入正确的真实姓名,不可输入数字和特殊字符</span></span>
+                                    </div>
+                                    <div class="pf-line">
+                                        <label class="pf-l-l">证件号码</label>
+                                        <div class="pf-l-m">
+                                            <input type="text" placeholder="请输入证件号码" name="identify" id="identify">
+                                        </div>
+                                        <span class="pf-l-tip"><i class="iconfont">&#xe64b;</i><span>请输入正确的身份证等证件号</span></span>
+                                    </div>
+                                    <div class="pf-line" style="position: relative;z-index: 2;">
+                                        <label class="pf-l-l">账户类型</label>
+                                        <div class="pf-l-m">
+                                            <div class="pf-l-accounts account_type">
+                                                <span>账户类型</span>
+                                                <input type="hidden" id="account_type" name="account_type" value="">
+                                                <i class="iconfont">&#xe647;</i>
+                                                <ul class="pf-l-a-sel">
+                                                    <li data-val="1">银行卡</li>
+                                                    <li data-val="2">支付宝</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <span class="pf-l-tip"><i class="iconfont">&#xe64b;</i><span>请选择账号类型</span></span>
+                                    </div>
+                                    <div class="pf-line" id="banks" style="position: relative;z-index: 1;">
+                                        <label class="pf-l-l">所属银行</label>
+                                        <div class="pf-l-m">
+                                            <div class="pf-l-accounts type">
+                                                <span>银行名称</span>
+                                                <input type="hidden" id="type" name="type" value="">
+                                                <input type="hidden" id="bank_name" name="bank_name">
+                                                <i class="iconfont">&#xe647;</i>
+                                                <ul class="pf-l-a-sel">
+                                                    <li data-val="3">中国银行</li>
+                                                    <li data-val="4">农业银行</li>
+                                                    <li data-val="5">工商银行</li>
+                                                    <li data-val="6">建设银行</li>
+                                                    <li data-val="7">民生银行</li>
+                                                    <li data-val="8">交通银行</li>
+                                                    <li data-val="9">广发银行</li>
+                                                    <li data-val="10">兴业银行</li>
+                                                    <li data-val="11">招商银行</li>
+                                                    <li data-val="12">光大银行</li>
+                                                    <li data-val="13">邮政储蓄</li>
+                                                    <li data-val="14">中信银行</li>
+                                                    <li data-val="15">浦发银行</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <span class="pf-l-tip"><i class="iconfont">&#xe64b;</i><span>请选择所属银行</span></span>
+                                    </div>
+                                    <div class="pf-line">
+                                        <label class="pf-l-l">账号</label>
+                                        <div class="pf-l-m">
+                                            <input type="text" placeholder="请输入您的账号" name="bank_no" id="bank_no">
+                                        </div>
+                                        <span class="pf-l-tip"><i class="iconfont">&#xe64b;</i><span>请输入您的账号</span></span>
+                                    </div>
+                                    <div class="pf-line" id="is_default">
+                                        <label class="pf-l-l">&nbsp;</label>
+                                        <div class="pf-l-m">
+                                            <input class="pf-l-check" type="checkbox" name="is_default">
+                                            <span class="pf-l-c-tip">将此卡设置为默认提现卡</span>
+                                        </div>
+                                    </div>
+                                    <div class="pf-line">
+                                        <input type="hidden" name="uid" value="{:get_user_id()}">
+                                        <input class="pf-l-submit" type="button" value="立即添加">
+                                    </div>
+
+                                </div>
+                                    </form>
+                                <div class="pec-notice">
+                                    <span><i class="iconfont pec-n-ti">&#xe64c;</i></span>
+                                    <div class="pec-n-t">
+                                        <h4>注意事项</h4>
+                                        <p>
+                                            1、添加账户必须为本人银行借记卡，支付宝账户，不支持存折、信用卡提现；<br>
+                                            2、银行帐号最多可以添加8个，请仔细填写，填写完后无法修改；<br>
+                                            3、您填写的银行帐号户名、支付宝账户必须与你实名认证的身份证姓名一致，否则无法到帐，后果自负；<br>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="m-user-frame-clear"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<input type="hidden" id="submit_url" value="{:U('account_save')}">
+<input type="hidden" id="root_url" value="{:U('extract')}">
+
+{/block}
+{block name="user_js"}
+{js href="__static__/js/ucenter/add_extract_acount.js" /}
+{/block}

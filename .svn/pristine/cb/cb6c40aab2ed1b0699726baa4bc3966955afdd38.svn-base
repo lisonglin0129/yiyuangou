@@ -1,0 +1,87 @@
+{extend name='base/base' /}
+{block name='content'}
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('breadcrumbs', 'fixed')
+        } catch (e) {
+        }
+    </script>
+
+    <ul class="breadcrumb">
+        <li>
+            <i class="icon-home home-icon"></i>
+            <a href="javascript:">后台管理</a>
+        </li>
+        <li class="active">中奖纪录</li>
+    </ul><!-- .breadcrumb -->
+
+
+</div>
+
+<div class="page-content">
+    <div class="page-header">
+        <form id="form_condition" class="form-search form-inline">
+            <div class="row">
+                <div class="col-xs-8">
+                    <div class="row">
+                        <div class="col-xs-2">
+                            <select class="form-control" id="form-field-select-1" name="field">
+                                <option value="u.phone">手机</option>
+                            </select>
+                        </div>
+                        <div class="col-xs-2">
+                            <select class="form-control" id="form-field-select-2" name="field2">
+                                <option value="">全部用户</option>
+                                <option value="1">普通用户</option>
+                                <option value="-1">机器人</option>
+                                <option value="2">商户</option>
+                            </select>
+                            </div>
+                        <div class="col-xs-2">
+                            <select class="form-control" id="form-field-select-3" name="field3">
+                                <option value="">获奖状态</option>
+                                <option value="1">用户确认收货地址</option>
+                                <option value="2">商品等待派发</option>
+                                <option value="3">商品已派发</option>
+                                <option value="4">商品已经签收</option>
+                                <option value="5">晒单完成</option>
+                            </select>
+                        </div>
+                        <div class="col-xs-6">
+                            <div class="input-group">
+                                <input class="form-control search-query fc-input" style="min-width: 120px" placeholder="请输入" type="text" name="keywords">
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-purple btn-sm search_btn">
+                                        搜索
+                                        <i class="icon-search icon-on-right bigger-110"></i>
+                                    </button>
+                                </span>
+                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <!-- PAGE CONTENT BEGINS -->
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="table-responsive">
+                    <div id="form_content" data-url="{:U('show_list')}"></div>
+                    </div><!-- /.table-responsive -->
+                </div><!-- /span -->
+            </div><!-- /row -->
+        </div><!-- /.col -->
+    </div><!-- /.row -->
+</div><!-- /.page-content -->
+
+<input type="hidden" id="del_url" value="{:U('del')}">
+
+{/block}
+
+{block name="js"}
+{js href='__common__/admin/js/order/index.js' /}
+{/block}

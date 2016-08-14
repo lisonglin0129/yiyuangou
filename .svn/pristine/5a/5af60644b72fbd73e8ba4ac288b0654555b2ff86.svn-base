@@ -1,0 +1,25 @@
+{extend name="base/common"}
+
+
+
+{block name="head"}
+<script type="text/javascript" src="__MOBILE_JS__/jquery.min.js"></script>
+<script type="text/javascript" src="__MOBILE_JS__/common.js"></script>
+
+{/block}
+
+
+{block name="main"}
+{if condition="!isset($_GET['a'])"}
+<div class="m-simpleHeader" id="dvHeader">
+    <a href="javascript:history.go(-1)" data-pro="back" data-back="true" class="m-simpleHeader-back"><i class="ico ico-back"></i></a>
+    <h1>{$agreement.title|default=''}</h1>
+</div>
+{/if}
+<div style="margin: 0 auto;padding:20px ">
+    {$agreement.content_mob|default=''}
+
+</div>
+
+
+{/block}

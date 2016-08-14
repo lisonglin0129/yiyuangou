@@ -1,0 +1,141 @@
+{extend name="base/common"}
+
+
+
+{block name="head"}
+<script type="text/javascript" src="__MOBILE_JS__/jquery.min.js"></script>
+<script type="text/javascript" src="__MOBILE_JS__/common.js"></script>
+<link href="__MOBILE_CSS__/login.css" rel="stylesheet" />
+
+{/block}
+
+
+{block name="main"}
+
+<div class="m-simpleHeader" id="dvHeader">
+		<a href="javascript:history.go(-1)" data-pro="back" data-back="true" class="m-simpleHeader-back"><i class="ico ico-back"></i></a>
+		<h1>用户登录</h1>
+	</div>
+	<div class="m-login">
+		<div class="m-login-tips" id="tips"></div>
+		<div class="m-login-form w-form">
+			<div class="w-form-item m-login-form-account w-inputBar w-bar" id="dvAccount"><div class="w-bar-label">帐号：</div><a data-pro="clear" href="javascript:void(0);" class="w-bar-input-clear">×</a><div class="w-bar-control"><input placeholder="请输入帐号" autocapitalize="off" data-pro="input" class="w-bar-input" type="text" name="" value=""></div></div>
+			<div class="w-form-item m-login-form-password w-inputBar w-bar" id="dvPassword"><div class="w-bar-label">密码：</div><a data-pro="clear" href="javascript:void(0);" class="w-bar-input-clear">×</a><div class="w-bar-control"><input placeholder="请输入密码" autocapitalize="off" data-pro="input" class="w-bar-input" type="password" name="" value=""></div></div>
+			<div class="m-login-menu" id="autoCmpl" style="display:none;"></div>
+		</div>
+		<div class="m-login-tips-bottom" id="tipsBottom"></div>
+		<div class="m-login-submit"><button class="w-button w-button-main" data-pro="submit" id="btnLogin">登 录</button></div>
+		<div class="m-login-link">
+			<a href="{:U('OtherUsers/register')}">进行注册</a>
+			<a href="{:U('OtherUsers/forget_password')}" id="aForget" class="aside" target="_blank">忘记密码？</a>
+		</div>
+		{if condition="C('UNION_QQ_SWITH') == 1 || C('UNION_SINA_WEIBO_SWITH') == 1 || (strpos($_SERVER['HTTP_USER_AGENT'],'MicroMessenger')!==false && C('UNION_WEICHAT_SWITH') == 1) " }
+		<div class="m-login-extLogin">
+			<div class="hd"><span>第三方登录</span></div>
+			<div class="bd">
+                {php}
+                if(strpos($_SERVER['HTTP_USER_AGENT'],'MicroMessenger')!==false && C('UNION_WEICHAT_SWITH') == 1){
+                {/php}
+					<div class="m-login-extLogin-item">
+						<a class="ico ico-thirdLogin ico-thirdLogin-wechat" href="{:U('Login/login',array('type'=>'wechat'))}"></a>
+						<p>微信</p>
+					</div>
+                {php}
+                }
+                {/php}
+				{if condition="C('UNION_QQ_SWITH') == 1"}
+					<div class="m-login-extLogin-item">
+						<a class="ico ico-thirdLogin ico-thirdLogin-qq" href="{:U('Login/login',array('type'=>'qq'))}"></a>
+						<p>QQ</p>
+					</div>
+				{/if}
+				{if condition="C('UNION_SINA_WEIBO_SWITH') == 1"}
+					<div class="m-login-extLogin-item">
+						<a class="ico ico-thirdLogin ico-thirdLogin-weibo" href="{:U('Login/login',array('type'=>'weibo'))}"></a>
+						<p>新浪微博</p>
+					</div>
+				{/if}
+			</div>
+		</div>
+		{/if}
+	</div>
+	<form action="" method="post" id="loginForm" style="display:none;">
+		<input id="loginForm_username" type="hidden" name="username" value="">
+		<input id="loginForm_password" type="hidden" name="password" value="">
+		<input id="loginForm_product" type="hidden" name="product" value="mail163">
+		<input id="loginForm_url" type="hidden" name="{:U()}" value="">
+		<input id="loginForm_url2" type="hidden" name="url2" value="">
+		<input id="loginForm_savelogin" type="hidden" name="savelogin" value="">
+	</form>
+<input type="hidden" value="{:U('OtherUsers/login')}" id="login-url"/>
+<input type="hidden" value="{if condition='!isset($url) && empty($url)'}{:U('Users/personal_center')}{else /}{$url|default=''}{/if}" id="personal-url"/>
+
+<script>
+
+    /**
+     * TODO 弹出框美化
+     * 点击登录按钮
+     */
+    $('#btnLogin').click(function () {
+        if($('#dvAccount input').val() == '') {
+			layer.open({
+				content: '账号不得为空',
+				time: 1 //1秒后自动关闭
+			});
+            return;
+        }
+        if($('#dvPassword input').val() == '') {
+			layer.open({
+				content: '密码不得为空',
+				time: 1 //1秒后自动关闭
+			});
+            return;
+        }
+
+        $.ajax({
+            url : $('#login-url').val(),
+            type : 'POST',
+            data : {
+                phone : $('#dvAccount input').val(),
+                password : $('#dvPassword input').val()
+            },
+            beforeSend : function () {
+
+            },
+            success : function (data, response, status) {
+
+
+                var response_data = $.parseJSON(data);
+
+
+
+                if (response_data.status == 'fail') {
+					layer.open({
+						content: response_data.message,
+						time: 1
+					});
+                    return;
+                }
+                if(response_data.status == 'success') {
+                    layer.open({
+                        content: '登录成功',
+                        time: 1
+                    });
+                    window.location.href = $('#personal-url').val()
+                }
+            }
+        });
+
+
+    });
+
+
+
+
+
+
+
+</script>
+
+
+{/block}

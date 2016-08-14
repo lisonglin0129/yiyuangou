@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>注册推广</title>
+<meta charset="UTF-8"/>
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=750,user-scalable=no,target-densitydpi=device-dpi"/>
+<link rel="stylesheet" href="./fonts/iconfont.css">
+<link href="./css/common1.css" rel="stylesheet">
+<link href="./css/indexho.css" rel="stylesheet">
+<link href="./css/promote.css" rel="stylesheet">
+<script type="text/javascript"  src="./js/jquery.min.js"></script>
+<script type="text/javascript"  src="./js/indexho.js"></script>
+</head>
+<body>
+	<div class="home">
+		<!-- 头部 -->
+		<!-- <iframe src="header.html" width="750" height="80" scrolling="no" frameborder="0"></iframe> -->
+		<header> 
+		   <a href="" class="heads"><i class="icon iconfont cio1">&#xe600;</i></a>
+		   <span class="heads-p">注册推广</span>
+		</header>
+		
+
+		<section style="background-color:#f7f7f7">
+		<div class="det-time">
+			<button type="button">2016年5月<i class="icon iconfont ico11">&#xe60c;</i></button>
+			<div class="det-dates">
+					<div class="arrow-up"></div>
+					<div class="arrow-up arrow-ups"></div>
+					<div class="det-dates1">
+						<ul>
+							<li class="li1">全部</li>
+							<li class="li2">2016年</li>
+							<li class="li3">2015年</li>
+							<li class="li4">2014年</li>
+							<li class="li5">2013年</li>
+						</ul>
+					</div>
+			</div>	
+			<div class="det-das det-das1">
+						<ul>
+							<li>全部</li>
+							<li>1月</li>
+							<li>2月</li>
+							<li>3月</li>
+							<li>4月</li>
+							<li>5月</li>
+							<li>6月</li>
+							<li>7月</li>
+							<li>8月</li>
+							<li>9月</li>
+							<li>10月</li>
+							<li>11月</li>
+							<li>12月</li>
+						</ul>
+			</div>
+
+			<div class="det-das det-das2">
+						<ul>
+							<li>全部</li>
+							<li>1月</li>
+							<li>2月</li>
+							<li>3月</li>
+							<li>4月</li>
+							<li>5月</li>
+							<li>6月</li>
+							<li>7月</li>
+							<li>8月</li>
+							<li>9月</li>
+							<li>10月</li>
+							<li>11月</li>
+							<li>12月</li>
+						</ul>
+			</div>
+			<div class="det-das det-das3">
+						<ul>
+							<li>全部</li>
+							<li>1月</li>
+							<li>2月</li>
+							<li>3月</li>
+							<li>4月</li>
+							<li>5月</li>
+							<li>6月</li>
+							<li>7月</li>
+							<li>8月</li>
+							<li>9月</li>
+							<li>10月</li>
+							<li>11月</li>
+							<li>12月</li>
+						</ul>
+			</div>
+
+			<div class="det-das det-das4">
+						<ul>
+							<li>全部</li>
+							<li>1月</li>
+							<li>2月</li>
+							<li>3月</li>
+							<li>4月</li>
+							<li>5月</li>
+							<li>6月</li>
+							<li>7月</li>
+							<li>8月</li>
+							<li>9月</li>
+							<li>10月</li>
+							<li>11月</li>
+							<li>12月</li>
+						</ul>
+			</div>
+			<div class="det-das det-das5">
+						<ul>
+							<li>全部</li>
+							<li>1月</li>
+							<li>2月</li>
+							<li>3月</li>
+							<li>4月</li>
+							<li>5月</li>
+							<li>6月</li>
+							<li>7月</li>
+							<li>8月</li>
+							<li>9月</li>
+							<li>10月</li>
+							<li>11月</li>
+							<li>12月</li>
+						</ul>
+			</div>
+		</div>
+		<section class="t-detail">推广▪好友</section>
+	
+		<div class="clr"></div>
+		<section class="prom-top1">
+			<section class="prom-left1">
+				<section class="prom-left1-1">
+					<section>10元</section>
+					<section>奖励现金</section>
+				</section>
+
+				<section class="prom-left1-2">
+					<section>用户名　123456789</section>
+					<section>注册时间　2013.13.14　10:30</section>
+				</section>
+			</section>
+		</section>
+
+		<section class="prom-top1">
+			<section class="prom-left1">
+				<section class="prom-left1-1">
+					<section>10元</section>
+					<section>奖励现金</section>
+				</section>
+
+				<section class="prom-left1-2">
+					<section>用户名　123456789</section>
+					<section>注册时间　2013.13.14　10:30</section>
+				</section>
+			</section>
+		</section>
+
+		<section class="prom-top1">
+			<section class="prom-left1">
+				<section class="prom-left1-1">
+					<section>10元</section>
+					<section>奖励现金</section>
+				</section>
+
+				<section class="prom-left1-2">
+					<section>用户名　123456789</section>
+					<section>注册时间　2013.13.14　10:30</section>
+				</section>
+			</section>
+		</section>
+
+		<section class="prom-top1">
+			<section class="prom-left1">
+				<section class="prom-left1-1">
+					<section>10元</section>
+					<section>奖励现金</section>
+				</section>
+
+				<section class="prom-left1-2">
+					<section>用户名　123456789</section>
+					<section>注册时间　2013.13.14　10:30</section>
+				</section>
+			</section>
+		</section>
+
+		<section class="prom-top1">
+			<section class="prom-left1">
+				<section class="prom-left1-1">
+					<section>10元</section>
+					<section>奖励现金</section>
+				</section>
+
+				<section class="prom-left1-2">
+					<section>用户名　123456789</section>
+					<section>注册时间　2013.13.14　10:30</section>
+				</section>
+			</section>
+		</section>
+
+		<section class="prom-top1">
+			<section class="prom-left1">
+				<section class="prom-left1-1">
+					<section>10元</section>
+					<section>奖励现金</section>
+				</section>
+
+				<section class="prom-left1-2">
+					<section>用户名　123456789</section>
+					<section>注册时间　2013.13.14　10:30</section>
+				</section>
+			</section>
+		</section>
+
+
+	</section>
+		<!-- 底部 -->
+		<div class="foots"></div>
+		<footer>
+			<a href="" class="foots1">夺宝</a>
+			<a href="" class="foots2">全部商品</a>
+			<a href="" class="foots3">晒单</a>
+			<a href="" class="foots4">购物车</a>
+			<a href="" class="foots5 act">我的</a>
+		</footer>
+		<!-- <iframe src="footer.html" class="footer" width="750" height="115" scrolling="no" frameborder="0"></iframe> -->
+	</div>	
+
+
+
+</body>
+</html>

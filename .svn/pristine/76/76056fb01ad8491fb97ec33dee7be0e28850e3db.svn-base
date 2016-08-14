@@ -1,0 +1,27 @@
+$(function(){
+
+	$(document).on("click",".exddas-open",function(){
+
+		$(".express_t").show();
+
+	});
+
+	$(document).on("click",".exddas-close",function(){
+
+		$(".express_t").fadeOut(200);
+
+	});
+
+
+	// 来自文件my_ticket.html
+	$(document).on("click",".tick-top-left",function(){
+			var a = $(this).index(".tick-top-left");
+			$(".tick-top-left").eq(a).css("color","#e2342a").siblings(".tick-top-left").css("color","#000");
+			$(".tick-no").eq(a).show().siblings(".tick-no").hide();
+
+	});
+
+
+
+
+})

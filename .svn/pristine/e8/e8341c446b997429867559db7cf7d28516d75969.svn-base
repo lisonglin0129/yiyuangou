@@ -1,0 +1,14 @@
+/**
+ * Created by phil on 2016/5/10.
+ */
+$(function(){
+    var func = {
+        init:function(){
+            table.init();
+        },
+
+    };
+    func.init();
+
+
+});

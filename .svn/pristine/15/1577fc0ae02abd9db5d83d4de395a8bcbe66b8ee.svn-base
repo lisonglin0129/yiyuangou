@@ -1,0 +1,68 @@
+
+
+{extend name="base/common"}
+
+
+
+{block name="head"}
+<link href="__MOBILE_CSS__/user.css" rel="stylesheet"/>
+<script src="__MOBILE_JS__/jquery.min.js"></script>
+<script src="__MOBILE_JS__/index.js"></script>
+<script src="__MOBILE_JS__/js.js"></script>
+<script>
+    $(function(){
+        $(document).on("click",".view-num",function(){
+            $(this).parents('.zx-0').find('.mm').show();
+        });
+		$(document).on("touchend",".view-num",function(){
+			$(this).parents('.zx-0').find('.mm').show();
+		});
+		$(document).on("click",".dbjl-trop02-02",function(){
+			$(this).parents('.zx-0').find('.mm').hide();
+		});
+		$(document).on("touchend",".dbjl-trop02-02",function(){
+			$(this).parents('.zx-0').find('.mm').hide();
+		});
+    })
+
+
+</script>
+{/block}
+{block name="main"}
+<div class="m-user mm czz mm1s" id="dvWrapper">
+		<div class="m-simpleHeader" id="dvHeader">
+			<a href="javascript:history.go(-1);" data-pro="back" data-back="true" class="m-simpleHeader-back"><i class="ico ico-back"></i></a>
+			<h1>夺宝记录</h1>
+		</div>
+		<div class="clear">
+		</div>
+	</div>
+	<div class="w-nav w-nav-hasSplt w-nav-hasBorder hehe2" id="dvTab">
+		<div class="w-nav-item haha k2" data-name="db" data-pro="item">
+			<span class="w-nav-txt h6">进行中</span>
+		</div>
+		<div class="w-nav-item haha k4" data-name="wishlist" data-pro="item">
+			<span class="w-nav-txt h5">即将揭晓</span>
+		</div>
+		<div class="w-nav-item haha k3" data-name="wishlist" data-pro="item">
+			<span class="w-nav-txt h5">已揭晓</span>
+		</div>
+	</div>
+<div class="ing">
+
+</div>
+<div class="doing">
+</div>
+<div class="done">
+</div>
+<!--全部-->
+<div class="zx-11 active" style="display:block;"></div>
+<!--进行中-->
+<div class="zx-11"></div>
+    <!--已揭晓-->
+	<div class="zx-11"></div>
+
+<input type="hidden" id="pi_type" value="ing"/>
+<input type="hidden" id="ajax_person_indiana" value="{:U('mobile/buy/ajax_person_indiana')}"/>
+<p id="load-more"></p>
+{/block}

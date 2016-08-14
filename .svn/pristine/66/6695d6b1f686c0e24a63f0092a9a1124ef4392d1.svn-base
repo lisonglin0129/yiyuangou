@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>提现记录</title>
+<meta charset="UTF-8"/>
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=750,user-scalable=no,target-densitydpi=device-dpi"/>
+<link rel="stylesheet" href="./fonts/iconfont.css">
+<link href="./css/common1.css" rel="stylesheet">
+<link href="./css/empty.css" rel="stylesheet">
+<script type="text/javascript"  src="./js/jquery.min.js"></script>
+<script type="text/javascript"  src="./js/records.js"></script>
+<style type="text/css">
+body{background-color: #fff}
+</style>
+</head>
+<body>
+	<div class="home">
+		<!-- 头部 -->	
+		<header> 
+		   <a href="" class="heads"><i class="icon iconfont cio1">&#xe600;</i></a>
+		   <span class="heads-p">提现记录</span>
+		</header>
+		
+	<section>
+		<section class="iwto-top1">
+				<section class="itop1-left">
+					 <i class="icon iconfont ico22">&#xe608;</i>
+				</section>
+				<section class="itop1-lef2">
+						<section>中国银行</section>
+						<section>储蓄卡</section>
+						<section>＊＊＊＊＊＊＊＊＊＊＊＊9971</section>
+				</section>
+				<section class="itop1-lef3">
+					 <i class="icon iconfont ico23">&#xe608;</i>
+				</section>
+		</section>
+
+		<section class="iwto-top1 iwto-top2">
+				<section class="itop1-left itop1-left1">
+					 <i class="icon iconfont ico22 ico25">&#xe60b;</i>
+				</section>
+				<section class="itop1-lef2">
+						<section>中国建设银行</section>
+						<section>储蓄卡</section>
+						<section>＊＊＊＊＊＊＊＊＊＊＊＊9971</section>
+				</section>
+				<section class="itop1-lef3">
+					 <i class="icon iconfont ico23 ico27">&#xe60b;</i>
+				</section>
+		</section>
+
+		<section class="iwto-top1 iwto-top3">
+				<section class="itop1-left itop1-left2 ">
+					 <i class="icon iconfont ico22 ico25">&#xe613;</i>
+				</section>
+				<section class="itop1-lef2">
+						<section>支付宝</section>
+						<section>电子银行</section>
+						<section>9971＊＊＊＊@＊＊＊＊</section>
+				</section>
+				<section class="itop1-lef3">
+					 <i class="icon iconfont ico23 ico26">&#xe613;</i>
+				</section>
+
+
+
+		</section>
+		<a href="" class="iwto-top4">
+			<i class="icon iconfont ico123">&#xe601;</i>
+			添加账号
+		</a>
+		<section class="iwto-top5">
+			<a href="" class="iwto-top5-le">立即提现</a>
+			<a href="" class="iwto-top5-le">提现记录</a>
+		</section>
+
+	</section>
+		<!-- 底部 -->
+		<div class="foots"></div>
+		<footer>
+			<a href="" class="foots1">夺宝</a>
+			<a href="" class="foots2">全部商品</a>
+			<a href="" class="foots3">晒单</a>
+			<a href="" class="foots4">购物车</a>
+			<a href="" class="foots5 act">我的</a>
+		</footer>
+		
+	</div>	
+</body>
+</html>

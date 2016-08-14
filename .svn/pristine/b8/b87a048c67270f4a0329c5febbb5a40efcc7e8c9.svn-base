@@ -1,0 +1,88 @@
+
+
+    {notempty name="indiana_array_all"}
+
+    {volist name="indiana_array_all" id="vo"}
+
+
+
+    {if condition="$vo.status eq 1" }
+    <div class="zx-1 zx-0">
+        {if condition="$vo.code eq 'shiyuanduobao'"}
+        <img class="ico ico-label ico-label-goods w-cbn" src="__MOBILE_STATIC__/img/icon_ten.png">
+        {/if}
+        <img src="{$vo.img_path}" class="img123"/>
+        <div class="xz-3">
+            <section><a href="{if condition="$vo['nper_type'] eq 1"}{:U('Goods/goods_detail',array('nper_id'=>$vo['nper_id']))}{else /}{:U('Goods/zero_detail',array('nper_id'=>$vo['nper_id']))}{/if}">{$vo.name}</a></section>
+            <section style="color:#999;">期号：{$vo.nper_id|num_base_mask=0}</section>
+
+            {eq name="vo.status" value="1"}
+            <div class="gdt">
+                <div class="gdt1" style="width: {$vo.progress}%">
+                </div>
+            </div>
+            {else/}
+            正在揭晓中，请稍等
+            {/eq}
+            <div class="canyu">
+                <section style="float:left">总需<span>{$vo.sum_times}</span></section><section style="float:right;margin-top:-2px;">剩余<span style="color:#3997FE">
+                {if condition="$vo['nper_type'] eq 1"}
+                {$vo.sum_times-$vo.participant_num}
+                {else /}
+                {if condition="$vo['join_type'] eq 1"}
+                {$vo.sum_times-$vo.odd_join_num}
+                {else /}
+                {$vo.sum_times-$vo.even_join_num}
+                {/if}
+                {/if}
+            </span></section>
+            </div>
+            <div class="canyu">
+                <section style="float:left">参与人次：<span class="cs1">{$vo.join_num}</span>人次</section>
+                <!--<section style="float:right" class="se">-->
+                <!--<a href="../../app/mobile/view/cart/qd.html">追加</a>-->
+                <!--</section>-->
+            </div>
+        </div>
+    </div>
+{else/}
+
+    <div class="zx-1 zx-0">
+        {if condition="$vo.code eq 'shiyuanduobao'"}
+        <img class="ico ico-label ico-label-goods w-cbn" src="__MOBILE_STATIC__/img/icon_ten.png">
+        {/if}
+        <img src="{$vo.img_path}" class="img123"/>
+        <div class="xz-3">
+            <section><a href="{if condition="$vo['nper_type'] eq 1"}{:U('Goods/goods_detail',array('nper_id'=>$vo['nper_id']))}{else /}{:U('Goods/zero_detail',array('nper_id'=>$vo['nper_id']))}{/if}">{$vo.name|default=''}</a></section>
+            <section style="color:#999;">期号：{$vo.nper_id|num_base_mask=0}</section>
+            <section style="color:#999;">获奖者：<a href="{:U('OtherUsers/other_person_center',array('uid'=>$vo['luck_uid']))}"><span style="color:blue;">{$vo.nick_name|default=''}</span></a>（共参与{$vo.win_num|default=''}次）</section>
+            <section style="color:#999;">幸运号码：{$vo.luck_num|default=''}</section>
+            <section style="color:#999;">揭晓时间：{$vo.open_time|default=''}</section>
+            <section style="color:#999;">本期参与：<span style="color:red;">{$vo.join_num|default=''}次</span><span style="color:blue;" class="view-num"> 查看我的号码</span></section>
+        </div>
+        <!--弹出框+遮罩层开始-->
+        <div class="mm" style="display:none">
+            <div class="dbjl-trop01"></div><!--遮罩层-->
+            <div class="dbjl-trop02">
+                <div class="dbjl-trop02-1">
+                    <div class="dbjl-trop02-left"></div><!--点击消失--><div class="clr"></div>
+                    <div class="dbjl-trop02-01">
+                        <section>夺宝号码</section>
+                        <section>参与<span style="color:red;">{$vo.join_num}</span>人次，夺宝号码：</section>
+                        <section class="seed">
+                            {volist name="vo.code_list" id="data"}
+                            <span style="color:#666">{$data}</span>
+                            {/volist}
+
+                        </section>
+                    </div>
+                    <section class="dbjl-trop02-02">确定</section>
+                </div>
+            </div>
+        </div>
+        <!--弹出框+遮罩层结束-->
+    </div>
+{/if}
+
+    {/volist}
+    {/notempty}

@@ -1,0 +1,120 @@
+.prom-top1{
+	margin: 0 auto;
+	width: 715px;
+	height: 100px;
+	background-color: #fff;
+	border-radius: 10px;
+	margin-bottom: 10px;
+}
+.prom-left1{
+	margin-top: 14px;
+	width: 640px;
+	height: 72px;
+	float: right;
+}
+.prom-left1-1{
+	width: 135px;
+	height: 72px;
+	border-right: 1px solid #ccc;
+	float: left;
+	line-height: 37px;
+}
+.prom-left1-1 section{
+	text-align: left;
+}
+.prom-left1-1 section:first-child{
+	font-size: 30px;
+	color: #fd5e64;
+}
+.prom-left1-1 section:last-child{
+	font-size: 18px;
+	color: #666;
+}
+.prom-left1-2{
+	width: 400px;
+	height: 72px;
+	float: left;
+	color: #666;
+	text-align: center;
+	overflow: hidden;
+    font-size: 21px;
+    line-height: 35px;
+}
+.patt_layer{
+	position: fixed;
+	z-index: 1000;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	height: 100%;
+	background-color: #000;
+	opacity: 0.6;
+}
+.patt_layer_main{
+	position: fixed;
+	z-index: 1001;
+	top: 50%;
+	margin-top: -270px;
+	left: 50%;
+	margin-left: -310px;
+	width: 620px;
+	height: 540px;
+	border-radius: 10px;
+	overflow: hidden;
+	/*background-color: #ccc;*/
+}
+.patt_layer_circle{
+	display: block;
+	position: absolute;
+	top: -10px;
+	left: 50%;
+	margin-left: -100px;
+	width: 200px;
+	height: 200px;
+	border-radius: 50%;
+	background:url(../img/act/Layers.png) no-repeat 2px -228px #fff;
+}
+.patt_cards{
+	margin-top: 110px;
+	padding-top: 80px;
+	width: 100%;
+	height: 350px;
+	border-radius: 10px;
+	text-align: center;
+	background-color: #fff;
+}
+.patt_cards_h1{
+	display: block;
+	font-weight: 400;
+	font-size: 36px;
+	color: #000;
+}
+.patt_cards p{
+	font-size: 28px;
+	line-height: 0px;
+}
+.patt_cards_sect{
+	margin-top: 60px;
+	width: 100%;
+	height: 160px;
+	border-top: 1px solid #ebecec;
+}
+.patt_cards_a{
+	margin: 45px 0px 0px 30px;
+	float: left;
+	width: 260px;
+	height: 75px;
+	border-radius: 7px;
+	line-height: 75px;
+	text-align: center;
+	font-size: 34px;
+	color: #fff;
+	background-color: #ed383d;
+}
+.patt_cards_gray{
+	background-color:#e3e3e3;
+	color: #989898;
+}
+.layers{
+	display: none;
+}

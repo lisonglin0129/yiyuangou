@@ -1,0 +1,124 @@
+/**
+ * Created by phil on 2016/5/6.
+ */
+$(function(){
+    var func = {
+        init:function(){
+            table.init();
+        },
+
+        search_miss_document:function (obj) {
+            var order_id = obj.data('id');
+            var plat = obj.data('plat');
+            var url = $("#search_document_url").val();
+            if ( plat == '' ) {
+                var param = {order_id:order_id};
+            } else {
+                var param = {order_id:order_id,plat:plat};
+            }
+
+            var index = layer.msg('正在查询,请稍后...', {icon: 16,time:9999999});
+            var back_url = ''
+
+            common.ajax_post(url, param, true, function (rt) {
+                layer.close(index);
+                var res = JSON.parse(rt)
+                if ( res['code'] == -100 ) {
+                    layer.msg('该订单无需返还金额');
+                    return;
+                } else if( res['code'] == -101 ) {
+                    layer.msg('获取订单信息失败');
+                    return;
+                }else if( res['code'] == -102 ) {
+                    layer.msg('改变订单状态失败');
+                    return;
+                }else if( res['code'] == -200 ) {
+                    layer.msg('支付平台查不到订单');
+                    return;
+                }else if( res['code'] == -201 ) {
+                    layer.msg('平台付款不成功');
+                    return;
+                } else if( res['code'] == -202 ) {
+                    layer.msg('商户号mch_id与appid不匹配');
+                    return;
+                }
+                else if( res['code'] == -301 ) {
+                    layer.msg('获取用户信息失败');
+                    return;
+                } else if( res['code'] == -302 ) {
+                    layer.msg('返还用户余额失败');
+                    return;
+                }
+
+                common.delay(function () {
+                    layer.confirm('该订单处于掉单状态,是否将用户花费金额(' + res['money'] + ')返还?', {
+                        btn: ['返还', '取消'] //按钮
+                    }, function () {
+                        var back_url = $("#back_url").val();
+                        //点击返还执行返还虚拟币到用户账户
+                        var param = {pay_plat: res['pay_plat'], order_id: order_id};
+                        var index = layer.msg('正在返还金额...', {icon: 16, time: 9999999});
+
+
+                        common.ajax_post(back_url, param, true, function (rt) {
+
+                            var bakc_moneuy = JSON.parse(rt);
+                            console.log(bakc_moneuy);
+                            if (bakc_moneuy['code'] == -100) {
+                                layer.msg('该订单无需返还金额');
+                                return;
+                            } else if (bakc_moneuy['code'] == -101) {
+                                layer.msg('获取订单信息失败');
+                                return;
+                            } else if (bakc_moneuy['code'] == -102) {
+                                layer.msg('改变订单状态失败');
+                                return;
+                            } else if (bakc_moneuy['code'] == -200) {
+                                layer.msg('支付平台查不到订单');
+                                return;
+                            } else if (bakc_moneuy['code'] == -201) {
+                                layer.msg('平台付款不成功');
+                                return;
+                            } else if (bakc_moneuy['code'] == -301) {
+                                layer.msg('获取用户信息失败');
+                                return;
+                            } else if (bakc_moneuy['code'] == -302) {
+                                layer.msg('返还用户余额失败');
+                                return;
+                            } else if(bakc_moneuy['code'] == -400) {
+                                layer.msg('未知错误');
+                                return;
+
+                            } else if (bakc_moneuy['code'] == 100) {
+                                layer.msg('返还用户余额成功');
+                                return;
+                            }
+
+
+                        })
+
+
+                    });
+                });
+
+            });
+
+        }
+    };
+
+    $("#form-field-select-1 ").change(function () {
+        var select_class = $(this).find("option:selected").attr('class');
+        if(select_class!==false){
+            var value = $(this).find("option:selected").val();
+            $(".search-query").attr('value',select_class);
+        }
+    });
+
+    $(document).on('click','.search_miss_document',function () {
+        var obj = $(this);
+        func.search_miss_document(obj)
+
+    });
+
+    func.init();
+});

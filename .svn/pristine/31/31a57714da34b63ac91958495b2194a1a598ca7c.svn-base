@@ -1,0 +1,36 @@
+{extend name="base/common"}
+{block name="head"}
+<link href="__MOBILE_CSS__/user.css"  rel="stylesheet" />
+<script src="__MOBILE_JS__/jquery.min.js"></script>
+<script src="__MOBILE_JS__/index.js"></script>
+{/block}
+{block name="main"}
+	<div class="m-user" id="dvWrapper">
+		<div class="m-simpleHeader" id="dvHeader">
+			<a href="javascript:history.go(-1);" data-pro="back" data-back="true" class="m-simpleHeader-back"><i class="ico ico-back"></i></a>
+			<h1>晒单分享</h1>
+		</div>
+		<div class="zx1" style="display:block;width:95%;margin-left:2.5%;">
+            {empty name="share_list"}
+
+                <p style="width: 100%;text-align: center;margin-top: 10px;">该商品下没有晒单记录</p>
+
+            {else /}
+
+
+                {volist name="share_list" id="vo"}
+                    <a href="{:U('mobile/other_users/share_detail',array('share_id'=>$vo.share_id))}">
+                        <div class="zx2-1">
+                            <section>{$vo.title}</section>
+                            <section><a href="{:U('mobile/other_users/other_person_center',array('uid'=>$vo.user_id))}" style="float:left;color:#0079fe">{$vo.nick_name|default=''}</a></section><section style="float:right;margin-top:5px;color:#999;">{$vo.create_time}</section>
+                            <div class="xz2-2"><img src="{$vo.img_path}">
+                                {$vo.content}
+                            </div>
+                        </div>
+                </a>
+                {/volist}
+            {/empty}
+		</div>	 
+	</div>
+
+{/block}

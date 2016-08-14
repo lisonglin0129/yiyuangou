@@ -1,0 +1,105 @@
+
+{extend name="base/common"}
+
+
+
+{block name="head"}
+<link href="__MOBILE_CSS__/user.css"  rel="stylesheet" />
+<script src="__MOBILE_JS__/jquery.min.js"></script>
+<script src="__MOBILE_JS__/index.js"></script>
+
+<script>
+    $(function () {
+        //得到总页码
+        $.ajax({
+            url : "{:U('Goods/all_ever_count')}",
+            type : 'POST',
+            data : {
+                goods_id : $('#goods-id').val()
+            },
+            success: function(data, response, status){
+                window.count = parseInt(data);
+            }
+        });
+        //滚动条拖动
+        window.scrollFlag = true;
+        window.first = 10;
+        window.page = 1;
+        $(window).scroll(function () {
+            if (window.page < window.count) {
+                if (window.scrollFlag) {
+                    if ($(document).scrollTop() >= ($('#load-more').offset().top + $('#load-more').outerHeight() - $(window).height() - 20)) {
+                        setTimeout(function () {
+                            $.ajax({
+                                url: "{:U('Goods/ajax_ever_announce')}",
+                                type: 'POST',
+                                data: {
+                                    offset: window.first,
+                                    goods_id: $('#goods-id').val()
+                                },
+                                success: function (data, response, status) {
+                                    $('#load-more').before(data);
+                                }
+                            });
+                            window.scrollFlag = true;
+                            window.first += 10;
+                            window.page += 1;
+                        }, 10);
+                        window.scrollFlag = false;
+                    }
+                }
+            } else {
+                $('#load-more').html('<section style="width:100%;height30px;text-align:center;margin-top:10px;">没有更多数据</section>');
+            }
+        });
+    })
+
+</script>
+{/block}
+
+
+
+{block name="main"}
+
+
+	<div class="m-user" id="dvWrapper">
+		<div class="m-simpleHeader" id="dvHeader">
+			<a href="javascript:history.go(-1);" data-pro="back" data-back="true" class="m-simpleHeader-back"><i class="ico ico-back"></i></a>
+			<h1>往期揭晓</h1>
+		</div>
+        <div class="g-wrap-bd">
+			<div class="m-detail-record" style="display:block;width:95%;margin-left:2.5%;">
+
+                {notempty name="announce_info"}
+                    {volist name="announce_info" id="vo"}
+                        {if condition='$vo["n_status"] eq 2'}
+                        <div class="wq-0" >期号：{$vo|num_base_mask=0}　即将揭晓，正在倒计时</div>
+                        {elseif condition='$vo["n_status"] eq 3'}
+                            <div class="wq-1" >
+                                <div class="wq-2 wq-3">
+                                    <div class="wq-4">=
+                                        <a href="{:U('mobile/other_users/other_person_center',array('uid'=>$vo.luck_uid))}">
+                                        <img src="{$vo.user_face|default=''}" alt="" style="width: 45px;height: 45px;margin-top: -15.5px;"/>
+                                        </a>
+                                    </div>
+                                    <div class="wq-5">
+                                        获奖者：{$vo.nick_name|default=''}</br>
+                                        期号:{$vo.nper_id|default=""}</br>
+                                        <span style="color:green">(  IP：{$vo.reg_ip|default=''} )</span></br>
+                                        用户ID：{$vo.luck_uid|default=''} (唯一不变标识)</br>
+                                        揭晓时间：{$vo.luck_time|microtime_format='1','Y-m-d H:i:s'|default=''}</br>
+                                        幸运号码：<span style="color:#db3652">{$vo.luck_num|default=''}</span></br>
+                                        本期参与：<span style="color:#db3652">{$vo.num|default=''}</span>次</br>
+                                    </div>
+                                </div>
+                            </div>
+                        {/if}
+                    {/volist}
+                {/notempty}
+                <p id="load-more"></p>
+			</div>
+        </div>
+
+	</div>
+<input type="hidden" value="{$goods_id|default=''}" id="goods-id">
+{/block}

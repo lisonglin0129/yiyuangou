@@ -1,0 +1,40 @@
+﻿<?php
+header("Content-type:text/html;charset=utf-8");
+
+$demo_static = empty($_SERVER['SERVER_NAME']) ? "1" : $_SERVER['SERVER_NAME'];
+//根据域名区分模版
+switch ($demo_static) {
+    //绑定PC前端的域名
+    case '1.xiangchang.com':
+        $default_module = 'yyg';
+        break;
+    //绑定手机端的域名
+    case 'm.xiangchang.com':
+        $default_module = 'mobile';
+        break;
+    //绑定后台的域名
+    case 'admin.xiangchang.com':
+        $default_module = 'admin';
+        break;
+    //默认跳转到PC前端
+    default:
+        $default_module = 'yyg';
+}
+
+//静态资源
+define('__demo_static__', 'default');
+
+//!file_exists('./data/db/lock') && $default_module = 'install';
+//区分模块
+define('__default_module__', $default_module);
+
+
+
+define('APP_PATH', __DIR__ . '/../app/');// 定义应用目录
+define('__STATIC_PREFIX__', '');//静态资源前缀,如果用七牛同步数据,请填写这里
+define('APP_DEBUG', false);// 开启调试模式
+define('__version__', 'Ver 2.0');//版本号
+define('__SPLIT_CODE_NUM__', '3000');//生成随机号码的分割数量,每多少条数据分一条,不能变
+define("TOP_SDK_WORK_DIR", "/tmp/");
+// 加载框架引导文件
+require __DIR__ . '/../thinkphp/start.php';

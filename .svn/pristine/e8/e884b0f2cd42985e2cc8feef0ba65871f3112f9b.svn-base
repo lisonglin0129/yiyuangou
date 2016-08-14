@@ -1,0 +1,102 @@
+{extend name="base/base"}
+{block name="head"}
+<link rel="stylesheet" href="__MOBILE_FONTS__/iconfont.css">
+<link href="__MOBILE_CSS__/common1.css" rel="stylesheet">
+<link href="__MOBILE_CSS__/express.css" rel="stylesheet">
+<script type="text/javascript"  src="__MOBILE_JS__/jquery.min.js"></script>
+<style type="text/css">
+    html body{background-color: #f7f7f7}
+</style>
+{/block}
+
+{block name="main"}
+
+   
+
+
+
+<div class="home homes_new">
+    <!-- 头部 -->
+    <header class="header_news header_act">
+      <a href="{:U('users/personal_center')}" class="heads heads_new"><i class="icon iconfont cio1 cio_ff">&#xe600;</i></a>
+        <span class="heads-p heads-p-news heads-p-act">充值抢购</span>
+    </header>
+
+
+    <!-- 页面主体 -->
+        <section>
+
+        <section class="act_banner recharge_banner">
+            <section class="limit_ban_details recharge_details">
+                 <p>某时间段内，0元购商品；（如：6月18日至6月20日0元可购买的商品)；</p>
+                 <p>某时间段内，低价购商品；如：6月18日至6月20日0元可购买的商品)；</p>
+            </section>
+             <div style="clear: both;"></div>
+        </section> 
+       
+
+
+
+        <section class="limit_list">
+                <img src="" class="limit_img" />
+                <section class="limit_rob">
+                    <span class="limit_p">iPad Pro 12.9英寸 32G WIFI版</span>
+                    <span class="recharge_span2 recharge_span3 clear">总需：1999人次</span>
+                     
+                    <span class="recharge_span2 clear">已参与：<span class="re_color">999</span>人次</span>
+                 
+                    <span class="recharge_span2 clear">剩余：<span class="re_color">999</span>人次</span>
+                   
+                    <div style="clear: both;"></div>
+                    <a href="" class="limit_a">立即夺宝</a>
+                </section>
+        </section>
+       
+
+         
+
+
+
+
+
+
+
+
+
+
+
+        </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- 底部 -->
+    <footer>
+        <a href="{:U('Index/index')}" class="foots1">夺宝</a>
+        <a href="{:U('Index/all_goods', array('cate'=> '0-1'))}" class="foots2">全部商品</a>
+        <a href="{:U('Index/all_share_order')}" class="foots3">晒单</a>
+        <a href="{:U('Cart/cart_list')}" class="foots6 act">活动</a>
+        <a href="{:U('Users/personal_center')}" class="foots5">我的</a>
+    </footer>
+
+</div>
+<!-- <script type="text/javascript"  src="__MOBILE_JS__/login.js"></script> -->
+{/block}

@@ -1,0 +1,14 @@
+{extend name="base/common"}
+{block name="title"}1元夺宝{/block}
+{block name="head"}
+<link rel="stylesheet" type="text/css" href="__MOBILE_CSS__/help.css">{/block}
+
+
+
+
+{block name="main"}
+
+<div style="padding: 19px">
+    {$content|default='暂无内容'}
+</div>
+{/block}

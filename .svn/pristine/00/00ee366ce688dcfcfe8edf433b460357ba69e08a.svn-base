@@ -1,0 +1,40 @@
+/**
+ * Created by phil on 2016/5/6.
+ */
+$(function(){
+    var func = {
+        init:function(){
+            table.init();
+        },
+        create_menu:function(){
+            var appid=$('#appid').val();
+            var appsecret=$('#appsecret').val();
+            if(!appid || !appsecret){
+                layer.msg('请先配置公众号的appid和appsecret');return false;
+            }
+            var url=$('#menu_url').val();
+            var param={
+                appid:appid,
+                appsecret:appsecret
+            };
+            common.ajax_post(url, param, true, function (rt) {
+                common.post_tips(rt, function (obj) {
+
+                    if(obj.code=='1'){
+                        common.delay(function(){
+                            layer.msg('自定义菜单生成成功');
+                        },1000,1)
+                    }else{
+                        layer.msg('自定义菜单生成失败');
+                    }
+
+                });
+            }, true);
+        }
+    };
+
+    func.init();
+    $('#create_menu').click(function(){
+        func.create_menu();
+    })
+});
